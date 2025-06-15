@@ -87,6 +87,31 @@ If you want more from a response:
 - "What's a different perspective on this?"
 - "Can you elaborate on the meaning of this quote?"
 
+## 🚀 Coming Soon
+
+Future development ideas:
+
+### Enhanced Features
+- Add your own quotes directly through the chat
+- Automatic quote organization and tagging
+- Integration with your reading notes and book highlights
+- Smart quote recommendations based on your interests
+- Real-time updates to the quote collection
+
+### New Integrations
+- Connect with your Goodreads account
+- Sync with your personal reading notes
+- Link with your favorite note-taking apps
+- Browser extension for quick quote access
+- Mobile app for on-the-go wisdom
+
+### Improved Experience
+- Better quote organization
+- Smarter quote recommendations
+- More personalized responses
+- Enhanced search capabilities
+- Richer context and connections
+
 ---
 
 Built by Zach | Designed for thinkers, reflectors, and seekers of clarity.
