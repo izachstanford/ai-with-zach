@@ -1,5 +1,7 @@
 # 🗡️ Whetstones of Wisdom
 
+![Whetstones of Wisdom Logo](./assets/logo_whetstones_of_wisdom.png)
+
 A curated collection of thought-provoking quotes and insights from literature, designed to sharpen your mind and deepen your understanding of life's most important questions.
 
 ## 📁 Project Structure
