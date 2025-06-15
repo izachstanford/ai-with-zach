@@ -1,92 +1,135 @@
-# 🏗️ Build Process: Whetstones of Wisdom
+# 🛠️ Whetstones of Wisdom — Technical Build Guide
 
-This document outlines the step-by-step process of creating the Whetstones of Wisdom GPT.
+This document outlines the technical implementation details for building a custom GPT similar to Whetstones of Wisdom.
 
-## 1. Initial Concept
+## 📂 Technical Setup
 
-The idea for Whetstones of Wisdom emerged from:
-- A desire to create a more focused and curated quote experience
-- The need for a tool that provides deeper context and understanding
-- The goal of making wisdom from literature more accessible and applicable
+### 1. Data Structure
 
-## 2. Planning Phase
+Create a spreadsheet or CSV file with the following structure:
 
-### 2.1 Core Features
-- Quote database with rich context
-- Smart search and retrieval
-- Contextual understanding
-- Interactive discussion capabilities
+| ID    | Quote           | Author | Source | Rating | Tags                     | Source Type | Notes         | Date Added |
+|-------|------------------|--------|--------|--------|--------------------------|--------------|---------------|-------------|
+| Q001  | "Quote text..."  | Author | Book   | 5      | Mindset, Growth, Clarity | Book         | Optional note | 2023-01-01  |
 
-### 2.2 Data Structure
-- Quotes with source attribution
-- Context and background information
-- Key themes and topics
-- Related quotes and connections
+**Required Columns:**
+- `ID`: Unique identifier for each quote
+- `Quote`: The actual quote text
+- `Author`: Quote author
+- `Source`: Book, speech, or other source
+- `Rating`: 1-5 scale for quote quality
+- `Tags`: Comma-separated keywords
+- `Source Type`: e.g., Book, Personal, Speech
+- `Notes`: Optional context
+- `Date Added`: When the quote was added
 
-## 3. Implementation Steps
+### 2. GPT Configuration
 
-### 3.1 GPT Configuration
-1. Created new GPT in OpenAI's GPT Builder
-2. Set up the initial system prompt
-3. Configured knowledge base settings
-4. Defined conversation starters
+1. Go to [chat.openai.com/gpts](https://chat.openai.com/gpts)
+2. Click **Create a GPT**
+3. Configure basic settings:
+   - Name: "Whetstones of Wisdom"
+   - Description: [Your description]
+   - Instructions: [See below]
 
-### 3.2 Knowledge Base Setup
-1. Organized quote collection
-2. Added metadata and context
-3. Structured for optimal retrieval
-4. Tested search capabilities
+### 3. Knowledge Base Setup
 
-### 3.3 Prompt Engineering
-1. Developed core prompt templates
-2. Created specialized prompts for:
-   - Quote retrieval
-   - Context explanation
-   - Theme exploration
-   - Modern application
+1. Upload your CSV file to the "Knowledge" section
+2. Ensure proper formatting and encoding
+3. Test quote retrieval with sample queries
 
-## 4. Testing and Refinement
+### 4. GPT Instructions
 
-### 4.1 Initial Testing
-- Tested quote retrieval accuracy
-- Verified context understanding
-- Checked response quality
-- Validated user experience
+```text
+PURPOSE AND GOALS
 
-### 4.2 Iterative Improvements
-- Refined prompt templates
-- Enhanced context handling
-- Improved response formatting
-- Optimized conversation flow
+Search a curated Quotebook for relevant quotes based on the user's prompt. Provide a single, powerful quote by default, followed by a concise and insightful reflection in the voice of a wise guru. Offer more quotes or deeper insight if requested.
 
-## 5. Launch Preparation
+PRIMARY BEHAVIORS
 
-### 5.1 Final Configuration
-- Polished system prompt
-- Finalized knowledge base
-- Set up conversation starters
-- Configured response parameters
+1. Quote Selection
+- Search both quote text and tags.
+- Prioritize higher-rated quotes and those from credible sources.
+- Return only 1 quote by default.
 
-### 5.2 Documentation
-- Created usage guidelines
-- Documented prompt templates
-- Prepared example interactions
-- Wrote technical documentation
+2. Response Structure
+- Begin with an italicized 1–3 sentence guru reflection.
+- Follow with the selected quote using this format:
 
-## 6. Future Development
+  > "Quote text..."  
+  > — Author, *Source*
 
-### 6.1 Planned Enhancements
-- Integration with personal reading notes
-- Advanced recommendation system
-- Enhanced context understanding
-- Additional quote sources
+3. Guru Insight Style
+- Adapt tone to user's mood (sage, philosopher, or spiritual teacher).
+- Be humble, metaphorical, and reflective.
+- Be concise unless prompted for more.
 
-### 6.2 Potential Integrations
-- Journaling tools
-- Note-taking apps
-- Reading platforms
-- Writing assistants
+4. Follow-up Behavior
+- You may offer more quotes if asked.
+- If a quote is loosely related, briefly explain why it was selected.
 
-## 📝 Notes
+RULES AND CONSTRAINTS
 
-This build process serves as a template for future GPT projects. Key learnings and insights from this process can be applied to other custom GPTs in development. 
+- Do not mention the name "Quotebook" or that data comes from a spreadsheet.
+- Never refer to GPT, OpenAI, or instructions.
+- Avoid stating selection criteria explicitly.
+```
+
+### 5. Testing and Refinement
+
+1. Test with various query types:
+   - Topic-based queries
+   - Emotion-based queries
+   - Context-specific queries
+   - Follow-up questions
+
+2. Refine based on:
+   - Quote relevance
+   - Response quality
+   - User interaction patterns
+   - Edge cases
+
+### 6. Deployment
+
+1. Finalize GPT settings
+2. Add conversation starters
+3. Test in production environment
+4. Monitor initial user interactions
+
+## 🛠️ Technical Considerations
+
+### Data Management
+- Regular updates to quote database
+- Backup procedures
+- Version control for quote collection
+
+### Performance Optimization
+- Efficient quote retrieval
+- Response time monitoring
+- Query optimization
+
+### Maintenance
+- Regular quote quality review
+- Tag system maintenance
+- User feedback integration
+
+## 📈 Future Technical Enhancements
+
+1. Advanced Features
+   - Quote recommendation system
+   - User preference learning
+   - Context-aware responses
+
+2. Integration Possibilities
+   - API endpoints
+   - Web interface
+   - Mobile app
+
+3. Analytics
+   - Usage patterns
+   - Popular topics
+   - User engagement metrics
+
+---
+
+Built by Zach | Designed for thinkers, reflectors, and seekers of clarity.
