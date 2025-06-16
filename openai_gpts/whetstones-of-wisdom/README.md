@@ -32,7 +32,6 @@ This GPT serves as a digital library of carefully curated quotes from literature
 
 - [Build Process](./docs/build_process.md) - Step-by-step guide to creating this GPT
 - [Quote Database Structure](./docs/data_structure.md) - How quotes are organized and stored
-- [Usage Examples](./docs/examples.md) - Sample interactions and use cases
 
 ## 🔧 Recipes
 
