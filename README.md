@@ -53,25 +53,27 @@ When working locally:
 1. Always activate the virtual environment:
 
    ```bash
-   source .venv/bin/activate```
+   source .venv/bin/activate
+   ```
 
 2. Install new packages as needed, then update requirements:
 
-```bash
-pip install <package-name>
-pip freeze > requirements.txt```
+   ```bash
+   pip install <package-name>
+   pip freeze > requirements.txt
+   ```
 
 3. Run Streamlit apps (if applicable) with:
 
-
-```bash
-streamlit run <filename>.py```
-
+   ```bash
+   streamlit run <filename>.py
+   ```
 
 4. When done:
 
-```bash
-deactivate```
+   ```bash
+   deactivate
+   ```
 
 ---
 
