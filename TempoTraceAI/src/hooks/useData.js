@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 
 export const useData = () => {
-  const [streamingData, setStreamingData] = useState([]);
-  const [concertData, setConcertData] = useState([]);
+  const [lifetimeStats, setLifetimeStats] = useState(null);
+  const [annualRecaps, setAnnualRecaps] = useState(null);
+  const [artistSummary, setArtistSummary] = useState(null);
+  const [concertData, setConcertData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -11,16 +13,32 @@ export const useData = () => {
       try {
         setLoading(true);
         
-        // Load streaming data
-        const streamingResponse = await fetch('/consolidated_streaming_history.json');
-        if (!streamingResponse.ok) {
-          throw new Error('Failed to load streaming data');
+        // Load lifetime streaming stats (for The Pulse tab)
+        const lifetimeResponse = await fetch('/data/lifetime_streaming_stats.json');
+        if (!lifetimeResponse.ok) {
+          throw new Error('Failed to load lifetime streaming stats');
         }
-        const streamingJson = await streamingResponse.json();
-        setStreamingData(streamingJson);
+        const lifetimeJson = await lifetimeResponse.json();
+        setLifetimeStats(lifetimeJson);
         
-        // Load concert data
-        const concertResponse = await fetch('/concerts.json');
+        // Load annual recaps (for Leaderboard tab)
+        const recapsResponse = await fetch('/data/annual_recaps.json');
+        if (!recapsResponse.ok) {
+          throw new Error('Failed to load annual recaps');
+        }
+        const recapsJson = await recapsResponse.json();
+        setAnnualRecaps(recapsJson);
+        
+        // Load artist summary (for Concert Compass tab)
+        const artistResponse = await fetch('/data/artist_summary.json');
+        if (!artistResponse.ok) {
+          throw new Error('Failed to load artist summary');
+        }
+        const artistJson = await artistResponse.json();
+        setArtistSummary(artistJson);
+        
+        // Load concert data (for Concert Compass tab)
+        const concertResponse = await fetch('/data/concerts.json');
         if (!concertResponse.ok) {
           throw new Error('Failed to load concert data');
         }
@@ -38,5 +56,5 @@ export const useData = () => {
     loadData();
   }, []);
 
-  return { streamingData, concertData, loading, error };
+  return { lifetimeStats, annualRecaps, artistSummary, concertData, loading, error };
 };

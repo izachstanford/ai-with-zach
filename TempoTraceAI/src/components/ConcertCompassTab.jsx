@@ -25,6 +25,57 @@ import {
 import { format, parseISO, isAfter, isBefore, addMonths, subMonths } from 'date-fns';
 import { formatNumber, formatTimeToReadable, generateMonthlyData, getTopByTime } from '../utils/dataUtils';
 
+// Helper function to generate yearly data
+const generateYearlyData = (data, startDate, endDate) => {
+  const yearlyData = {};
+  
+  // Initialize all years in range
+  const startYear = startDate.getFullYear();
+  const endYear = endDate.getFullYear();
+  
+  for (let year = startYear; year <= endYear; year++) {
+    yearlyData[year] = 0;
+  }
+  
+  // Aggregate data by year
+  data.forEach(item => {
+    const itemDate = parseISO(item.ts);
+    const year = itemDate.getFullYear();
+    
+    if (yearlyData.hasOwnProperty(year)) {
+      yearlyData[year] += item.ms_played;
+    }
+  });
+  
+  return yearlyData;
+};
+
+// Helper function to get full year range from data
+const getFullYearRange = (data, artistSummary) => {
+  if (data && data.length > 0) {
+    const dates = data.map(item => parseISO(item.ts));
+    const startYear = Math.min(...dates.map(d => d.getFullYear()));
+    const endYear = Math.max(...dates.map(d => d.getFullYear()));
+    return { startYear, endYear };
+  }
+  
+  // Fallback to artistSummary data
+  if (artistSummary) {
+    const allYears = [];
+    Object.values(artistSummary).forEach(artist => {
+      if (artist.yearly_breakdown) {
+        allYears.push(...Object.keys(artist.yearly_breakdown).map(year => parseInt(year)));
+      }
+    });
+    
+    if (allYears.length > 0) {
+      return { startYear: Math.min(...allYears), endYear: Math.max(...allYears) };
+    }
+  }
+  
+  return { startYear: new Date().getFullYear(), endYear: new Date().getFullYear() };
+};
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -36,78 +87,156 @@ ChartJS.register(
   Filler
 );
 
-const ConcertCompassTab = ({ streamingData, concertData }) => {
+const ConcertCompassTab = ({ streamingData, concertData, artistSummary }) => {
   const [selectedArtist, setSelectedArtist] = useState(null);
+  
+  // If streamingData is not available, use annual recaps for year range
+  const processedStreamingData = useMemo(() => {
+    if (streamingData && streamingData.length > 0) {
+      return streamingData;
+    }
+    
+    // Return empty array - we'll use artistSummary.yearly_breakdown directly
+    return [];
+  }, [streamingData]);
   
   // Get top 20 artists by listening time
   const topArtists = useMemo(() => {
-    return getTopByTime(streamingData, 'artist_name', 20);
-  }, [streamingData]);
+    if (processedStreamingData && processedStreamingData.length > 0) {
+      return getTopByTime(processedStreamingData, 'artist_name', 20);
+    }
+    
+    // Fallback to artistSummary
+    if (artistSummary) {
+      return Object.entries(artistSummary)
+        .map(([name, data]) => ({
+          name,
+          time: data.total_hours * 60 * 60 * 1000,
+          count: data.total_streams
+        }))
+        .sort((a, b) => b.time - a.time)
+        .slice(0, 20);
+    }
+    
+    return [];
+  }, [processedStreamingData, artistSummary]);
 
   // Get artists with concerts (filter out null dates)
   const concertArtists = useMemo(() => {
+    if (!concertData) return [];
     return concertData.filter(concert => concert.date && concert.artist);
   }, [concertData]);
 
+  // Get unique artists from concerts for the dropdown
+  const uniqueConcertArtists = [...new Set(concertArtists.map(c => c.artist))].sort();
+
+  // Default to Fall Out Boy when tab is activated
+  React.useEffect(() => {
+    if (uniqueConcertArtists.length > 0 && !selectedArtist) {
+      if (uniqueConcertArtists.includes('Fall Out Boy')) {
+        setSelectedArtist('Fall Out Boy');
+      }
+    }
+  }, [uniqueConcertArtists, selectedArtist]);
+
   // Create artist chart data
   const createArtistChartData = (artistName) => {
-    const artistStreams = streamingData.filter(item => item.artist_name === artistName);
     const artistConcerts = concertArtists.filter(concert => concert.artist === artistName);
     
-    if (artistStreams.length === 0) return null;
-    
-    // Get date range (6 months before first concert to 6 months after last concert, or full data range)
-    const concertDates = artistConcerts.map(c => parseISO(c.date)).sort((a, b) => a - b);
-    const firstStream = parseISO(artistStreams[0].ts);
-    const lastStream = parseISO(artistStreams[artistStreams.length - 1].ts);
-    
-    let startDate, endDate;
-    if (concertDates.length > 0) {
-      startDate = subMonths(concertDates[0], 6);
-      endDate = addMonths(concertDates[concertDates.length - 1], 6);
-      // Ensure we don't go beyond actual data range
-      if (isBefore(startDate, firstStream)) startDate = firstStream;
-      if (isAfter(endDate, lastStream)) endDate = lastStream;
-    } else {
-      startDate = firstStream;
-      endDate = lastStream;
+    // Try to get actual yearly data from artistSummary
+    if (artistSummary && artistSummary[artistName] && artistSummary[artistName].yearly_breakdown) {
+      const yearlyBreakdown = artistSummary[artistName].yearly_breakdown;
+      
+      // Get the complete year range from annual recaps or all streaming data
+      const { startYear, endYear } = getFullYearRange(processedStreamingData, artistSummary);
+      
+      // Create yearly data for the complete range
+      const yearlyData = {};
+      for (let year = startYear; year <= endYear; year++) {
+        yearlyData[year] = yearlyBreakdown[year]?.hours || 0;
+      }
+      
+      const labels = Object.keys(yearlyData).sort();
+      const chartData = labels.map(year => yearlyData[year]);
+      
+      // Mark concert years (allow multiple per artist)
+      const concertYears = [...new Set(artistConcerts.map(concert => parseISO(concert.date).getFullYear()))];
+      const pointStyles = labels.map(year => 
+        concertYears.includes(parseInt(year)) ? 'rectRot' : 'circle'
+      );
+      const pointColors = labels.map(year => 
+        concertYears.includes(parseInt(year)) ? '#f472b6' : '#00f5ff'
+      );
+      const pointSizes = labels.map(year => 
+        concertYears.includes(parseInt(year)) ? 8 : 4
+      );
+      
+      return {
+        labels: labels.map(year => year.toString()),
+        datasets: [{
+          label: 'Hours Listened',
+          data: chartData,
+          borderColor: '#00f5ff',
+          backgroundColor: 'rgba(0, 245, 255, 0.1)',
+          fill: true,
+          pointStyle: pointStyles,
+          pointBackgroundColor: pointColors,
+          pointBorderColor: pointColors,
+          pointRadius: pointSizes,
+          tension: 0.3
+        }],
+        concerts: artistConcerts
+      };
     }
     
-    // Generate monthly listening data
-    const monthlyData = generateMonthlyData(artistStreams, startDate, endDate);
+    // Fallback to processed streaming data if available
+    const artistStreams = processedStreamingData.filter(item => item.artist_name === artistName);
     
-    // Convert to chart format
-    const labels = Object.keys(monthlyData).sort();
-    const data = labels.map(month => monthlyData[month] / (1000 * 60 * 60)); // Convert to hours
+    if (artistStreams.length > 0) {
+      // Use complete year range from all data to show full trend
+      const concertDates = artistConcerts.map(c => parseISO(c.date)).sort((a, b) => a - b);
+      const { startYear, endYear } = getFullYearRange(processedStreamingData, artistSummary);
+      const fullStartDate = new Date(startYear, 0, 1);
+      const fullEndDate = new Date(endYear, 11, 31);
+      
+      // Generate yearly listening data for the complete range
+      const yearlyData = generateYearlyData(artistStreams, fullStartDate, fullEndDate);
+      
+      // Convert to chart format
+      const labels = Object.keys(yearlyData).sort();
+      const data = labels.map(year => yearlyData[year] / (1000 * 60 * 60)); // Convert to hours
+      
+      // Mark concert years (allow multiple per artist)
+      const concertYears = [...new Set(concertDates.map(date => date.getFullYear()))];
+      const pointStyles = labels.map(year => 
+        concertYears.includes(parseInt(year)) ? 'rectRot' : 'circle'
+      );
+      const pointColors = labels.map(year => 
+        concertYears.includes(parseInt(year)) ? '#f472b6' : '#00f5ff'
+      );
+      const pointSizes = labels.map(year => 
+        concertYears.includes(parseInt(year)) ? 8 : 4
+      );
+      
+      return {
+        labels: labels.map(year => year.toString()),
+        datasets: [{
+          label: 'Hours Listened',
+          data: data,
+          borderColor: '#00f5ff',
+          backgroundColor: 'rgba(0, 245, 255, 0.1)',
+          fill: true,
+          pointStyle: pointStyles,
+          pointBackgroundColor: pointColors,
+          pointBorderColor: pointColors,
+          pointRadius: pointSizes,
+          tension: 0.3
+        }],
+        concerts: artistConcerts
+      };
+    }
     
-    // Mark concert months
-    const concertMonths = concertDates.map(date => format(date, 'yyyy-MM'));
-    const pointStyles = labels.map(month => 
-      concertMonths.includes(month) ? 'rectRot' : 'circle'
-    );
-    const pointColors = labels.map(month => 
-      concertMonths.includes(month) ? '#f472b6' : '#00f5ff'
-    );
-    const pointSizes = labels.map(month => 
-      concertMonths.includes(month) ? 8 : 4
-    );
-    
-    return {
-      labels: labels.map(month => format(parseISO(month + '-01'), 'MMM yyyy')),
-      datasets: [{
-        label: 'Hours Listened',
-        data: data,
-        borderColor: '#00f5ff',
-        backgroundColor: 'rgba(0, 245, 255, 0.1)',
-        fill: true,
-        pointStyle: pointStyles,
-        pointBackgroundColor: pointColors,
-        pointBorderColor: pointColors,
-        pointRadius: pointSizes,
-        tension: 0.3
-      }],
-      concerts: artistConcerts
-    };
+    return null;
   };
 
   const chartOptions = {
@@ -138,6 +267,7 @@ const ConcertCompassTab = ({ streamingData, concertData }) => {
         }
       },
       y: {
+        beginAtZero: true,
         grid: {
           color: 'rgba(255, 255, 255, 0.1)'
         },
@@ -164,7 +294,7 @@ const ConcertCompassTab = ({ streamingData, concertData }) => {
   }, [topArtists, concertArtists]);
 
   const seenLiveCount = bucketListData.filter(artist => artist.hasSeenLive).length;
-  const bucketListProgress = (seenLiveCount / bucketListData.length) * 100;
+  const bucketListProgress = bucketListData.length > 0 ? (seenLiveCount / bucketListData.length) * 100 : 0;
 
   return (
     <div className="space-y-8">
@@ -194,9 +324,9 @@ const ConcertCompassTab = ({ streamingData, concertData }) => {
               className="cyber-input w-full"
             >
               <option value="">Select an artist...</option>
-              {concertArtists.map(concert => (
-                <option key={concert.artist} value={concert.artist}>
-                  {concert.artist}
+              {uniqueConcertArtists.map(artist => (
+                <option key={artist} value={artist}>
+                  {artist}
                 </option>
               ))}
             </select>
@@ -204,7 +334,7 @@ const ConcertCompassTab = ({ streamingData, concertData }) => {
 
           {selectedArtist && (
             <div className="space-y-4">
-              <div className="chart-container">
+              <div className="chart-container" style={{ height: '300px' }}>
                 <Line 
                   data={createArtistChartData(selectedArtist)} 
                   options={chartOptions}
@@ -214,7 +344,7 @@ const ConcertCompassTab = ({ streamingData, concertData }) => {
                 <Circle className="w-3 h-3 text-cyber-blue" />
                 <span>Regular listening</span>
                 <div className="w-3 h-3 bg-cyber-pink rotate-45 ml-4"></div>
-                <span>Concert month</span>
+                <span>Concert year</span>
               </div>
             </div>
           )}
@@ -294,7 +424,7 @@ const ConcertCompassTab = ({ streamingData, concertData }) => {
                   </div>
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4 text-yellow-400" />
-                    <span className="text-sm text-gray-300">{concert.vibe_rating}</span>
+                    <span className="text-sm text-gray-300">{concert.vibe_rating || 'N/A'}</span>
                   </div>
                 </div>
                 <div className="text-sm text-cyber-pink">
@@ -333,7 +463,9 @@ const ConcertCompassTab = ({ streamingData, concertData }) => {
         
         <div className="cyber-card p-6 text-center">
           <div className="text-3xl font-bold text-cyber-green mb-2">
-            {(concertArtists.reduce((sum, c) => sum + (c.vibe_rating || 0), 0) / concertArtists.filter(c => c.vibe_rating).length).toFixed(1)}
+            {concertArtists.filter(c => c.vibe_rating).length > 0 
+              ? (concertArtists.reduce((sum, c) => sum + (c.vibe_rating || 0), 0) / concertArtists.filter(c => c.vibe_rating).length).toFixed(1)
+              : 'N/A'}
           </div>
           <div className="text-gray-400">Avg Vibe Rating</div>
         </div>

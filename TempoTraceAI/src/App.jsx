@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Activity, BarChart3, Compass, Loader2, AlertCircle } from 'lucide-react';
+import { Activity, BarChart3, Compass, Users, Loader2, AlertCircle } from 'lucide-react';
 import { useData } from './hooks/useData';
 import PulseTab from './components/PulseTab';
 import LeaderboardTab from './components/LeaderboardTab';
 import ConcertCompassTab from './components/ConcertCompassTab';
+import ArtistStatsTab from './components/ArtistStatsTab';
 
 const LoadingScreen = () => (
   <div className="min-h-screen bg-dark-bg flex items-center justify-center">
@@ -35,7 +36,7 @@ const ErrorScreen = ({ error }) => (
 
 function App() {
   const [activeTab, setActiveTab] = useState('pulse');
-  const { streamingData, concertData, loading, error } = useData();
+  const { lifetimeStats, annualRecaps, artistSummary, concertData, loading, error } = useData();
 
   if (loading) {
     return <LoadingScreen />;
@@ -48,7 +49,8 @@ function App() {
   const tabs = [
     { id: 'pulse', label: 'The Pulse', icon: Activity },
     { id: 'leaderboard', label: 'Leaderboard', icon: BarChart3 },
-    { id: 'compass', label: 'Concert Compass', icon: Compass }
+    { id: 'compass', label: 'Concert Compass', icon: Compass },
+    { id: 'stats', label: 'Artist Stats', icon: Users }
   ];
 
   return (
@@ -92,18 +94,23 @@ function App() {
       {/* Main Content */}
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'pulse' && (
-          <PulseTab data={streamingData} />
+          <PulseTab data={lifetimeStats} />
         )}
         
         {activeTab === 'leaderboard' && (
-          <LeaderboardTab data={streamingData} />
+          <LeaderboardTab data={annualRecaps} />
         )}
         
         {activeTab === 'compass' && (
           <ConcertCompassTab 
-            streamingData={streamingData} 
-            concertData={concertData} 
+            streamingData={null}
+            concertData={concertData}
+            artistSummary={artistSummary}
           />
+        )}
+        
+        {activeTab === 'stats' && (
+          <ArtistStatsTab data={artistSummary} />
         )}
       </main>
 
@@ -116,10 +123,13 @@ function App() {
             </p>
             <div className="mt-2 flex justify-center space-x-6">
               <div className="text-xs text-gray-500">
-                {streamingData.length.toLocaleString()} streams analyzed
+                {lifetimeStats?.content_stats?.total_plays?.toLocaleString() || '0'} streams analyzed
               </div>
               <div className="text-xs text-gray-500">
-                {concertData.length} concerts tracked
+                {lifetimeStats?.content_stats?.unique_artists?.toLocaleString() || '0'} artists explored
+              </div>
+              <div className="text-xs text-gray-500">
+                {Math.round(lifetimeStats?.time_stats?.total_hours || 0).toLocaleString()} hours of music
               </div>
             </div>
           </div>

@@ -1,149 +1,312 @@
 import React from 'react';
-import { Music, Clock, Users, Disc, PlayCircle, SkipForward, Headphones, Smartphone } from 'lucide-react';
-import { formatNumber, formatTimeToHours, formatTimeToReadable, calculateStats } from '../utils/dataUtils';
+import { 
+  Play, 
+  Clock, 
+  Music, 
+  Users, 
+  Calendar, 
+  TrendingUp, 
+  Headphones, 
+  Globe,
+  Smartphone,
+  Award,
+  Activity,
+  BarChart3
+} from 'lucide-react';
 
-const StatCard = ({ title, value, subtitle, icon: Icon, color = 'cyber-blue' }) => (
-  <div className="stat-card">
-    <div className="flex items-center justify-between mb-4">
-      <div className={`p-3 rounded-lg bg-gradient-to-br from-${color}/20 to-${color}/10`}>
-        <Icon className={`w-6 h-6 text-${color}`} />
+const StatCard = ({ icon: Icon, label, value, subtitle, gradient = false }) => (
+  <div className="cyber-card p-6 hover:scale-105 transition-transform duration-300">
+    <div className="flex items-center gap-4">
+      <div className={`p-3 rounded-lg ${gradient ? 'bg-gradient-to-r from-cyber-blue to-cyber-purple' : 'bg-cyber-blue/20'}`}>
+        <Icon className="w-6 h-6 text-white" />
       </div>
-      <div className="text-right">
-        <div className={`text-2xl font-bold text-${color} glow-text`}>{value}</div>
-        <div className="text-gray-400 text-sm">{subtitle}</div>
+      <div className="flex-1">
+        <p className="text-sm text-gray-400">{label}</p>
+        <p className="text-2xl font-bold text-white">{value}</p>
+        {subtitle && <p className="text-xs text-gray-500 mt-1">{subtitle}</p>}
       </div>
     </div>
-    <div className="text-gray-300 font-medium">{title}</div>
+  </div>
+);
+
+const TopListCard = ({ title, items, icon: Icon, showIndex = true }) => (
+  <div className="cyber-card p-6">
+    <div className="flex items-center gap-3 mb-4">
+      <Icon className="w-5 h-5 text-cyber-blue" />
+      <h3 className="text-lg font-semibold text-white">{title}</h3>
+    </div>
+    <div className="space-y-3">
+      {items.slice(0, 10).map((item, index) => (
+        <div key={index} className="flex items-center gap-3 p-3 bg-card-bg/50 rounded-lg hover:bg-card-bg/70 transition-colors">
+          {showIndex && (
+            <span className="text-sm font-mono text-cyber-blue w-6 text-right">
+              {index + 1}
+            </span>
+          )}
+          <div className="flex-1">
+            <p className="text-white font-medium">{item[0]}</p>
+            <p className="text-sm text-gray-400">{item[1].toLocaleString()} plays</p>
+          </div>
+          <div className="w-12 bg-gray-700 rounded-full h-2">
+            <div 
+              className="bg-gradient-to-r from-cyber-blue to-cyber-purple h-2 rounded-full" 
+              style={{ width: `${(item[1] / items[0][1]) * 100}%` }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const TimelineCard = ({ title, data, icon: Icon }) => (
+  <div className="cyber-card p-6">
+    <div className="flex items-center gap-3 mb-4">
+      <Icon className="w-5 h-5 text-cyber-blue" />
+      <h3 className="text-lg font-semibold text-white">{title}</h3>
+    </div>
+    <div className="space-y-3 max-h-96 overflow-y-auto">
+      {Object.entries(data).map(([key, value]) => (
+        <div key={key} className="flex items-center justify-between p-3 bg-card-bg/50 rounded-lg">
+          <span className="text-white font-medium">{key}</span>
+          <div className="text-right">
+            <p className="text-cyber-blue font-bold">{value.plays.toLocaleString()}</p>
+            <p className="text-xs text-gray-400">{Math.round(value.ms_played / 60000).toLocaleString()} min</p>
+          </div>
+        </div>
+      ))}
+    </div>
   </div>
 );
 
 const PulseTab = ({ data }) => {
-  const stats = calculateStats(data);
-  
-  const statCards = [
-    {
-      title: 'Total Streams',
-      value: formatNumber(stats.totalStreams),
-      subtitle: 'lifetime plays',
-      icon: PlayCircle,
-      color: 'cyber-blue'
-    },
-    {
-      title: 'Hours Listened',
-      value: formatNumber(Math.round(stats.totalTime / (1000 * 60 * 60))),
-      subtitle: formatTimeToHours(stats.totalTime) + ' hours',
-      icon: Clock,
-      color: 'cyber-purple'
-    },
-    {
-      title: 'Unique Artists',
-      value: formatNumber(stats.uniqueArtists),
-      subtitle: 'discovered artists',
-      icon: Users,
-      color: 'cyber-pink'
-    },
-    {
-      title: 'Unique Albums',
-      value: formatNumber(stats.uniqueAlbums),
-      subtitle: 'albums explored',
-      icon: Disc,
-      color: 'cyber-green'
-    },
-    {
-      title: 'Unique Tracks',
-      value: formatNumber(stats.uniqueTracks),
-      subtitle: 'songs in library',
-      icon: Music,
-      color: 'neon-blue'
-    },
-    {
-      title: 'Skip Rate',
-      value: (stats.skipRate * 100).toFixed(1) + '%',
-      subtitle: 'of tracks skipped',
-      icon: SkipForward,
-      color: 'neon-purple'
-    },
-    {
-      title: 'Average Session',
-      value: formatTimeToReadable(stats.avgSessionLength),
-      subtitle: 'per song',
-      icon: Headphones,
-      color: 'cyber-blue'
-    },
-    {
-      title: 'Peak Hour',
-      value: stats.peakHour + ':00',
-      subtitle: 'most active time',
-      icon: Smartphone,
-      color: 'cyber-purple'
-    }
-  ];
+  if (!data) {
+    return (
+      <div className="text-center py-12">
+        <Activity className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+        <p className="text-gray-400">Loading your musical pulse...</p>
+      </div>
+    );
+  }
+
+  const formatTime = (hours) => {
+    if (hours < 24) return `${Math.round(hours)}h`;
+    const days = Math.floor(hours / 24);
+    if (days < 7) return `${days}d`;
+    const weeks = Math.floor(days / 7);
+    if (weeks < 4) return `${weeks}w`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months}mo`;
+    const years = Math.floor(days / 365);
+    return `${years}y`;
+  };
+
+  const getTopHours = () => {
+    const sortedHours = Object.entries(data.temporal_patterns.hourly_breakdown)
+      .sort(([,a], [,b]) => b.plays - a.plays)
+      .slice(0, 5);
+    
+    return sortedHours.map(([hour, stats]) => [
+      `${hour}:00`, 
+      stats.plays
+    ]);
+  };
+
+  const diversityScore = Math.round(data.diversity_metrics.artist_diversity_score * 100);
+  const trackingYears = Math.round(data.time_stats.tracking_span_days / 365);
 
   return (
     <div className="space-y-8">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold font-cyber mb-4">
-          <span className="bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">
-            The Pulse
-          </span>
-        </h1>
-        <p className="text-gray-400 text-lg">
-          Your lifetime musical journey at a glance
+      {/* Header */}
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-white mb-2">Your Musical Pulse</h1>
+        <p className="text-gray-400">
+          {trackingYears} years of musical evolution • {data.metadata.total_records.toLocaleString()} total streams
         </p>
       </div>
-      
+
+      {/* Key Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {statCards.map((stat, index) => (
-          <div key={index} className="animate-slide-in" style={{ animationDelay: `${index * 0.1}s` }}>
-            <StatCard {...stat} />
-          </div>
-        ))}
+        <StatCard
+          icon={Clock}
+          label="Total Listening Time"
+          value={formatTime(data.time_stats.total_hours)}
+          subtitle={`${Math.round(data.time_stats.total_days)} days of music`}
+          gradient={true}
+        />
+        <StatCard
+          icon={Play}
+          label="Total Plays"
+          value={data.content_stats.total_plays.toLocaleString()}
+          subtitle={`${Math.round(data.content_stats.total_plays / (data.time_stats.tracking_span_days / 365))} per year`}
+        />
+        <StatCard
+          icon={Users}
+          label="Unique Artists"
+          value={data.content_stats.unique_artists.toLocaleString()}
+          subtitle={`${Math.round(data.content_stats.average_plays_per_artist)} plays per artist`}
+        />
+        <StatCard
+          icon={Music}
+          label="Unique Tracks"
+          value={data.content_stats.unique_tracks.toLocaleString()}
+          subtitle={`${Math.round(data.content_stats.average_plays_per_track)} plays per track`}
+        />
       </div>
-      
-      {/* Additional insights section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+
+      {/* Listening Behavior */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatCard
+          icon={TrendingUp}
+          label="Completion Rate"
+          value={`${Math.round(data.listening_behavior.completion_rate_percentage)}%`}
+          subtitle={`${data.listening_behavior.total_completions.toLocaleString()} full plays`}
+        />
+        <StatCard
+          icon={Headphones}
+          label="Offline Listening"
+          value={`${Math.round(data.listening_behavior.offline_listening_percentage)}%`}
+          subtitle={`${data.listening_behavior.total_offline_plays.toLocaleString()} offline plays`}
+        />
+        <StatCard
+          icon={Award}
+          label="Artist Diversity"
+          value={`${diversityScore}%`}
+          subtitle="Musical exploration score"
+        />
+        <StatCard
+          icon={Globe}
+          label="Countries"
+          value={data.geographical_stats.countries_streamed_from}
+          subtitle={`${data.geographical_stats.top_countries[0][0]} most played`}
+        />
+      </div>
+
+      {/* Platform & Provider Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="cyber-card p-6">
-          <h3 className="text-xl font-bold text-cyber-blue mb-4">Listening Habits</h3>
+          <div className="flex items-center gap-3 mb-4">
+            <Smartphone className="w-5 h-5 text-cyber-blue" />
+            <h3 className="text-lg font-semibold text-white">Platform Usage</h3>
+          </div>
           <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-300">Most Active Platform</span>
-              <span className="text-cyber-blue font-semibold capitalize">{stats.topPlatform}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-300">Discovery Rate</span>
-              <span className="text-cyber-purple font-semibold">
-                {((stats.uniqueTracks / stats.totalStreams) * 100).toFixed(1)}%
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-300">Repeat Listening</span>
-              <span className="text-cyber-pink font-semibold">
-                {(stats.totalStreams / stats.uniqueTracks).toFixed(1)}x per song
-              </span>
-            </div>
+            {Object.entries(data.platform_stats.distribution)
+              .sort(([,a], [,b]) => b - a)
+              .map(([platform, plays]) => (
+                <div key={platform} className="flex items-center justify-between p-3 bg-card-bg/50 rounded-lg">
+                  <span className="text-white font-medium">{platform}</span>
+                  <div className="text-right">
+                    <p className="text-cyber-blue font-bold">{plays.toLocaleString()}</p>
+                    <p className="text-xs text-gray-400">
+                      {Math.round((plays / data.content_stats.total_plays) * 100)}%
+                    </p>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
-        
+
         <div className="cyber-card p-6">
-          <h3 className="text-xl font-bold text-cyber-green mb-4">Music Variety</h3>
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-300">Songs per Artist</span>
-              <span className="text-cyber-green font-semibold">
-                {(stats.uniqueTracks / stats.uniqueArtists).toFixed(1)}
-              </span>
+          <div className="flex items-center gap-3 mb-4">
+            <BarChart3 className="w-5 h-5 text-cyber-blue" />
+            <h3 className="text-lg font-semibold text-white">Music Providers</h3>
+          </div>
+          <div className="space-y-4">
+            {Object.entries(data.provider_stats.distribution).map(([provider, plays]) => (
+              <div key={provider} className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-white font-medium">{provider}</span>
+                  <span className="text-cyber-blue font-bold">{plays.toLocaleString()}</span>
+                </div>
+                <div className="w-full bg-gray-700 rounded-full h-3">
+                  <div 
+                    className="bg-gradient-to-r from-cyber-blue to-cyber-purple h-3 rounded-full" 
+                    style={{ width: `${(plays / data.content_stats.total_plays) * 100}%` }}
+                  />
+                </div>
+                <p className="text-xs text-gray-400">
+                  {Math.round((plays / data.content_stats.total_plays) * 100)}% of total plays
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Top Lists */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <TopListCard
+          title="Top Artists"
+          items={data.top_lists.top_artists}
+          icon={Users}
+        />
+        <TopListCard
+          title="Top Tracks"
+          items={data.top_lists.top_tracks}
+          icon={Music}
+        />
+        <TopListCard
+          title="Top Albums"
+          items={data.top_lists.top_albums}
+          icon={Award}
+        />
+      </div>
+
+      {/* Temporal Patterns */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <TimelineCard
+          title="Peak Listening Hours"
+          data={Object.fromEntries(getTopHours().map(([hour, plays]) => [hour, { plays, ms_played: 0 }]))}
+          icon={Clock}
+        />
+        <TimelineCard
+          title="Seasonal Patterns"
+          data={data.temporal_patterns.seasonal_breakdown}
+          icon={Calendar}
+        />
+      </div>
+
+      {/* Milestones */}
+      <div className="cyber-card p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <Award className="w-5 h-5 text-cyber-blue" />
+          <h3 className="text-lg font-semibold text-white">Musical Milestones</h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div className="p-4 bg-card-bg/50 rounded-lg">
+              <p className="text-sm text-gray-400">First Track Ever</p>
+              <p className="text-white font-medium">{data.milestones.first_track_played.track}</p>
+              <p className="text-cyber-blue text-sm">by {data.milestones.first_track_played.artist}</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {new Date(data.milestones.first_track_played.timestamp).toLocaleDateString()}
+              </p>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-300">Albums per Artist</span>
-              <span className="text-neon-blue font-semibold">
-                {(stats.uniqueAlbums / stats.uniqueArtists).toFixed(1)}
-              </span>
+            <div className="p-4 bg-card-bg/50 rounded-lg">
+              <p className="text-sm text-gray-400">Longest Track</p>
+              <p className="text-white font-medium">{data.milestones.longest_track_played.master_metadata_track_name}</p>
+              <p className="text-cyber-blue text-sm">by {data.milestones.longest_track_played.master_metadata_album_artist_name}</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {Math.round(data.milestones.longest_track_played.ms_played / 60000)} minutes
+              </p>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-300">Songs per Album</span>
-              <span className="text-neon-purple font-semibold">
-                {(stats.uniqueTracks / stats.uniqueAlbums).toFixed(1)}
-              </span>
+          </div>
+          <div className="space-y-4">
+            <div className="p-4 bg-card-bg/50 rounded-lg">
+              <p className="text-sm text-gray-400">Most Recent Track</p>
+              <p className="text-white font-medium">{data.milestones.most_recent_track.track}</p>
+              <p className="text-cyber-blue text-sm">by {data.milestones.most_recent_track.artist}</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {new Date(data.milestones.most_recent_track.timestamp).toLocaleDateString()}
+              </p>
+            </div>
+            <div className="p-4 bg-card-bg/50 rounded-lg">
+              <p className="text-sm text-gray-400">Listening Consistency</p>
+              <p className="text-white font-medium">{data.milestones.days_with_listening.toLocaleString()} days</p>
+              <p className="text-cyber-blue text-sm">with music</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {Math.round(data.milestones.average_daily_listening_minutes)} min/day average
+              </p>
             </div>
           </div>
         </div>
