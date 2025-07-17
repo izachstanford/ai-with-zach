@@ -142,6 +142,35 @@ This script tests:
 - ✅ File structure and documentation
 - ✅ Complete workflow integration
 
+## 🛠️ Developer Notes
+
+When working locally:
+
+1. Always activate the virtual environment:
+
+   ```bash
+   source .venv/bin/activate
+   ```
+
+2. Install new packages as needed, then update requirements:
+
+   ```bash
+   pip install <package-name>
+   pip freeze > requirements.txt
+   ```
+
+3. For running Streamlit applications:
+
+   ```bash
+   streamlit run <filename>.py
+   ```
+
+4. When done:
+
+   ```bash
+   deactivate
+   ```
+
 ---
 
 ## 🚀 Quick Start (Try with Sample Data)
