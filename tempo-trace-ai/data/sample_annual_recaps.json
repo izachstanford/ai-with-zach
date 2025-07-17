@@ -1,0 +1,164 @@
+{
+  "2022": {
+    "year": 2022,
+    "top_artists": [
+      ["Taylor Swift", 145],
+      ["The Weeknd", 98],
+      ["Billie Eilish", 76],
+      ["Olivia Rodrigo", 65],
+      ["Dua Lipa", 54]
+    ],
+    "top_tracks": [
+      ["Anti-Hero", 45],
+      ["Blinding Lights", 38],
+      ["Good 4 U", 32],
+      ["Levitating", 28],
+      ["Happier Than Ever", 24]
+    ],
+    "top_albums": [
+      ["Midnights", 89],
+      ["After Hours", 56],
+      ["SOUR", 45],
+      ["Happier Than Ever", 34],
+      ["Future Nostalgia", 28]
+    ],
+    "year_stats": {
+      "total_plays": 1247,
+      "total_minutes": 4892.3,
+      "total_hours": 81.5,
+      "unique_artists": 234,
+      "unique_tracks": 689,
+      "unique_albums": 298,
+      "unique_days_with_listening": 289,
+      "average_track_length_minutes": 3.92,
+      "average_daily_minutes": 16.9,
+      "skip_rate_percentage": 22.3,
+      "completion_rate_percentage": 68.7,
+      "offline_percentage": 15.2,
+      "shuffle_percentage": 78.4,
+      "first_play": "2022-01-01T08:15:23",
+      "last_play": "2022-12-31T23:42:18",
+      "peak_month": "November",
+      "peak_month_plays": 189,
+      "top_platform": ["iOS", 847],
+      "top_provider": ["Spotify", 892],
+      "provider_breakdown": {
+        "Spotify": 892,
+        "Apple Music": 355
+      },
+      "platform_breakdown": {
+        "iOS": 847,
+        "Android": 234,
+        "Desktop": 166
+      }
+    }
+  },
+  "2023": {
+    "year": 2023,
+    "top_artists": [
+      ["The 1975", 156],
+      ["Arctic Monkeys", 134],
+      ["Phoebe Bridgers", 89],
+      ["Taylor Swift", 82],
+      ["Lorde", 67]
+    ],
+    "top_tracks": [
+      ["I'm in Love with You", 52],
+      ["R U Mine?", 44],
+      ["Motion Sickness", 38],
+      ["Karma", 35],
+      ["Solar Power", 29]
+    ],
+    "top_albums": [
+      ["Being Funny in a Foreign Language", 98],
+      ["AM", 76],
+      ["Stranger in the Alps", 54],
+      ["Midnights", 43],
+      ["Solar Power", 38]
+    ],
+    "year_stats": {
+      "total_plays": 1589,
+      "total_minutes": 6234.7,
+      "total_hours": 103.9,
+      "unique_artists": 289,
+      "unique_tracks": 834,
+      "unique_albums": 367,
+      "unique_days_with_listening": 318,
+      "average_track_length_minutes": 3.92,
+      "average_daily_minutes": 19.6,
+      "skip_rate_percentage": 19.8,
+      "completion_rate_percentage": 72.4,
+      "offline_percentage": 12.7,
+      "shuffle_percentage": 82.1,
+      "first_play": "2023-01-01T09:22:15",
+      "last_play": "2023-12-31T22:18:45",
+      "peak_month": "October",
+      "peak_month_plays": 203,
+      "top_platform": ["iOS", 1089],
+      "top_provider": ["Spotify", 1156],
+      "provider_breakdown": {
+        "Spotify": 1156,
+        "Apple Music": 433
+      },
+      "platform_breakdown": {
+        "iOS": 1089,
+        "Android": 298,
+        "Desktop": 202
+      }
+    }
+  },
+  "2024": {
+    "year": 2024,
+    "top_artists": [
+      ["Chappell Roan", 178],
+      ["Sabrina Carpenter", 145],
+      ["Charli xcx", 123],
+      ["Boygenius", 98],
+      ["The National", 76]
+    ],
+    "top_tracks": [
+      ["Good Luck, Babe!", 58],
+      ["Espresso", 49],
+      ["360", 42],
+      ["Not Strong Enough", 38],
+      ["I Need My Girl", 31]
+    ],
+    "top_albums": [
+      ["The Rise and Fall of a Midwest Princess", 134],
+      ["Short n' Sweet", 98],
+      ["BRAT", 87],
+      ["the record", 65],
+      ["Trouble Will Find Me", 43]
+    ],
+    "year_stats": {
+      "total_plays": 1734,
+      "total_minutes": 6891.2,
+      "total_hours": 114.9,
+      "unique_artists": 312,
+      "unique_tracks": 923,
+      "unique_albums": 401,
+      "unique_days_with_listening": 289,
+      "average_track_length_minutes": 3.97,
+      "average_daily_minutes": 23.8,
+      "skip_rate_percentage": 17.2,
+      "completion_rate_percentage": 75.8,
+      "offline_percentage": 10.4,
+      "shuffle_percentage": 85.6,
+      "first_play": "2024-01-01T10:45:32",
+      "last_play": "2024-12-15T20:33:12",
+      "peak_month": "July",
+      "peak_month_plays": 234,
+      "top_platform": ["iOS", 1245],
+      "top_provider": ["Spotify", 1298],
+      "provider_breakdown": {
+        "Spotify": 1298,
+        "Apple Music": 436
+      },
+      "platform_breakdown": {
+        "iOS": 1245,
+        "Android": 312,
+        "Desktop": 177
+      }
+    }
+  }
+}
