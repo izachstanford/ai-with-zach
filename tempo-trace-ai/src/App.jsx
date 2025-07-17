@@ -38,6 +38,15 @@ function App() {
   const [activeTab, setActiveTab] = useState('pulse');
   const { lifetimeStats, annualRecaps, artistSummary, concertData, loading, error } = useData();
 
+  console.log('App render state:', { 
+    loading, 
+    error, 
+    hasLifetimeStats: !!lifetimeStats,
+    hasAnnualRecaps: !!annualRecaps,
+    hasArtistSummary: !!artistSummary,
+    hasConcertData: !!concertData
+  });
+
   if (loading) {
     return <LoadingScreen />;
   }
@@ -123,10 +132,10 @@ function App() {
             </p>
             <div className="mt-2 flex justify-center space-x-6">
               <div className="text-xs text-gray-500">
-                {lifetimeStats?.content_stats?.total_plays?.toLocaleString() || '0'} streams analyzed
+                {(lifetimeStats?.content_stats?.total_plays || 0).toLocaleString()} streams analyzed
               </div>
               <div className="text-xs text-gray-500">
-                {lifetimeStats?.content_stats?.unique_artists?.toLocaleString() || '0'} artists explored
+                {(lifetimeStats?.content_stats?.unique_artists || 0).toLocaleString()} artists explored
               </div>
               <div className="text-xs text-gray-500">
                 {Math.round(lifetimeStats?.time_stats?.total_hours || 0).toLocaleString()} hours of music

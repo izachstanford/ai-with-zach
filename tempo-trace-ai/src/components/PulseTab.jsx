@@ -80,11 +80,25 @@ const TimelineCard = ({ title, data, icon: Icon }) => (
 );
 
 const PulseTab = ({ data, artistSummary }) => {
+  console.log('PulseTab received data:', data);
+  console.log('PulseTab received artistSummary:', artistSummary);
+  
   if (!data) {
     return (
       <div className="text-center py-12">
         <Activity className="w-16 h-16 text-gray-400 mx-auto mb-4" />
         <p className="text-gray-400">Loading your musical pulse...</p>
+      </div>
+    );
+  }
+
+  // Add error handling for required data properties
+  if (!data.time_stats || !data.content_stats || !data.top_lists) {
+    return (
+      <div className="text-center py-12">
+        <Activity className="w-16 h-16 text-red-400 mx-auto mb-4" />
+        <p className="text-red-400">Data structure error: Missing required properties</p>
+        <p className="text-gray-400 text-sm mt-2">Please check the data format</p>
       </div>
     );
   }
@@ -129,8 +143,8 @@ const PulseTab = ({ data, artistSummary }) => {
       .slice(0, 10);
   };
 
-  const diversityScore = Math.round(data.diversity_metrics.artist_diversity_score * 100);
-  const trackingYears = Math.round(data.time_stats.tracking_span_days / 365);
+  const diversityScore = Math.round((data.diversity_metrics?.artist_diversity_score || 0) * 100);
+  const trackingYears = Math.round((data.time_stats?.tracking_span_days || 0) / 365);
 
   return (
     <div className="space-y-8">
@@ -138,7 +152,7 @@ const PulseTab = ({ data, artistSummary }) => {
       <div className="text-center">
         <h1 className="text-4xl font-bold text-white mb-2">Your Musical Pulse</h1>
         <p className="text-gray-400">
-          {trackingYears} years of musical evolution • {data.metadata.total_records.toLocaleString()} total streams
+          {trackingYears} years of musical evolution • {(data.metadata?.total_records || 0).toLocaleString()} total streams
         </p>
       </div>
 

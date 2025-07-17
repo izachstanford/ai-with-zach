@@ -1,56 +1,181 @@
 {
   "metadata": {
     "generated_at": "2023-12-15T10:30:00Z",
-    "data_source": "Spotify + Apple Music",
-    "total_streams": 2847,
-    "time_range": {
-      "start": "2010-01-01T00:00:00Z",
-      "end": "2023-12-15T10:30:00Z"
-    }
+    "total_records": 2847,
+    "data_sources": ["Spotify", "Apple Music"]
   },
-  "lifetime_stats": {
-    "total_streams": 2847,
-    "total_hours": 245.6,
-    "total_minutes": 14736,
+  "time_stats": {
+    "total_milliseconds": 883600000,
+    "total_seconds": 883600,
+    "total_minutes": 14726,
+    "total_hours": 245.4,
+    "total_days": 10.2,
+    "total_weeks": 1.5,
+    "total_months": 0.3,
+    "total_years": 0.03,
+    "average_track_length_ms": 310000,
+    "average_track_length_seconds": 310,
+    "average_track_length_minutes": 5.17,
+    "earliest_play": "2010-01-01T00:00:00",
+    "latest_play": "2023-12-15T10:30:00",
+    "tracking_span_days": 5096
+  },
+  "content_stats": {
     "unique_artists": 523,
-    "unique_albums": 892,
     "unique_tracks": 1847,
-    "skip_rate": 0.18,
-    "completion_rate": 0.66,
-    "discovery_rate": 0.24,
-    "platform_distribution": {
-      "spotify": 0.72,
-      "apple_music": 0.28
+    "unique_albums": 892,
+    "total_plays": 2847,
+    "average_plays_per_artist": 5.4,
+    "average_plays_per_track": 1.5,
+    "average_plays_per_album": 3.2
+  },
+  "platform_stats": {
+    "distribution": {
+      "iOS": 1937,
+      "Android": 626,
+      "Desktop": 284
+    },
+    "total_platforms": 3,
+    "top_platform": "iOS"
+  },
+  "provider_stats": {
+    "distribution": {
+      "Spotify": 2050,
+      "Apple Music": 797
+    },
+    "total_providers": 2,
+    "top_provider": "Spotify"
+  },
+  "listening_behavior": {
+    "total_completions": 1879,
+    "completion_rate_percentage": 66,
+    "total_skips": 512,
+    "skip_rate_percentage": 18,
+    "total_offline_plays": 341,
+    "offline_listening_percentage": 12
+  },
+  "geographical_stats": {
+    "countries_streamed_from": 5,
+    "total_cities": 12,
+    "top_countries": [
+      ["United States", 2130],
+      ["Canada", 412],
+      ["United Kingdom", 198],
+      ["Germany", 89],
+      ["France", 18]
+    ],
+    "top_cities": [
+      ["New York", 850],
+      ["Los Angeles", 543],
+      ["Toronto", 312],
+      ["London", 198],
+      ["Berlin", 89]
+    ]
+  },
+  "diversity_metrics": {
+    "artist_diversity_score": 0.78,
+    "genre_diversity_score": 0.65,
+    "temporal_diversity_score": 0.72,
+    "discovery_rate": 0.24
+  },
+  "top_lists": {
+    "top_artists": [
+      ["The Weeknd", 128],
+      ["Taylor Swift", 95],
+      ["Olivia Rodrigo", 87],
+      ["Harry Styles", 76],
+      ["Billie Eilish", 64],
+      ["Drake", 58],
+      ["Ed Sheeran", 52],
+      ["Adele", 48],
+      ["Ariana Grande", 41],
+      ["Post Malone", 39]
+    ],
+    "top_tracks": [
+      ["Blinding Lights - The Weeknd", 45],
+      ["Anti-Hero - Taylor Swift", 38],
+      ["Good 4 U - Olivia Rodrigo", 35],
+      ["As It Was - Harry Styles", 32],
+      ["Bad Habit - Steve Lacy", 28],
+      ["Unholy - Sam Smith", 25],
+      ["Flowers - Miley Cyrus", 23],
+      ["Creepin' - Metro Boomin", 21],
+      ["Lavender Haze - Taylor Swift", 19],
+      ["Vampire - Olivia Rodrigo", 18]
+    ],
+    "top_albums": [
+      ["Midnights - Taylor Swift", 112],
+      ["Harry's House - Harry Styles", 89],
+      ["SOUR - Olivia Rodrigo", 76],
+      ["After Hours - The Weeknd", 65],
+      ["Happier Than Ever - Billie Eilish", 54],
+      ["30 - Adele", 48],
+      ["Positions - Ariana Grande", 41],
+      ["Divide - Ed Sheeran", 39],
+      ["Scorpion - Drake", 35],
+      ["Hollywood's Bleeding - Post Malone", 32]
+    ]
+  },
+  "temporal_patterns": {
+    "hourly_breakdown": {
+      "0": {"plays": 45, "ms_played": 13950000},
+      "1": {"plays": 23, "ms_played": 7130000},
+      "2": {"plays": 18, "ms_played": 5580000},
+      "3": {"plays": 12, "ms_played": 3720000},
+      "4": {"plays": 15, "ms_played": 4650000},
+      "5": {"plays": 28, "ms_played": 8680000},
+      "6": {"plays": 67, "ms_played": 20770000},
+      "7": {"plays": 89, "ms_played": 27590000},
+      "8": {"plays": 156, "ms_played": 48360000},
+      "9": {"plays": 134, "ms_played": 41540000},
+      "10": {"plays": 178, "ms_played": 55180000},
+      "11": {"plays": 189, "ms_played": 58590000},
+      "12": {"plays": 198, "ms_played": 61380000},
+      "13": {"plays": 234, "ms_played": 72540000},
+      "14": {"plays": 267, "ms_played": 82770000},
+      "15": {"plays": 245, "ms_played": 75950000},
+      "16": {"plays": 223, "ms_played": 69130000},
+      "17": {"plays": 201, "ms_played": 62310000},
+      "18": {"plays": 189, "ms_played": 58590000},
+      "19": {"plays": 167, "ms_played": 51770000},
+      "20": {"plays": 145, "ms_played": 44950000},
+      "21": {"plays": 123, "ms_played": 38130000},
+      "22": {"plays": 89, "ms_played": 27590000},
+      "23": {"plays": 67, "ms_played": 20770000}
+    },
+    "daily_breakdown": {
+      "Monday": {"plays": 389, "ms_played": 120590000},
+      "Tuesday": {"plays": 412, "ms_played": 127720000},
+      "Wednesday": {"plays": 445, "ms_played": 137950000},
+      "Thursday": {"plays": 423, "ms_played": 131130000},
+      "Friday": {"plays": 467, "ms_played": 144770000},
+      "Saturday": {"plays": 356, "ms_played": 110360000},
+      "Sunday": {"plays": 355, "ms_played": 110050000}
+    },
+    "seasonal_breakdown": {
+      "Spring": {"plays": 812, "ms_played": 251720000},
+      "Summer": {"plays": 756, "ms_played": 234360000},
+      "Fall": {"plays": 689, "ms_played": 213590000},
+      "Winter": {"plays": 590, "ms_played": 182900000}
     }
   },
-  "top_artists": [
-    {
-      "name": "The Weeknd",
-      "total_streams": 128,
-      "total_hours": 14.2,
-      "top_songs": ["Blinding Lights", "Save Your Tears", "Can't Feel My Face"]
+  "milestones": {
+    "first_track_played": {
+      "track": "Someone Like You",
+      "artist": "Adele",
+      "timestamp": "2010-01-01T00:00:00"
     },
-    {
-      "name": "Taylor Swift",
-      "total_streams": 95,
-      "total_hours": 11.8,
-      "top_songs": ["Anti-Hero", "Shake It Off", "Blank Space"]
+    "most_recent_track": {
+      "track": "Anti-Hero",
+      "artist": "Taylor Swift",
+      "timestamp": "2023-12-15T10:30:00"
     },
-    {
-      "name": "Olivia Rodrigo",
-      "total_streams": 87,
-      "total_hours": 9.4,
-      "top_songs": ["Good 4 U", "drivers license", "vampire"]
-    }
-  ],
-  "listening_patterns": {
-    "peak_day": "Friday",
-    "peak_hour": 14,
-    "peak_season": "Spring",
-    "device_usage": {
-      "iOS": 0.68,
-      "Android": 0.22,
-      "Desktop": 0.10
-    }
+    "longest_track_played": {
+      "master_metadata_track_name": "Bohemian Rhapsody",
+      "master_metadata_album_artist_name": "Queen",
+      "ms_played": 354000
+    },
+    "days_with_listening": 1247,
+    "average_daily_listening_minutes": 11.8
   }
 }
