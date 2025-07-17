@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "generated_at": "2023-12-15T10:30:00Z",
+    "data_source": "Spotify + Apple Music",
+    "total_streams": 2847,
+    "time_range": {
+      "start": "2010-01-01T00:00:00Z",
+      "end": "2023-12-15T10:30:00Z"
+    }
+  },
+  "lifetime_stats": {
+    "total_streams": 2847,
+    "total_hours": 245.6,
+    "total_minutes": 14736,
+    "unique_artists": 523,
+    "unique_albums": 892,
+    "unique_tracks": 1847,
+    "skip_rate": 0.18,
+    "completion_rate": 0.66,
+    "discovery_rate": 0.24,
+    "platform_distribution": {
+      "spotify": 0.72,
+      "apple_music": 0.28
+    }
+  },
+  "top_artists": [
+    {
+      "name": "The Weeknd",
+      "total_streams": 128,
+      "total_hours": 14.2,
+      "top_songs": ["Blinding Lights", "Save Your Tears", "Can't Feel My Face"]
+    },
+    {
+      "name": "Taylor Swift",
+      "total_streams": 95,
+      "total_hours": 11.8,
+      "top_songs": ["Anti-Hero", "Shake It Off", "Blank Space"]
+    },
+    {
+      "name": "Olivia Rodrigo",
+      "total_streams": 87,
+      "total_hours": 9.4,
+      "top_songs": ["Good 4 U", "drivers license", "vampire"]
+    }
+  ],
+  "listening_patterns": {
+    "peak_day": "Friday",
+    "peak_hour": 14,
+    "peak_season": "Spring",
+    "device_usage": {
+      "iOS": 0.68,
+      "Android": 0.22,
+      "Desktop": 0.10
+    }
+  }
+}

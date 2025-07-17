@@ -1,0 +1,222 @@
+{
+  "Taylor Swift": {
+    "total_streams": 327,
+    "total_minutes": 1284.5,
+    "total_hours": 21.4,
+    "unique_tracks": 45,
+    "unique_albums": 12,
+    "years_active": 5,
+    "days_active": 89,
+    "first_played": "2019-08-23T14:22:15",
+    "last_played": "2024-12-15T19:33:42",
+    "avg_track_length_minutes": 3.93,
+    "avg_streams_per_year": 65.4,
+    "avg_minutes_per_year": 256.9,
+    "avg_streams_per_day": 3.67,
+    "avg_minutes_per_day": 14.4,
+    "skip_rate_percentage": 18.3,
+    "completion_rate_percentage": 73.7,
+    "offline_percentage": 12.5,
+    "shuffle_percentage": 84.4,
+    "peak_year": "2022",
+    "peak_year_streams": 145,
+    "top_tracks": [
+      ["Anti-Hero", 45],
+      ["Shake It Off", 32],
+      ["Blank Space", 28],
+      ["Karma", 35],
+      ["Lavender Haze", 24]
+    ],
+    "top_albums": [
+      ["Midnights", 89],
+      ["1989", 56],
+      ["Lover", 43],
+      ["folklore", 38],
+      ["Red (Taylor's Version)", 31]
+    ],
+    "platform_breakdown": {
+      "iOS": 234,
+      "Android": 67,
+      "Desktop": 26
+    },
+    "provider_breakdown": {
+      "Spotify": 245,
+      "Apple Music": 82
+    }
+  },
+  "The Weeknd": {
+    "total_streams": 223,
+    "total_minutes": 892.7,
+    "total_hours": 14.9,
+    "unique_tracks": 34,
+    "unique_albums": 8,
+    "years_active": 4,
+    "days_active": 67,
+    "first_played": "2020-03-12T16:45:33",
+    "last_played": "2024-11-28T22:18:09",
+    "avg_track_length_minutes": 4.0,
+    "avg_streams_per_year": 55.8,
+    "avg_minutes_per_year": 223.2,
+    "avg_streams_per_day": 3.33,
+    "avg_minutes_per_day": 13.3,
+    "skip_rate_percentage": 15.7,
+    "completion_rate_percentage": 78.9,
+    "offline_percentage": 8.5,
+    "shuffle_percentage": 76.2,
+    "peak_year": "2022",
+    "peak_year_streams": 98,
+    "top_tracks": [
+      ["Blinding Lights", 38],
+      ["Save Your Tears", 29],
+      ["Can't Feel My Face", 25],
+      ["The Hills", 22],
+      ["Earned It", 19]
+    ],
+    "top_albums": [
+      ["After Hours", 56],
+      ["Beauty Behind the Madness", 45],
+      ["Starboy", 38],
+      ["Dawn FM", 32],
+      ["Trilogy", 28]
+    ],
+    "platform_breakdown": {
+      "iOS": 167,
+      "Android": 43,
+      "Desktop": 13
+    },
+    "provider_breakdown": {
+      "Spotify": 189,
+      "Apple Music": 34
+    }
+  },
+  "Chappell Roan": {
+    "total_streams": 178,
+    "total_minutes": 689.3,
+    "total_hours": 11.5,
+    "unique_tracks": 18,
+    "unique_albums": 2,
+    "years_active": 1,
+    "days_active": 45,
+    "first_played": "2024-02-18T11:22:45",
+    "last_played": "2024-12-14T18:55:33",
+    "avg_track_length_minutes": 3.87,
+    "avg_streams_per_year": 178.0,
+    "avg_minutes_per_year": 689.3,
+    "avg_streams_per_day": 3.96,
+    "avg_minutes_per_day": 15.3,
+    "skip_rate_percentage": 12.4,
+    "completion_rate_percentage": 82.6,
+    "offline_percentage": 5.6,
+    "shuffle_percentage": 89.9,
+    "peak_year": "2024",
+    "peak_year_streams": 178,
+    "top_tracks": [
+      ["Good Luck, Babe!", 58],
+      ["Pink Pony Club", 34],
+      ["Red Wine Supernova", 28],
+      ["HOT TO GO!", 25],
+      ["Femininomenon", 22]
+    ],
+    "top_albums": [
+      ["The Rise and Fall of a Midwest Princess", 134],
+      ["School Nights", 44]
+    ],
+    "platform_breakdown": {
+      "iOS": 145,
+      "Android": 25,
+      "Desktop": 8
+    },
+    "provider_breakdown": {
+      "Spotify": 156,
+      "Apple Music": 22
+    }
+  },
+  "Arctic Monkeys": {
+    "total_streams": 189,
+    "total_minutes": 734.8,
+    "total_hours": 12.2,
+    "unique_tracks": 28,
+    "unique_albums": 6,
+    "years_active": 3,
+    "days_active": 52,
+    "first_played": "2021-05-14T20:33:12",
+    "last_played": "2024-10-22T15:44:28",
+    "avg_track_length_minutes": 3.89,
+    "avg_streams_per_year": 63.0,
+    "avg_minutes_per_year": 244.9,
+    "avg_streams_per_day": 3.63,
+    "avg_minutes_per_day": 14.1,
+    "skip_rate_percentage": 21.2,
+    "completion_rate_percentage": 69.8,
+    "offline_percentage": 14.3,
+    "shuffle_percentage": 72.5,
+    "peak_year": "2023",
+    "peak_year_streams": 134,
+    "top_tracks": [
+      ["R U Mine?", 44],
+      ["Do I Wanna Know?", 38],
+      ["505", 32],
+      ["I Bet You Look Good on the Dancefloor", 25],
+      ["Arabella", 22]
+    ],
+    "top_albums": [
+      ["AM", 76],
+      ["Whatever People Say I Am, That's What I'm Not", 45],
+      ["Favourite Worst Nightmare", 34],
+      ["The Car", 28],
+      ["Humbug", 19]
+    ],
+    "platform_breakdown": {
+      "iOS": 134,
+      "Android": 38,
+      "Desktop": 17
+    },
+    "provider_breakdown": {
+      "Spotify": 167,
+      "Apple Music": 22
+    }
+  },
+  "Phoebe Bridgers": {
+    "total_streams": 156,
+    "total_minutes": 612.4,
+    "total_hours": 10.2,
+    "unique_tracks": 22,
+    "unique_albums": 3,
+    "years_active": 2,
+    "days_active": 38,
+    "first_played": "2022-09-05T13:28:44",
+    "last_played": "2024-11-18T21:15:33",
+    "avg_track_length_minutes": 3.93,
+    "avg_streams_per_year": 78.0,
+    "avg_minutes_per_year": 306.2,
+    "avg_streams_per_day": 4.11,
+    "avg_minutes_per_day": 16.1,
+    "skip_rate_percentage": 16.7,
+    "completion_rate_percentage": 75.6,
+    "offline_percentage": 11.5,
+    "shuffle_percentage": 68.6,
+    "peak_year": "2023",
+    "peak_year_streams": 89,
+    "top_tracks": [
+      ["Motion Sickness", 38],
+      ["Scott Street", 29],
+      ["I Know the End", 25],
+      ["Kyoto", 22],
+      ["Garden Song", 19]
+    ],
+    "top_albums": [
+      ["Stranger in the Alps", 54],
+      ["Punisher", 67],
+      ["Boygenius", 35]
+    ],
+    "platform_breakdown": {
+      "iOS": 112,
+      "Android": 32,
+      "Desktop": 12
+    },
+    "provider_breakdown": {
+      "Spotify": 134,
+      "Apple Music": 22
+    }
+  }
+}

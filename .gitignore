@@ -192,4 +192,21 @@ cython_debug/
 #  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
-.cursorindexingignore.DS_Store
+.cursorindexingignore
+.DS_Store
+
+# Personal music data files (exclude from public repo)
+music-data-processor/input/*.json
+music-data-processor/input/*.csv
+music-data-processor/output/*.json
+music-data-processor/output/*.csv
+tempo-trace-ai/data/*.json
+tempo-trace-ai/data/*.csv
+tempo-trace-ai/public/data/*.json
+tempo-trace-ai/public/data/*.csv
+
+# But keep sample/example files
+!music-data-processor/input/sample_*
+!music-data-processor/output/sample_*
+!tempo-trace-ai/data/sample_*
+!tempo-trace-ai/public/data/sample_*
