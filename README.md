@@ -13,7 +13,7 @@ I'm Zach Stanford — a thought leader and builder with a background in AI analy
 I have a unique mix of hands-on engineering skill and product leadership experience, and I'm especially passionate about building LLM-powered systems that feel less like tools and more like intelligent collaborators.
 
 - 🔗 [Connect with me on LinkedIn](https://www.linkedin.com/in/zachstanford1/)
-- 🌐 Personal site coming soon
+- 🌐 [Checkout my Personal Website and Blog](https://aiwithzach.com/)
 
 ---
 
