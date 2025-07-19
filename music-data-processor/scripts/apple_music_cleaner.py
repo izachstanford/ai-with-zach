@@ -190,6 +190,7 @@ def should_exclude_record(row: Dict[str, Any]) -> bool:
     - Media type is not AUDIO
     - Play duration is less than 30 seconds (30000ms)
     - Track description cannot be parsed
+    - Date is before 2016-01-01
     """
     # Check media type
     media_type = row.get('Media type', '')
@@ -210,7 +211,29 @@ def should_exclude_record(row: Dict[str, Any]) -> bool:
     if not song:  # If we can't extract at least a song name, exclude
         return True
     
+    # Check if date is before 2016
+    date_played = row.get('Date Played', '')
+    if date_played and is_before_2016_date(date_played):
+        return True
+    
     return False
+
+
+def is_before_2016_date(date_played: str) -> bool:
+    """
+    Check if a date is before 2016-01-01.
+    
+    Args:
+        date_played: Date in YYYYMMDD format
+        
+    Returns:
+        True if date is before 2016-01-01, False otherwise
+    """
+    try:
+        year = int(date_played[:4])
+        return year < 2016
+    except (ValueError, IndexError):
+        return False
 
 
 def convert_apple_music_record_optimized(row: Dict[str, Any], spotify_artists: List[str], 
@@ -363,6 +386,7 @@ def process_apple_music_csv(csv_path: str, spotify_json_path: str, output_file: 
     
     total_records = 0
     excluded_records = 0
+    pre_2016_count = 0
     
     try:
         with open(csv_path, 'r', encoding='utf-8') as file:
@@ -374,6 +398,10 @@ def process_apple_music_csv(csv_path: str, spotify_json_path: str, output_file: 
                 # Check if record should be excluded
                 if should_exclude_record(row):
                     excluded_records += 1
+                    # Count pre-2016 exclusions separately
+                    date_played = row.get('Date Played', '')
+                    if date_played and is_before_2016_date(date_played):
+                        pre_2016_count += 1
                     continue
                 
                 # Convert record with optimized fuzzy matching
@@ -405,6 +433,7 @@ def process_apple_music_csv(csv_path: str, spotify_json_path: str, output_file: 
         print(f"\nApple Music conversion complete!")
         print(f"Total records processed: {total_records}")
         print(f"Excluded records: {excluded_records}")
+        print(f"- Pre-2016 exclusions: {pre_2016_count}")
         print(f"Final converted records: {len(converted_records)}")
         print(f"Output file: {output_file}")
     

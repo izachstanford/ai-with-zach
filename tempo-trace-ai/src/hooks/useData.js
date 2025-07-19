@@ -15,9 +15,9 @@ export const useData = () => {
         
         // Load lifetime streaming stats (for The Pulse tab)
         // Try to load sample data first (for demo), then fall back to real data
-        let lifetimeResponse = await fetch('/data/sample_lifetime_streaming_stats.json');
+        let lifetimeResponse = await fetch('./data/sample_lifetime_streaming_stats.json');
         if (!lifetimeResponse.ok) {
-          lifetimeResponse = await fetch('/data/lifetime_streaming_stats.json');
+          lifetimeResponse = await fetch('./data/lifetime_streaming_stats.json');
         }
         if (!lifetimeResponse.ok) {
           throw new Error('Failed to load lifetime streaming stats');
@@ -26,9 +26,9 @@ export const useData = () => {
         setLifetimeStats(lifetimeJson);
         
         // Load annual recaps (for Leaderboard tab)
-        let recapsResponse = await fetch('/data/sample_annual_recaps.json');
+        let recapsResponse = await fetch('./data/sample_annual_recaps.json');
         if (!recapsResponse.ok) {
-          recapsResponse = await fetch('/data/annual_recaps.json');
+          recapsResponse = await fetch('./data/annual_recaps.json');
         }
         if (!recapsResponse.ok) {
           throw new Error('Failed to load annual recaps');
@@ -37,9 +37,9 @@ export const useData = () => {
         setAnnualRecaps(recapsJson);
         
         // Load artist summary (for Concert Compass tab)
-        let artistResponse = await fetch('/data/sample_artist_summary.json');
+        let artistResponse = await fetch('./data/sample_artist_summary.json');
         if (!artistResponse.ok) {
-          artistResponse = await fetch('/data/artist_summary.json');
+          artistResponse = await fetch('./data/artist_summary.json');
         }
         if (!artistResponse.ok) {
           throw new Error('Failed to load artist summary');
@@ -48,9 +48,9 @@ export const useData = () => {
         setArtistSummary(artistJson);
         
         // Load concert data (for Concert Compass tab)
-        let concertResponse = await fetch('/data/sample_concerts.json');
+        let concertResponse = await fetch('./data/sample_concerts.json');
         if (!concertResponse.ok) {
-          concertResponse = await fetch('/data/concerts.json');
+          concertResponse = await fetch('./data/concerts.json');
         }
         if (!concertResponse.ok) {
           throw new Error('Failed to load concert data');
