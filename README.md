@@ -33,8 +33,7 @@ tempo-trace-ai/
 │
 ├── tempo-trace-ai/          # ⚛️ React web dashboard
 │   ├── src/                 # React components & logic
-│   ├── public/              # Static assets
-│   ├── data/                # JSON files from processor
+│   ├── public/              # Static assets and JSON data
 │   └── dist/                # Built application
 │
 └── README.md                # This file
@@ -75,7 +74,6 @@ python wrapped_reimagined.py process-all
 ### Step 3: Copy Data to Web App
 ```bash
 # Copy processed files to the web dashboard
-cp output/*.json ../tempo-trace-ai/data/
 cp output/*.json ../tempo-trace-ai/public/data/
 ```
 
