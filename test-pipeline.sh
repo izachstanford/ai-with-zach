@@ -32,7 +32,7 @@ print_info() {
 
 # Check if we're in the right directory
 if [ ! -d "music-data-processor" ] || [ ! -d "tempo-trace-ai" ]; then
-    print_error "Please run this script from the ai-with-zach root directory"
+    print_error "Please run this script from the tempo-trace-ai root directory"
     exit 1
 fi
 
@@ -202,7 +202,7 @@ print_success "Build processes are functional"
 echo ""
 echo "🚀 Ready for Public Release!"
 echo "============================"
-echo "The ai-with-zach music analytics pipeline is ready for:"
+echo "The tempo-trace-ai music analytics pipeline is ready for:"
 echo "• GitHub publication"
 echo "• Community use with sample data"
 echo "• Complete end-to-end workflow"
