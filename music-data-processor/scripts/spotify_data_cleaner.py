@@ -15,6 +15,8 @@ import os
 import sys
 from pathlib import Path
 from typing import List, Dict, Any
+from datetime import datetime
+from collections import defaultdict
 
 
 def is_song(record: Dict[str, Any]) -> bool:
@@ -45,6 +47,7 @@ def should_exclude_record(record: Dict[str, Any]) -> bool:
     Exclude if:
     - incognito_mode is True
     - skipped is True AND ms_played < 30000 (30 seconds)
+    - timestamp is before 2016-01-01
     """
     is_incognito = record.get('incognito_mode', False)
     is_skipped = record.get('skipped', False)
@@ -58,7 +61,193 @@ def should_exclude_record(record: Dict[str, Any]) -> bool:
     if is_skipped and ms_played < 30000:
         return True
     
+    # Exclude data before 2016-01-01
+    timestamp = record.get('ts', '')
+    if timestamp and is_before_2016(timestamp):
+        return True
+    
     return False
+
+
+def is_before_2016(timestamp: str) -> bool:
+    """
+    Check if a timestamp is before 2016-01-01.
+    
+    Args:
+        timestamp: ISO format timestamp string
+        
+    Returns:
+        True if timestamp is before 2016-01-01, False otherwise
+    """
+    try:
+        dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+        return dt.year < 2016
+    except (ValueError, AttributeError):
+        return False
+
+
+def is_suspicious_stream(record: Dict[str, Any]) -> bool:
+    """
+    Detect potentially suspicious or fraudulent streaming data.
+    
+    Suspicious indicators:
+    - IP address patterns (like VPN/proxy ranges)
+    - Country code "ZZ" (invalid country)
+    - Unusual connection patterns
+    - Known fake artists/albums
+    
+    Args:
+        record: Spotify streaming record
+        
+    Returns:
+        True if record appears suspicious, False otherwise
+    """
+    # Check for invalid country code
+    country = record.get('conn_country', '')
+    if country == 'ZZ':
+        return True
+    
+    # Check for suspicious IP patterns
+    ip_addr = record.get('ip_addr', '')
+    if ip_addr and is_suspicious_ip(ip_addr):
+        return True
+    
+    # Check for known fake artists/albums
+    artist = record.get('master_metadata_album_artist_name', '')
+    album = record.get('master_metadata_album_album_name', '')
+    if is_fake_artist_or_album(artist, album):
+        return True
+    
+    return False
+
+
+def is_suspicious_ip(ip_addr: str) -> bool:
+    """
+    Check if an IP address appears suspicious.
+    
+    Args:
+        ip_addr: IP address string
+        
+    Returns:
+        True if IP appears suspicious, False otherwise
+    """
+    # Known suspicious IP ranges or patterns
+    suspicious_ips = [
+        '173.249.43.234',  # Specific IP found in the Wakeem data
+    ]
+    
+    # Check for exact matches
+    if ip_addr in suspicious_ips:
+        return True
+    
+    # Check for ranges that might be VPN/proxy services
+    # This is a simplified check - in production you'd want more sophisticated IP analysis
+    suspicious_ranges = [
+        '173.249.43.',  # Range that includes the suspicious IP
+    ]
+    
+    for range_prefix in suspicious_ranges:
+        if ip_addr.startswith(range_prefix):
+            return True
+    
+    return False
+
+
+def is_fake_artist_or_album(artist: str, album: str) -> bool:
+    """
+    Check if an artist or album appears to be fake/spam.
+    
+    Args:
+        artist: Artist name
+        album: Album name
+        
+    Returns:
+        True if appears fake, False otherwise
+    """
+    # Known fake artists/albums
+    fake_artists = [
+        'Wakeem',  # Specific fake artist found in the data
+    ]
+    
+    fake_albums = [
+        'War for Honor',  # Specific fake album
+        'War of Honor',   # Possible variation
+    ]
+    
+    if artist and artist in fake_artists:
+        return True
+    
+    if album and album in fake_albums:
+        return True
+    
+    return False
+
+
+def detect_streaming_anomalies(records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Detect and remove streaming anomalies using pattern analysis.
+    
+    This function looks for patterns that might indicate fake streams:
+    - Too many plays in a short time period
+    - Identical metadata repeated excessively
+    - Suspicious timing patterns
+    
+    Args:
+        records: List of streaming records
+        
+    Returns:
+        List of records with anomalies removed
+    """
+    if not records:
+        return records
+    
+    # Group records by artist and track for analysis
+    track_groups = defaultdict(list)
+    
+    for record in records:
+        artist = record.get('master_metadata_album_artist_name', '')
+        track = record.get('master_metadata_track_name', '')
+        if artist and track:
+            key = f"{artist}|||{track}"
+            track_groups[key].append(record)
+    
+    # Analyze each track group for anomalies
+    anomalous_records = set()
+    
+    for key, group_records in track_groups.items():
+        if len(group_records) > 100:  # Threshold for suspicion
+            # Check for rapid succession plays
+            group_records.sort(key=lambda x: x.get('ts', ''))
+            
+            rapid_plays = 0
+            for i in range(1, len(group_records)):
+                prev_time = group_records[i-1].get('ts', '')
+                curr_time = group_records[i].get('ts', '')
+                
+                if prev_time and curr_time:
+                    try:
+                        prev_dt = datetime.fromisoformat(prev_time.replace('Z', '+00:00'))
+                        curr_dt = datetime.fromisoformat(curr_time.replace('Z', '+00:00'))
+                        
+                        # If plays are less than 30 seconds apart, it's suspicious
+                        if (curr_dt - prev_dt).total_seconds() < 30:
+                            rapid_plays += 1
+                    except (ValueError, AttributeError):
+                        continue
+            
+            # If more than 50% of plays are rapid succession, mark as anomalous
+            if rapid_plays > len(group_records) * 0.5:
+                for record in group_records:
+                    anomalous_records.add(id(record))
+    
+    # Filter out anomalous records
+    clean_records = [record for record in records if id(record) not in anomalous_records]
+    
+    removed_count = len(records) - len(clean_records)
+    if removed_count > 0:
+        print(f"  Removed {removed_count} records due to streaming anomalies")
+    
+    return clean_records
 
 
 def process_streaming_file(file_path: str) -> List[Dict[str, Any]]:
@@ -84,6 +273,8 @@ def process_streaming_file(file_path: str) -> List[Dict[str, Any]]:
     total_records = len(data)
     songs_count = 0
     excluded_count = 0
+    suspicious_count = 0
+    pre_2016_count = 0
     
     for record in data:
         # Check if it's a song
@@ -92,18 +283,31 @@ def process_streaming_file(file_path: str) -> List[Dict[str, Any]]:
         
         songs_count += 1
         
-        # Check if should be excluded
+        # Check if should be excluded due to standard rules
         if should_exclude_record(record):
             excluded_count += 1
+            # Count pre-2016 exclusions separately
+            if record.get('ts', '') and is_before_2016(record.get('ts', '')):
+                pre_2016_count += 1
+            continue
+        
+        # Check if record appears suspicious
+        if is_suspicious_stream(record):
+            suspicious_count += 1
             continue
         
         # Add provider field and include the record
         record['provider'] = 'Spotify'
         cleaned_records.append(record)
     
+    # Apply anomaly detection
+    cleaned_records = detect_streaming_anomalies(cleaned_records)
+    
     print(f"  Total records: {total_records}")
     print(f"  Song records: {songs_count}")
     print(f"  Excluded records: {excluded_count}")
+    print(f"  - Pre-2016 exclusions: {pre_2016_count}")
+    print(f"  Suspicious records: {suspicious_count}")
     print(f"  Final cleaned records: {len(cleaned_records)}")
     
     return cleaned_records

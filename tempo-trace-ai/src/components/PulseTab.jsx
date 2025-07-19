@@ -13,6 +13,44 @@ import {
   BarChart3,
   Star
 } from 'lucide-react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  RadialLinearScale,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+} from 'chart.js';
+import { Line, Radar, Doughnut, PolarArea } from 'react-chartjs-2';
+
+// Import new stunning chart components
+import MusicalJourneyTimeline from './charts/MusicalJourneyTimeline';
+import ConcertStreamingHeatmap from './charts/ConcertStreamingHeatmap';
+import GlobalMusicMap from './charts/GlobalMusicMap';
+import ArtistLoyaltyConstellation from './charts/ArtistLoyaltyConstellation';
+import HourlyMoodRing from './charts/HourlyMoodRing';
+import DiscoveryNostalgiaFlow from './charts/DiscoveryNostalgiaFlow';
+import PlatformEcosystemWeb from './charts/PlatformEcosystemWeb';
+import EmotionalListeningLandscape from './charts/EmotionalListeningLandscape';
+import ArtistRankingSankey from './charts/ArtistRankingSankey';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  RadialLinearScale,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 const StatCard = ({ icon: Icon, label, value, subtitle, gradient = false }) => (
   <div className="cyber-card p-6 hover:scale-105 transition-transform duration-300">
@@ -79,7 +117,301 @@ const TimelineCard = ({ title, data, icon: Icon }) => (
   </div>
 );
 
-const PulseTab = ({ data, artistSummary }) => {
+// Chart Components
+const ChartCard = ({ title, children, className = "" }) => (
+  <div className={`cyber-card p-6 ${className}`}>
+    <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+      <Activity className="w-5 h-5 text-cyber-blue" />
+      {title}
+    </h3>
+    <div className="h-48">
+      {children}
+    </div>
+  </div>
+);
+
+const ActivityHeatmap = ({ data }) => {
+  // Create a mock heatmap visualization using a grid of squares
+  const generateHeatmapData = () => {
+    const days = [];
+    const today = new Date();
+    for (let i = 364; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      const dayOfWeek = date.getDay();
+      const hour = Math.floor(Math.random() * 24);
+      const intensity = Math.random();
+      days.push({ date, dayOfWeek, intensity });
+    }
+    return days;
+  };
+
+  const heatmapData = generateHeatmapData();
+  
+  return (
+    <div className="grid grid-cols-53 gap-1 p-2 overflow-hidden">
+      {heatmapData.map((day, index) => (
+        <div
+          key={index}
+          className="w-2 h-2 rounded-sm transition-all duration-200 hover:scale-150"
+          style={{
+            backgroundColor: `rgba(0, 245, 255, ${day.intensity * 0.8})`,
+            boxShadow: day.intensity > 0.7 ? '0 0 4px rgba(0, 245, 255, 0.5)' : 'none'
+          }}
+          title={`${day.date.toDateString()}: ${Math.round(day.intensity * 100)}% activity`}
+        />
+      ))}
+    </div>
+  );
+};
+
+const CircadianChart = ({ data }) => {
+  const hourlyData = data?.temporal_patterns?.hourly_breakdown || {};
+  const hours = Array.from({ length: 24 }, (_, i) => i);
+  const plays = hours.map(hour => hourlyData[hour]?.plays || 0);
+  const maxPlays = Math.max(...plays);
+
+  const chartData = {
+    labels: hours.map(h => `${h}:00`),
+    datasets: [{
+      label: 'Listening Activity',
+      data: plays,
+      backgroundColor: 'rgba(0, 245, 255, 0.2)',
+      borderColor: '#00f5ff',
+      borderWidth: 2,
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: '#00f5ff',
+      pointBorderColor: '#ffffff',
+      pointHoverRadius: 8,
+      pointRadius: 4
+    }]
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: 'rgba(26, 26, 26, 0.9)',
+        titleColor: '#ffffff',
+        bodyColor: '#00f5ff',
+        borderColor: '#00f5ff',
+        borderWidth: 1
+      }
+    },
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: maxPlays,
+        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+        pointLabels: { color: '#ffffff', font: { size: 10 } },
+        ticks: { display: false }
+      }
+    }
+  };
+
+  return <PolarArea data={chartData} options={options} />;
+};
+
+const SkipGauges = ({ data }) => {
+  const skipRate = data?.listening_behavior?.skip_rate_percentage || 0;
+  const completionRate = data?.listening_behavior?.completion_rate_percentage || 0;
+
+  const createGaugeData = (value, label, color) => ({
+    labels: [label, 'Remaining'],
+    datasets: [{
+      data: [value, 100 - value],
+      backgroundColor: [color, 'rgba(255, 255, 255, 0.1)'],
+      borderWidth: 0,
+      cutout: '75%'
+    }]
+  });
+
+  const gaugeOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: false }
+    }
+  };
+
+  return (
+    <div className="grid grid-cols-2 gap-4 h-full">
+      <div className="relative">
+        <Doughnut data={createGaugeData(skipRate, 'Skip Rate', '#f472b6')} options={gaugeOptions} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-white">{Math.round(skipRate)}%</div>
+            <div className="text-xs text-gray-400">Skip Rate</div>
+          </div>
+        </div>
+      </div>
+      <div className="relative">
+        <Doughnut data={createGaugeData(completionRate, 'Completion', '#10b981')} options={gaugeOptions} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-white">{Math.round(completionRate)}%</div>
+            <div className="text-xs text-gray-400">Complete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const DiscoveryRadar = ({ data }) => {
+  const diversityScore = (data?.diversity_metrics?.artist_diversity_score || 0) * 100;
+  const skipRate = 100 - (data?.listening_behavior?.skip_rate_percentage || 0);
+  const offlineRate = data?.listening_behavior?.offline_listening_percentage || 0;
+  const repeatRate = ((data?.content_stats?.total_plays || 0) / (data?.content_stats?.unique_tracks || 1)) * 10;
+  const explorationRate = Math.min(diversityScore * 1.2, 100);
+  const consistencyRate = Math.min((data?.milestones?.days_with_listening || 0) / (data?.time_stats?.tracking_span_days || 1) * 100, 100);
+
+  const radarData = {
+    labels: ['Diversity', 'Engagement', 'Discovery', 'Consistency', 'Exploration', 'Focus'],
+    datasets: [{
+      label: 'Your Music Profile',
+      data: [diversityScore, skipRate, explorationRate, consistencyRate, explorationRate, offlineRate],
+      backgroundColor: 'rgba(0, 245, 255, 0.2)',
+      borderColor: '#00f5ff',
+      borderWidth: 2,
+      pointBackgroundColor: '#00f5ff',
+      pointBorderColor: '#ffffff',
+      pointHoverBackgroundColor: '#ffffff',
+      pointHoverBorderColor: '#00f5ff'
+    }]
+  };
+
+  const radarOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false }
+    },
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 100,
+        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+        pointLabels: { color: '#ffffff', font: { size: 11 } },
+        ticks: { display: false }
+      }
+    }
+  };
+
+  return <Radar data={radarData} options={radarOptions} />;
+};
+
+const GenreEvolution = ({ data }) => {
+  // Mock genre evolution data - in real implementation, this would come from processed streaming data
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  
+  const genreData = {
+    labels: months,
+    datasets: [
+      {
+        label: 'Pop',
+        data: [30, 35, 40, 45, 35, 30, 25, 20, 25, 30, 35, 40],
+        backgroundColor: 'rgba(0, 245, 255, 0.6)',
+        borderColor: '#00f5ff',
+        borderWidth: 2,
+        fill: true
+      },
+      {
+        label: 'Rock',
+        data: [25, 20, 15, 20, 25, 30, 35, 40, 35, 30, 25, 20],
+        backgroundColor: 'rgba(139, 92, 246, 0.6)',
+        borderColor: '#8b5cf6',
+        borderWidth: 2,
+        fill: true
+      },
+      {
+        label: 'Electronic',
+        data: [20, 25, 30, 20, 25, 20, 25, 30, 25, 20, 25, 30],
+        backgroundColor: 'rgba(244, 114, 182, 0.6)',
+        borderColor: '#f472b6',
+        borderWidth: 2,
+        fill: true
+      }
+    ]
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { color: '#ffffff', font: { size: 10 } }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+        ticks: { color: '#ffffff', font: { size: 10 } }
+      },
+      y: {
+        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+        ticks: { display: false }
+      }
+    }
+  };
+
+  return <Line data={genreData} options={options} />;
+};
+
+const IntensityDistribution = ({ data }) => {
+  // Generate intensity distribution visualization
+  const dailyMinutes = [];
+  const totalDays = data?.time_stats?.tracking_span_days || 365;
+  const totalMinutes = (data?.time_stats?.total_hours || 0) * 60;
+  const avgDaily = totalMinutes / totalDays;
+
+  // Generate mock distribution data
+  for (let i = 0; i < 100; i++) {
+    const variation = (Math.random() - 0.5) * avgDaily;
+    dailyMinutes.push(Math.max(0, avgDaily + variation));
+  }
+
+  const bins = [0, 30, 60, 120, 180, 240, 300, 400, 500];
+  const distribution = bins.map((bin, i) => {
+    const nextBin = bins[i + 1] || Infinity;
+    return dailyMinutes.filter(min => min >= bin && min < nextBin).length;
+  });
+
+  const distributionData = {
+    labels: bins.slice(0, -1).map((bin, i) => `${bin}-${bins[i + 1] || '500+'}m`),
+    datasets: [{
+      data: distribution,
+      backgroundColor: [
+        'rgba(0, 245, 255, 0.8)',
+        'rgba(0, 245, 255, 0.7)',
+        'rgba(0, 245, 255, 0.6)',
+        'rgba(139, 92, 246, 0.6)',
+        'rgba(139, 92, 246, 0.7)',
+        'rgba(244, 114, 182, 0.6)',
+        'rgba(244, 114, 182, 0.7)',
+        'rgba(244, 114, 182, 0.8)'
+      ],
+      borderWidth: 0
+    }]
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false }
+    }
+  };
+
+  return <Doughnut data={distributionData} options={options} />;
+};
+
+const PulseTab = ({ data, artistSummary, concertData = [] }) => {
   console.log('PulseTab received data:', data);
   console.log('PulseTab received artistSummary:', artistSummary);
   
@@ -154,6 +486,65 @@ const PulseTab = ({ data, artistSummary }) => {
         <p className="text-gray-400">
           {trackingYears} years of musical evolution • {(data.metadata?.total_records || 0).toLocaleString()} total streams
         </p>
+      </div>
+
+      {/* Stunning Visual Analytics Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <ChartCard title="Musical Journey Timeline" className="lg:col-span-2">
+          <MusicalJourneyTimeline data={data} />
+        </ChartCard>
+        <ChartCard title="Daily Rhythm">
+          <CircadianChart data={data} />
+        </ChartCard>
+        <ChartCard title="Concert Correlation" className="lg:col-span-2">
+          <ConcertStreamingHeatmap data={data} concertData={concertData} artistSummary={artistSummary} />
+        </ChartCard>
+        <ChartCard title="Discovery Radar">
+          <DiscoveryRadar data={data} />
+        </ChartCard>
+        <ChartCard title="Global Music Map" className="lg:col-span-3">
+          <GlobalMusicMap data={data} />
+        </ChartCard>
+      </div>
+
+      {/* Second Row - More Stunning Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <ChartCard title="Artist Loyalty Constellation" className="lg:col-span-2">
+          <ArtistLoyaltyConstellation data={data} artistSummary={artistSummary} concertData={concertData} />
+        </ChartCard>
+      </div>
+
+      {/* Third Row - Interactive Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <ChartCard title="24-Hour Mood Ring">
+          <HourlyMoodRing data={data} />
+        </ChartCard>
+        <ChartCard title="Discovery vs Nostalgia">
+          <DiscoveryNostalgiaFlow data={data} artistSummary={artistSummary} />
+        </ChartCard>
+        <ChartCard title="Genre Journey">
+          <GenreEvolution data={data} />
+        </ChartCard>
+      </div>
+
+      {/* Fourth Row - Network & Landscape */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <ChartCard title="Platform Ecosystem">
+          <PlatformEcosystemWeb data={data} />
+        </ChartCard>
+        <ChartCard title="Emotional Landscape">
+          <EmotionalListeningLandscape data={data} artistSummary={artistSummary} />
+        </ChartCard>
+      </div>
+
+      {/* Fifth Row - Rankings & Traditional Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <ChartCard title="Artist Rankings Flow" className="lg:col-span-2">
+          <ArtistRankingSankey data={data} artistSummary={artistSummary} />
+        </ChartCard>
+        <ChartCard title="Skip Analysis">
+          <SkipGauges data={data} />
+        </ChartCard>
       </div>
 
       {/* Key Stats Grid */}
