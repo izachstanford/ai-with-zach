@@ -14,7 +14,7 @@ if [ $? -eq 0 ]; then
     
     if [ $? -eq 0 ]; then
         echo "✅ Deployment successful!"
-        echo "🌐 Your app is now live at: https://ai-with-zach.com/"
+        echo "🌐 Your app is now live at: https://ai-with-zach.com/tempo-trace-ai"
         
         # Show deployment summary
         echo ""
