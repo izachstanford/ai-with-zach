@@ -24,7 +24,7 @@ Transform your raw Spotify and Apple Music data into beautiful, interactive visu
 This project consists of two main components that work together:
 
 ```
-ai-with-zach/
+tempo-trace-ai/
 ├── music-data-processor/     # 🐍 Python CLI tool for data processing
 │   ├── input/               # Raw Spotify & Apple Music files
 │   ├── output/              # Processed JSON files
@@ -179,8 +179,8 @@ Want to see the dashboard in action before processing your own data? The project
 
 ```bash
 # Clone the repository
-git clone https://github.com/zachstanford/ai-with-zach.git
-cd ai-with-zach
+git clone https://github.com/zachstanford/tempo-trace-ai.git
+cd tempo-trace-ai
 
 # Go to the web app
 cd tempo-trace-ai
@@ -312,7 +312,7 @@ npm run dev
 
 ## 📄 License
 
-MIT License - feel free to use this for your own music analytics projects!
+MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 

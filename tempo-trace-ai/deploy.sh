@@ -10,11 +10,11 @@ if [ $? -eq 0 ]; then
     echo "✅ Build successful!"
     
     echo "📦 Deploying to website..."
-    cp -r dist/* /Users/zachstanford/Development/website-ai-with-zach/public/tempo-trace-ai/
+    cp -r dist/* /Users/zachstanford/Development/website-tempo-trace-ai/public/tempo-trace-ai/
     
     if [ $? -eq 0 ]; then
         echo "✅ Deployment successful!"
-        echo "🌐 Your app is now live at: https://ai-with-zach.com/tempo-trace-ai/"
+        echo "🌐 Your app is now live at: https://tempo-trace-ai.com/"
         
         # Show deployment summary
         echo ""
@@ -28,7 +28,7 @@ if [ $? -eq 0 ]; then
         # Show file sizes
         echo ""
         echo "📁 Deployed files:"
-        ls -lah /Users/zachstanford/Development/website-ai-with-zach/public/tempo-trace-ai/
+        ls -lah /Users/zachstanford/Development/website-tempo-trace-ai/public/tempo-trace-ai/
         
     else
         echo "❌ Deployment failed!"
