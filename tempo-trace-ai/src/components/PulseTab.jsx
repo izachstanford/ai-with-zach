@@ -33,7 +33,6 @@ import MusicalJourneyTimeline from './charts/MusicalJourneyTimeline';
 import ConcertStreamingHeatmap from './charts/ConcertStreamingHeatmap';
 import GlobalMusicMap from './charts/GlobalMusicMap';
 import ArtistLoyaltyConstellation from './charts/ArtistLoyaltyConstellation';
-import HourlyMoodRing from './charts/HourlyMoodRing';
 import DiscoveryNostalgiaFlow from './charts/DiscoveryNostalgiaFlow';
 import PlatformEcosystemWeb from './charts/PlatformEcosystemWeb';
 import EmotionalListeningLandscape from './charts/EmotionalListeningLandscape';
@@ -516,9 +515,6 @@ const PulseTab = ({ data, artistSummary, concertData = [] }) => {
 
       {/* Third Row - Interactive Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <ChartCard title="24-Hour Mood Ring">
-          <HourlyMoodRing data={data} />
-        </ChartCard>
         <ChartCard title="Discovery vs Nostalgia">
           <DiscoveryNostalgiaFlow data={data} artistSummary={artistSummary} />
         </ChartCard>
