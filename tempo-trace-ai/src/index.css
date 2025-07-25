@@ -85,6 +85,12 @@
   position: relative;
 }
 
+@media (max-width: 639px) {
+  .cyber-tab {
+    padding: 8px;
+  }
+}
+
 .cyber-tab.active {
   background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(139, 92, 246, 0.2));
   border-color: #00f5ff;

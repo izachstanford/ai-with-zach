@@ -5,6 +5,7 @@ import PulseTab from './components/PulseTab';
 import LeaderboardTab from './components/LeaderboardTab';
 import ConcertCompassTab from './components/ConcertCompassTab';
 import ArtistStatsTab from './components/ArtistStatsTab';
+import AdvancedInsightsTab from './components/AdvancedInsightsTab';
 
 const LoadingScreen = () => (
   <div className="min-h-screen bg-dark-bg flex items-center justify-center">
@@ -58,6 +59,7 @@ function App() {
   const tabs = [
     { id: 'pulse', label: 'The Pulse', icon: Activity },
     { id: 'leaderboard', label: 'Leaderboard', icon: BarChart3 },
+    { id: 'advanced', label: 'Advanced', icon: Activity },
     { id: 'stats', label: 'Artists', icon: Users },
     { id: 'compass', label: 'Concert Compass', icon: Compass }
   ];
@@ -79,14 +81,14 @@ function App() {
             </div>
             
             {/* Navigation */}
-            <nav className="flex space-x-2">
+            <nav className="flex space-x-1 sm:space-x-2">
               {tabs.map(tab => {
                 const Icon = tab.icon;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`cyber-tab flex items-center gap-2 ${
+                    className={`cyber-tab flex items-center gap-0 sm:gap-2 ${
                       activeTab === tab.id ? 'active' : ''
                     }`}
                   >
@@ -103,11 +105,20 @@ function App() {
       {/* Main Content */}
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'pulse' && (
-          <PulseTab data={lifetimeStats} artistSummary={artistSummary} concertData={concertData} />
+          <PulseTab
+            data={lifetimeStats}
+            artistSummary={artistSummary}
+            concertData={concertData}
+            recapData={annualRecaps}
+          />
         )}
         
         {activeTab === 'leaderboard' && (
           <LeaderboardTab data={annualRecaps} />
+        )}
+
+        {activeTab === 'advanced' && (
+          <AdvancedInsightsTab data={lifetimeStats} />
         )}
         
         {activeTab === 'compass' && (
