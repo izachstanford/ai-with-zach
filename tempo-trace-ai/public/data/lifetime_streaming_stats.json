@@ -1,74 +1,61 @@
 {
   "metadata": {
-    "generated_at": "2025-07-16T17:24:13.818905",
-    "total_records": 51122,
+    "generated_at": "2025-07-17T13:27:01.118887",
+    "total_records": 49891,
     "data_sources": [
       "Spotify",
       "Apple Music"
     ]
   },
   "time_stats": {
-    "total_milliseconds": 9358552397,
-    "total_seconds": 9358552.397,
-    "total_minutes": 155975.87328333332,
-    "total_hours": 2599.5978880555554,
-    "total_days": 108.31657866898148,
-    "total_weeks": 15.47379695271164,
-    "total_months": 3.558363293987565,
-    "total_years": 0.2965546301683271,
-    "average_track_length_ms": 183063.11171315677,
-    "average_track_length_seconds": 183.06311171315676,
-    "average_track_length_minutes": 3.051051861885946,
-    "earliest_play": "2012-09-03T00:36:07",
+    "total_milliseconds": 9251106155,
+    "total_seconds": 9251106.155,
+    "total_minutes": 154185.10258333333,
+    "total_hours": 2569.751709722222,
+    "total_days": 107.07298790509259,
+    "total_weeks": 15.296141129298942,
+    "total_months": 3.517509458117365,
+    "total_years": 0.2931498642165437,
+    "average_track_length_ms": 185426.35254855585,
+    "average_track_length_seconds": 185.42635254855583,
+    "average_track_length_minutes": 3.0904392091425974,
+    "earliest_play": "2016-03-30T12:00:00",
     "latest_play": "2025-07-09T16:29:55",
-    "tracking_span_days": 4692
+    "tracking_span_days": 3388
   },
   "content_stats": {
-    "unique_artists": 3962,
-    "unique_tracks": 12641,
-    "unique_albums": 4526,
-    "total_plays": 51122,
-    "average_plays_per_artist": 12.903079252902575,
-    "average_plays_per_track": 4.0441420773672965,
-    "average_plays_per_album": 11.295183384887318
+    "unique_artists": 3946,
+    "unique_tracks": 12520,
+    "unique_albums": 4476,
+    "total_plays": 49891,
+    "average_plays_per_artist": 12.643436391282311,
+    "average_plays_per_track": 3.9849041533546328,
+    "average_plays_per_album": 11.14633601429848
   },
   "platform_stats": {
     "distribution": {
-      "iOS": 45160,
-      "Other": 1312,
-      "Windows": 462,
-      "Web Player": 786,
+      "iOS": 44785,
+      "Windows": 383,
+      "Web Player": 35,
       "Watch": 974,
-      "Google Cast": 13,
-      "macOS": 2212,
+      "Other": 1305,
+      "macOS": 2206,
       "Garmin": 203
     },
-    "total_platforms": 8,
+    "total_platforms": 7,
     "top_platform": "iOS"
   },
   "provider_stats": {
     "distribution": {
-      "Spotify": 22304,
-      "Apple Music": 28818
+      "Apple Music": 28818,
+      "Spotify": 21073
     },
     "total_providers": 2,
-    "spotify_percentage": 43.628966002895034,
-    "apple_music_percentage": 56.371033997104966
+    "spotify_percentage": 42.2380790122467,
+    "apple_music_percentage": 57.7619209877533
   },
   "temporal_patterns": {
     "yearly_breakdown": {
-      "2012": {
-        "plays": 1,
-        "ms_played": 32089
-      },
-      "2013": {
-        "plays": 1,
-        "ms_played": 196000
-      },
-      "2015": {
-        "plays": 388,
-        "ms_played": 78083168
-      },
       "2016": {
         "plays": 5096,
         "ms_played": 1041630826
@@ -78,12 +65,12 @@
         "ms_played": 1424405372
       },
       "2018": {
-        "plays": 9289,
-        "ms_played": 1362541575
+        "plays": 9189,
+        "ms_played": 1352287774
       },
       "2019": {
-        "plays": 6721,
-        "ms_played": 1109437612
+        "plays": 5972,
+        "ms_played": 1090548947
       },
       "2020": {
         "plays": 3683,
@@ -102,8 +89,8 @@
         "ms_played": 879101461
       },
       "2024": {
-        "plays": 5070,
-        "ms_played": 910945493
+        "plays": 5078,
+        "ms_played": 910952974
       },
       "2025": {
         "plays": 2268,
@@ -111,30 +98,6 @@
       }
     },
     "monthly_breakdown": {
-      "2012-09": {
-        "plays": 1,
-        "ms_played": 32089
-      },
-      "2013-08": {
-        "plays": 1,
-        "ms_played": 196000
-      },
-      "2015-05": {
-        "plays": 195,
-        "ms_played": 39312882
-      },
-      "2015-06": {
-        "plays": 83,
-        "ms_played": 17305132
-      },
-      "2015-07": {
-        "plays": 39,
-        "ms_played": 7385798
-      },
-      "2015-08": {
-        "plays": 71,
-        "ms_played": 14079356
-      },
       "2016-03": {
         "plays": 43,
         "ms_played": 9326000
@@ -232,64 +195,64 @@
         "ms_played": 106487396
       },
       "2018-03": {
-        "plays": 1069,
-        "ms_played": 154886290
+        "plays": 1048,
+        "ms_played": 152795250
       },
       "2018-04": {
-        "plays": 786,
-        "ms_played": 118357817
+        "plays": 745,
+        "ms_played": 114327040
       },
       "2018-05": {
-        "plays": 975,
-        "ms_played": 137388860
+        "plays": 953,
+        "ms_played": 135115423
       },
       "2018-06": {
         "plays": 1082,
         "ms_played": 149838992
       },
       "2018-07": {
-        "plays": 1044,
-        "ms_played": 145533434
+        "plays": 1040,
+        "ms_played": 144779554
       },
       "2018-08": {
-        "plays": 519,
-        "ms_played": 72486132
+        "plays": 512,
+        "ms_played": 71708338
       },
       "2018-09": {
         "plays": 821,
         "ms_played": 98139371
       },
       "2018-10": {
-        "plays": 613,
-        "ms_played": 88535455
+        "plays": 610,
+        "ms_played": 88453011
       },
       "2018-11": {
-        "plays": 612,
-        "ms_played": 88168705
+        "plays": 611,
+        "ms_played": 88159537
       },
       "2018-12": {
-        "plays": 767,
-        "ms_played": 98535049
+        "plays": 766,
+        "ms_played": 98299788
       },
       "2019-01": {
         "plays": 482,
         "ms_played": 65551341
       },
       "2019-02": {
-        "plays": 468,
-        "ms_played": 66923119
+        "plays": 465,
+        "ms_played": 66855186
       },
       "2019-03": {
-        "plays": 547,
-        "ms_played": 66951016
+        "plays": 531,
+        "ms_played": 66262347
       },
       "2019-04": {
-        "plays": 1231,
-        "ms_played": 130496736
+        "plays": 660,
+        "ms_played": 116759365
       },
       "2019-05": {
-        "plays": 698,
-        "ms_played": 114768322
+        "plays": 539,
+        "ms_played": 110373630
       },
       "2019-06": {
         "plays": 554,
@@ -520,16 +483,16 @@
         "ms_played": 61729878
       },
       "2024-03": {
-        "plays": 268,
-        "ms_played": 47499301
+        "plays": 271,
+        "ms_played": 47504351
       },
       "2024-04": {
         "plays": 328,
         "ms_played": 58701706
       },
       "2024-05": {
-        "plays": 453,
-        "ms_played": 83135380
+        "plays": 457,
+        "ms_played": 83136826
       },
       "2024-06": {
         "plays": 229,
@@ -548,8 +511,8 @@
         "ms_played": 71282986
       },
       "2024-10": {
-        "plays": 437,
-        "ms_played": 79860829
+        "plays": 438,
+        "ms_played": 79861814
       },
       "2024-11": {
         "plays": 493,
@@ -589,184 +552,184 @@
       }
     },
     "hourly_breakdown": {
-      "0": {
-        "plays": 2550,
-        "ms_played": 466530792
-      },
-      "14": {
-        "plays": 5119,
-        "ms_played": 970503261
-      },
-      "1": {
-        "plays": 2420,
-        "ms_played": 423585260
-      },
-      "17": {
-        "plays": 3063,
-        "ms_played": 551220525
-      },
-      "18": {
-        "plays": 2617,
-        "ms_played": 457625013
-      },
-      "3": {
-        "plays": 1423,
-        "ms_played": 243132382
-      },
-      "15": {
-        "plays": 4312,
-        "ms_played": 810871665
-      },
-      "4": {
-        "plays": 654,
-        "ms_played": 103866461
-      },
-      "19": {
-        "plays": 3034,
-        "ms_played": 563904169
-      },
-      "16": {
-        "plays": 3712,
-        "ms_played": 697695705
-      },
-      "20": {
-        "plays": 2905,
-        "ms_played": 547096412
-      },
-      "21": {
-        "plays": 2749,
-        "ms_played": 512898136
-      },
-      "23": {
-        "plays": 2591,
-        "ms_played": 447838314
+      "12": {
+        "plays": 1475,
+        "ms_played": 293155865
       },
       "13": {
-        "plays": 4235,
-        "ms_played": 830998747
+        "plays": 4124,
+        "ms_played": 825202618
       },
-      "5": {
-        "plays": 298,
-        "ms_played": 48086113
+      "14": {
+        "plays": 5004,
+        "ms_played": 952187195
       },
-      "12": {
-        "plays": 1498,
-        "ms_played": 297622887
+      "23": {
+        "plays": 2577,
+        "ms_played": 445863893
       },
-      "11": {
-        "plays": 771,
-        "ms_played": 127529886
+      "0": {
+        "plays": 2410,
+        "ms_played": 460476249
+      },
+      "18": {
+        "plays": 2462,
+        "ms_played": 445551994
+      },
+      "1": {
+        "plays": 2404,
+        "ms_played": 420533111
       },
       "2": {
-        "plays": 2267,
-        "ms_played": 432262992
+        "plays": 2262,
+        "ms_played": 431513741
+      },
+      "21": {
+        "plays": 2733,
+        "ms_played": 509106535
       },
       "22": {
         "plays": 2955,
         "ms_played": 540806257
       },
+      "19": {
+        "plays": 3020,
+        "ms_played": 561357842
+      },
+      "11": {
+        "plays": 728,
+        "ms_played": 122637566
+      },
+      "20": {
+        "plays": 2859,
+        "ms_played": 540310989
+      },
+      "17": {
+        "plays": 3007,
+        "ms_played": 541384669
+      },
+      "3": {
+        "plays": 1410,
+        "ms_played": 240625957
+      },
+      "4": {
+        "plays": 646,
+        "ms_played": 102595912
+      },
+      "15": {
+        "plays": 4143,
+        "ms_played": 801430485
+      },
+      "16": {
+        "plays": 3588,
+        "ms_played": 691740019
+      },
+      "5": {
+        "plays": 280,
+        "ms_played": 46624728
+      },
       "7": {
-        "plays": 339,
-        "ms_played": 38948391
+        "plays": 227,
+        "ms_played": 35507170
       },
       "6": {
         "plays": 246,
         "ms_played": 42245893
       },
       "10": {
-        "plays": 630,
-        "ms_played": 91514780
+        "plays": 616,
+        "ms_played": 90280158
       },
       "8": {
-        "plays": 307,
-        "ms_played": 42928304
+        "plays": 295,
+        "ms_played": 41708163
       },
       "9": {
-        "plays": 427,
-        "ms_played": 68840052
+        "plays": 420,
+        "ms_played": 68259146
       }
     },
     "weekday_breakdown": {
-      "Monday": {
-        "plays": 6833,
-        "ms_played": 1278363402
-      },
-      "Friday": {
-        "plays": 9658,
-        "ms_played": 1774713410
-      },
-      "Saturday": {
-        "plays": 8016,
-        "ms_played": 1468163931
-      },
-      "Tuesday": {
-        "plays": 6858,
-        "ms_played": 1239838740
-      },
       "Wednesday": {
-        "plays": 7555,
-        "ms_played": 1414862402
+        "plays": 7378,
+        "ms_played": 1401235274
       },
       "Thursday": {
-        "plays": 8118,
-        "ms_played": 1475014677
+        "plays": 8015,
+        "ms_played": 1460550873
+      },
+      "Friday": {
+        "plays": 9537,
+        "ms_played": 1757103950
+      },
+      "Saturday": {
+        "plays": 7954,
+        "ms_played": 1457546277
       },
       "Sunday": {
-        "plays": 4084,
-        "ms_played": 707595835
+        "plays": 3912,
+        "ms_played": 693363694
+      },
+      "Monday": {
+        "plays": 6613,
+        "ms_played": 1255902406
+      },
+      "Tuesday": {
+        "plays": 6482,
+        "ms_played": 1225403681
       }
     },
     "seasonal_breakdown": {
-      "Fall": {
-        "plays": 11450,
-        "ms_played": 2149659667
+      "Spring": {
+        "plays": 13027,
+        "ms_played": 2406293278
       },
       "Summer": {
-        "plays": 13805,
-        "ms_played": 2552934777
+        "plays": 13600,
+        "ms_played": 2512436817
       },
-      "Spring": {
-        "plays": 14045,
-        "ms_played": 2472815650
+      "Fall": {
+        "plays": 11446,
+        "ms_played": 2149536951
       },
       "Winter": {
-        "plays": 11822,
-        "ms_played": 2183142303
+        "plays": 11818,
+        "ms_played": 2182839109
       }
     },
     "peak_listening_hour": 14,
     "peak_listening_day": "Friday",
-    "peak_listening_season": "Spring"
+    "peak_listening_season": "Summer"
   },
   "listening_behavior": {
-    "skip_rate_percentage": 18.082234654356245,
-    "completion_rate_percentage": 66.13982238566565,
-    "offline_listening_percentage": 4.634012753804624,
-    "shuffle_usage_percentage": 3.043699385783029,
-    "total_skips": 9244,
-    "total_completions": 33812,
+    "skip_rate_percentage": 18.410134092321258,
+    "completion_rate_percentage": 67.02812130444369,
+    "offline_listening_percentage": 4.748351406065223,
+    "shuffle_usage_percentage": 3.118798981780281,
+    "total_skips": 9185,
+    "total_completions": 33441,
     "total_offline_plays": 2369,
     "total_shuffle_plays": 1556
   },
   "diversity_metrics": {
-    "artist_diversity_score": 0.07750088024725167,
-    "unique_artists": 3962,
-    "unique_tracks": 12641,
-    "top_1_artist_concentration": 2.90481593051915,
-    "top_5_artist_concentration": 10.26759516450843,
-    "top_10_artist_concentration": 17.11396267751653,
-    "plays_per_artist": 12.903079252902575,
-    "plays_per_track": 4.0441420773672965
+    "artist_diversity_score": 0.07909242147882384,
+    "unique_artists": 3946,
+    "unique_tracks": 12520,
+    "top_1_artist_concentration": 2.9724800064139822,
+    "top_5_artist_concentration": 10.396664729109458,
+    "top_10_artist_concentration": 17.373875047603775,
+    "plays_per_artist": 12.643436391282311,
+    "plays_per_track": 3.9849041533546328
   },
   "top_lists": {
     "top_artists": [
       [
         "Fall Out Boy",
-        1485
+        1483
       ],
       [
         "Twenty One Pilots",
-        1385
+        1325
       ],
       [
         "Judah & the Lion",
@@ -781,16 +744,16 @@
         752
       ],
       [
-        "OneRepublic",
-        716
-      ],
-      [
         "Panic! At The Disco",
-        714
+        709
       ],
       [
         "Imagine Dragons",
-        707
+        705
+      ],
+      [
+        "OneRepublic",
+        704
       ],
       [
         "The National Parks",
@@ -801,24 +764,20 @@
         665
       ],
       [
-        "Wakeem",
-        663
-      ],
-      [
-        "Enter Shikari",
-        636
-      ],
-      [
         "for KING & COUNTRY",
-        614
+        612
       ],
       [
         "Yellowcard",
-        611
+        609
       ],
       [
         "Bastille",
-        576
+        574
+      ],
+      [
+        "Enter Shikari",
+        549
       ],
       [
         "The Rocket Summer",
@@ -830,7 +789,7 @@
       ],
       [
         "The Maine",
-        486
+        478
       ],
       [
         "The Chainsmokers",
@@ -838,7 +797,7 @@
       ],
       [
         "Angels & Airwaves",
-        417
+        411
       ],
       [
         "Bleachers",
@@ -846,7 +805,7 @@
       ],
       [
         "Thousand Foot Krutch",
-        390
+        381
       ],
       [
         "Tokio Hotel",
@@ -854,7 +813,7 @@
       ],
       [
         "Taking Back Sunday",
-        363
+        364
       ],
       [
         "Good Charlotte",
@@ -893,12 +852,12 @@
         305
       ],
       [
-        "The Wombats",
-        303
+        "Maroon 5",
+        292
       ],
       [
-        "Maroon 5",
-        293
+        "The Wombats",
+        287
       ],
       [
         "Written by Wolves",
@@ -906,7 +865,7 @@
       ],
       [
         "Beartooth",
-        275
+        276
       ],
       [
         "Switchfoot",
@@ -926,7 +885,7 @@
       ],
       [
         "Ed Sheeran",
-        246
+        244
       ],
       [
         "Emarosa",
@@ -934,7 +893,7 @@
       ],
       [
         "AJR",
-        232
+        230
       ],
       [
         "Hawk Nelson",
@@ -946,7 +905,7 @@
       ],
       [
         "NF",
-        224
+        222
       ],
       [
         "The Score",
@@ -959,6 +918,10 @@
       [
         "Anthem Lights",
         218
+      ],
+      [
+        "The Afters",
+        217
       ]
     ],
     "top_tracks": [
@@ -987,6 +950,10 @@
         68
       ],
       [
+        "Ghost",
+        66
+      ],
+      [
         "Anything",
         65
       ],
@@ -996,10 +963,6 @@
       ],
       [
         "Victorious",
-        65
-      ],
-      [
-        "Ghost",
         65
       ],
       [
@@ -1039,10 +1002,6 @@
         57
       ],
       [
-        "Hallelujah",
-        55
-      ],
-      [
         "Run",
         55
       ],
@@ -1067,8 +1026,8 @@
         54
       ],
       [
-        "Stay",
-        53
+        "Hallelujah",
+        52
       ],
       [
         "Boomerang",
@@ -1079,7 +1038,7 @@
         52
       ],
       [
-        "Black Butterflies and Déjà Vu",
+        "Stay",
         52
       ],
       [
@@ -1103,36 +1062,16 @@
         51
       ],
       [
-        "False Witness",
-        51
-      ],
-      [
-        "California Illusions",
-        51
-      ],
-      [
-        "A Boy and His God",
-        51
-      ],
-      [
         "Shape of You",
+        50
+      ],
+      [
+        "Black Butterflies and Déjà Vu",
         50
       ],
       [
         "Electrified",
         50
-      ],
-      [
-        "Paved Curtain",
-        50
-      ],
-      [
-        "Living Trust",
-        49
-      ],
-      [
-        "Beyond the Surface",
-        49
       ],
       [
         "Better",
@@ -1155,26 +1094,46 @@
         47
       ],
       [
-        "Gwenevere Experience",
+        "Vignette",
         47
       ],
       [
-        "Broken Together",
-        47
+        "Feel Invincible",
+        46
+      ],
+      [
+        "Glimmer",
+        46
+      ],
+      [
+        "Forever",
+        45
+      ],
+      [
+        "Rise Up",
+        45
+      ],
+      [
+        "joy.",
+        45
+      ],
+      [
+        "American Nights",
+        45
+      ],
+      [
+        "Same Mistakes",
+        45
       ]
     ],
     "top_albums": [
-      [
-        "War for Honor",
-        663
-      ],
       [
         "Clancy",
         330
       ],
       [
         "Trench",
-        293
+        294
       ],
       [
         "The Process",
@@ -1182,7 +1141,7 @@
       ],
       [
         "The Surface",
-        235
+        236
       ],
       [
         "Wild Spirit",
@@ -1190,7 +1149,7 @@
       ],
       [
         "Lovely Little Lonely",
-        195
+        186
       ],
       [
         "So Much (For) Stardust",
@@ -1213,10 +1172,6 @@
         109
       ],
       [
-        "The Mindsweep",
-        104
-      ],
-      [
         "Secrets",
         103
       ],
@@ -1231,14 +1186,6 @@
       [
         "Persona",
         99
-      ],
-      [
-        "Beautiful People Will Ruin Your Life",
-        95
-      ],
-      [
-        "Blurryface",
-        94
       ],
       [
         "The Hart",
@@ -1261,8 +1208,8 @@
         82
       ],
       [
-        "What Matters Most",
-        81
+        "Beautiful People Will Ruin Your Life",
+        79
       ],
       [
         "Infinity On High",
@@ -1321,12 +1268,12 @@
         58
       ],
       [
-        "Ocean Avenue",
+        "AMERICA",
         57
       ],
       [
-        "AMERICA",
-        57
+        "Ocean Avenue",
+        55
       ],
       [
         "Sting",
@@ -1363,54 +1310,62 @@
       [
         "Lying",
         46
+      ],
+      [
+        "Unleashed",
+        46
+      ],
+      [
+        "I'm So Good At Being Alone?",
+        46
+      ],
+      [
+        "Lift A Sail",
+        45
+      ],
+      [
+        "Blurryface",
+        45
       ]
     ],
     "top_platforms": [
       [
         "iOS",
-        45160
+        44785
       ],
       [
         "macOS",
-        2212
+        2206
       ],
       [
         "Other",
-        1312
+        1305
       ],
       [
         "Watch",
         974
       ],
       [
-        "Web Player",
-        786
-      ],
-      [
         "Windows",
-        462
+        383
       ],
       [
         "Garmin",
         203
       ],
       [
-        "Google Cast",
-        13
+        "Web Player",
+        35
       ]
     ],
     "top_countries": [
       [
         "US",
-        46898
+        46516
       ],
       [
         "BE",
         3097
-      ],
-      [
-        "ZZ",
-        849
       ],
       [
         "NZ",
@@ -1468,9 +1423,9 @@
   },
   "milestones": {
     "first_track_played": {
-      "timestamp": "2012-09-03T00:36:07",
-      "artist": "Muse",
-      "track": "Time is Running Out"
+      "timestamp": "2016-03-30T12:00:00",
+      "artist": "The Rocket Summer",
+      "track": "So Much Love"
     },
     "most_recent_track": {
       "timestamp": "2025-07-09T16:29:55",
@@ -1503,23 +1458,19 @@
       "incognito_mode": false,
       "provider": "Apple Music"
     },
-    "days_with_listening": 3044,
-    "average_daily_listening_minutes": 51.24043143342093
+    "days_with_listening": 2999,
+    "average_daily_listening_minutes": 51.41217158497277
   },
   "geographical_stats": {
-    "countries_streamed_from": 16,
+    "countries_streamed_from": 15,
     "top_countries": [
       [
         "US",
-        46898
+        46516
       ],
       [
         "BE",
         3097
-      ],
-      [
-        "ZZ",
-        849
       ],
       [
         "NZ",
@@ -1548,12 +1499,15 @@
       [
         "BR",
         6
+      ],
+      [
+        "DK",
+        2
       ]
     ],
     "distribution": {
-      "US": 46898,
+      "US": 46516,
       "BE": 3097,
-      "ZZ": 849,
       "IE": 1,
       "FR": 1,
       "SE": 14,
@@ -1571,12 +1525,12 @@
   },
   "technical_stats": {
     "data_quality": {
-      "records_with_timestamps": 51122,
-      "records_with_artists": 51122,
-      "records_with_tracks": 51122,
-      "records_with_duration": 50676
+      "records_with_timestamps": 49891,
+      "records_with_artists": 49891,
+      "records_with_tracks": 49891,
+      "records_with_duration": 49636
     },
-    "average_daily_tracks": 10.89324525889623,
-    "tracks_per_hour_of_listening": 19.665349104525617
+    "average_daily_tracks": 14.72145175568014,
+    "tracks_per_hour_of_listening": 19.414716142126032
   }
 }

@@ -1,647 +1,4 @@
 {
-  "2012": {
-    "year": 2012,
-    "top_artists": [
-      [
-        "Muse",
-        1
-      ]
-    ],
-    "top_tracks": [
-      [
-        "Time is Running Out",
-        1
-      ]
-    ],
-    "top_albums": [
-      [
-        "Absolution",
-        1
-      ]
-    ],
-    "year_stats": {
-      "total_plays": 1,
-      "total_minutes": 0.5348166666666666,
-      "total_hours": 0.00891361111111111,
-      "unique_artists": 1,
-      "unique_tracks": 1,
-      "unique_albums": 1,
-      "unique_days_with_listening": 1,
-      "average_track_length_minutes": 0.5348166666666666,
-      "average_daily_minutes": 0.5348166666666666,
-      "skip_rate_percentage": 100.0,
-      "completion_rate_percentage": 0.0,
-      "offline_percentage": 0.0,
-      "shuffle_percentage": 0.0,
-      "first_play": "2012-09-03T00:36:07",
-      "last_play": "2012-09-03T00:36:07",
-      "peak_month": "September",
-      "peak_month_plays": 1,
-      "top_platform": [
-        "iOS",
-        1
-      ],
-      "top_provider": [
-        "Spotify",
-        1
-      ],
-      "provider_breakdown": {
-        "Spotify": 1
-      },
-      "platform_breakdown": {
-        "iOS": 1
-      },
-      "monthly_breakdown": {
-        "September": {
-          "plays": 1,
-          "minutes": 0.5348166666666666,
-          "hours": 0.00891361111111111
-        }
-      }
-    }
-  },
-  "2013": {
-    "year": 2013,
-    "top_artists": [
-      [
-        "Alex Clare",
-        1
-      ]
-    ],
-    "top_tracks": [
-      [
-        "Hands Are Clever",
-        1
-      ]
-    ],
-    "top_albums": [
-      [
-        "The Lateness Of the Hour",
-        1
-      ]
-    ],
-    "year_stats": {
-      "total_plays": 1,
-      "total_minutes": 3.2666666666666666,
-      "total_hours": 0.05444444444444444,
-      "unique_artists": 1,
-      "unique_tracks": 1,
-      "unique_albums": 1,
-      "unique_days_with_listening": 1,
-      "average_track_length_minutes": 3.2666666666666666,
-      "average_daily_minutes": 3.2666666666666666,
-      "skip_rate_percentage": 0.0,
-      "completion_rate_percentage": 100.0,
-      "offline_percentage": 0.0,
-      "shuffle_percentage": 0.0,
-      "first_play": "2013-08-30T14:39:32",
-      "last_play": "2013-08-30T14:39:32",
-      "peak_month": "August",
-      "peak_month_plays": 1,
-      "top_platform": [
-        "iOS",
-        1
-      ],
-      "top_provider": [
-        "Spotify",
-        1
-      ],
-      "provider_breakdown": {
-        "Spotify": 1
-      },
-      "platform_breakdown": {
-        "iOS": 1
-      },
-      "monthly_breakdown": {
-        "August": {
-          "plays": 1,
-          "minutes": 3.2666666666666666,
-          "hours": 0.05444444444444444
-        }
-      }
-    }
-  },
-  "2015": {
-    "year": 2015,
-    "top_artists": [
-      [
-        "Enter Shikari",
-        87
-      ],
-      [
-        "Twenty One Pilots",
-        61
-      ],
-      [
-        "Forever Came Calling",
-        40
-      ],
-      [
-        "Spoken",
-        36
-      ],
-      [
-        "Number One Gun",
-        31
-      ],
-      [
-        "Broadway",
-        19
-      ],
-      [
-        "Manafest",
-        15
-      ],
-      [
-        "Vinyl Theatre",
-        14
-      ],
-      [
-        "OneRepublic",
-        11
-      ],
-      [
-        "Parachute",
-        10
-      ],
-      [
-        "Thousand Foot Krutch",
-        9
-      ],
-      [
-        "Lecrae",
-        9
-      ],
-      [
-        "Brandon Flowers",
-        7
-      ],
-      [
-        "Smallpools",
-        6
-      ],
-      [
-        "Emery",
-        5
-      ],
-      [
-        "There For Tomorrow",
-        4
-      ],
-      [
-        "The Red Jumpsuit Apparatus",
-        4
-      ],
-      [
-        "Ever Stays Red",
-        4
-      ],
-      [
-        "Simple Plan",
-        4
-      ],
-      [
-        "Panic! At The Disco",
-        3
-      ],
-      [
-        "NF",
-        2
-      ],
-      [
-        "Take That",
-        1
-      ],
-      [
-        "Ed Sheeran",
-        1
-      ],
-      [
-        "Maroon 5",
-        1
-      ],
-      [
-        "Laszlo",
-        1
-      ],
-      [
-        "Tame Impala",
-        1
-      ],
-      [
-        "Never Shout Never",
-        1
-      ],
-      [
-        "FLAME",
-        1
-      ]
-    ],
-    "top_tracks": [
-      [
-        "Lane Boy",
-        14
-      ],
-      [
-        "The Last Garrison",
-        14
-      ],
-      [
-        "Anaesthetist",
-        11
-      ],
-      [
-        "Calm The Storm",
-        10
-      ],
-      [
-        "The Appeal & The Mindsweep I",
-        10
-      ],
-      [
-        "There's A Price On Your Head",
-        10
-      ],
-      [
-        "Defenseless",
-        9
-      ],
-      [
-        "Transient (I Don't Miss)",
-        9
-      ],
-      [
-        "Tear in My Heart",
-        8
-      ],
-      [
-        "Torn Apart",
-        8
-      ],
-      [
-        "Never Let Go Of The Microscope",
-        7
-      ],
-      [
-        "interlude",
-        7
-      ],
-      [
-        "Make This Last Forever",
-        7
-      ],
-      [
-        "Stressed Out",
-        6
-      ],
-      [
-        "Through It All",
-        6
-      ],
-      [
-        "The One True Colour",
-        6
-      ],
-      [
-        "It",
-        6
-      ],
-      [
-        "Fairly Local",
-        5
-      ],
-      [
-        "More Than You Know",
-        5
-      ],
-      [
-        "Artificial Love",
-        5
-      ],
-      [
-        "One Night on Mars",
-        5
-      ],
-      [
-        "Myopia",
-        5
-      ],
-      [
-        "Get a Little Weird",
-        5
-      ],
-      [
-        "Edge of My Life",
-        4
-      ],
-      [
-        "Mapping with a Sense of Direction",
-        4
-      ],
-      [
-        "Substances",
-        4
-      ],
-      [
-        "Endangered Innocence",
-        4
-      ],
-      [
-        "Prometheus",
-        4
-      ],
-      [
-        "Heavydirtysoul",
-        4
-      ],
-      [
-        "Ride",
-        4
-      ],
-      [
-        "The Judge",
-        4
-      ],
-      [
-        "Doubt",
-        4
-      ],
-      [
-        "Polarize",
-        4
-      ],
-      [
-        "The Bank of England",
-        4
-      ],
-      [
-        "Hallelujah",
-        3
-      ],
-      [
-        "August Is Home",
-        3
-      ],
-      [
-        "Love Wide Open",
-        3
-      ],
-      [
-        "Illusion",
-        3
-      ],
-      [
-        "Indebted",
-        3
-      ],
-      [
-        "Between Me And You",
-        3
-      ],
-      [
-        "Dear Future Historians…",
-        3
-      ],
-      [
-        "Heartbeats",
-        3
-      ],
-      [
-        "Mercy",
-        3
-      ],
-      [
-        "Stop And Stare",
-        3
-      ],
-      [
-        "Kiss Me Slowly",
-        3
-      ],
-      [
-        "The Moment",
-        2
-      ],
-      [
-        "Cage",
-        2
-      ],
-      [
-        "Save This Heart",
-        2
-      ],
-      [
-        "How You Move Me so (Allelujah)",
-        2
-      ],
-      [
-        "American Love",
-        2
-      ]
-    ],
-    "top_albums": [
-      [
-        "The Mindsweep",
-        87
-      ],
-      [
-        "Blurryface",
-        49
-      ],
-      [
-        "What Matters Most",
-        40
-      ],
-      [
-        "Illusion",
-        36
-      ],
-      [
-        "This Is All We Know",
-        31
-      ],
-      [
-        "Contexture: Gods, Men, and the Infinite Cosmos",
-        19
-      ],
-      [
-        "The Moment",
-        15
-      ],
-      [
-        "Electrogram",
-        13
-      ],
-      [
-        "Dreaming Out Loud",
-        11
-      ],
-      [
-        "Welcome To The Masquerade",
-        9
-      ],
-      [
-        "Church Clothes Vol. 2",
-        8
-      ],
-      [
-        "The Desired Effect",
-        7
-      ],
-      [
-        "LOVETAP!",
-        6
-      ],
-      [
-        "Lane Boy",
-        6
-      ],
-      [
-        "Overnight",
-        6
-      ],
-      [
-        "You Were Never Alone",
-        5
-      ],
-      [
-        "Nightscape",
-        4
-      ],
-      [
-        "4",
-        4
-      ],
-      [
-        "These Words Become Us",
-        4
-      ],
-      [
-        "Get Your Heart On! - the Second Coming!",
-        4
-      ],
-      [
-        "Hallelujah",
-        3
-      ],
-      [
-        "Tear in My Heart",
-        3
-      ],
-      [
-        "The Way It Was",
-        3
-      ],
-      [
-        "Stressed Out",
-        2
-      ],
-      [
-        "Mansion",
-        2
-      ],
-      [
-        "Never Forget: The Ultimate Collection",
-        1
-      ],
-      [
-        "Fairly Local",
-        1
-      ],
-      [
-        "x",
-        1
-      ],
-      [
-        "V",
-        1
-      ],
-      [
-        "Gold",
-        1
-      ],
-      [
-        "Closer EP",
-        1
-      ],
-      [
-        "Anomaly",
-        1
-      ],
-      [
-        "Currents",
-        1
-      ],
-      [
-        "Black Cat",
-        1
-      ],
-      [
-        "Royal Flush",
-        1
-      ],
-      [
-        "Crave",
-        1
-      ]
-    ],
-    "year_stats": {
-      "total_plays": 388,
-      "total_minutes": 1301.3861333333334,
-      "total_hours": 21.68976888888889,
-      "unique_artists": 28,
-      "unique_tracks": 148,
-      "unique_albums": 36,
-      "unique_days_with_listening": 41,
-      "average_track_length_minutes": 3.3540879725085913,
-      "average_daily_minutes": 31.741125203252036,
-      "skip_rate_percentage": 14.948453608247423,
-      "completion_rate_percentage": 88.4020618556701,
-      "offline_percentage": 0.0,
-      "shuffle_percentage": 0.0,
-      "first_play": "2015-05-08T00:14:03",
-      "last_play": "2015-08-22T20:15:22",
-      "peak_month": "May",
-      "peak_month_plays": 195,
-      "top_platform": [
-        "iOS",
-        381
-      ],
-      "top_provider": [
-        "Spotify",
-        388
-      ],
-      "provider_breakdown": {
-        "Spotify": 388
-      },
-      "platform_breakdown": {
-        "Other": 7,
-        "iOS": 381
-      },
-      "monthly_breakdown": {
-        "May": {
-          "plays": 195,
-          "minutes": 655.2147,
-          "hours": 10.920245
-        },
-        "June": {
-          "plays": 83,
-          "minutes": 288.4188666666667,
-          "hours": 4.806981111111112
-        },
-        "July": {
-          "plays": 39,
-          "minutes": 123.09663333333333,
-          "hours": 2.0516105555555555
-        },
-        "August": {
-          "plays": 71,
-          "minutes": 234.65593333333334,
-          "hours": 3.9109322222222223
-        }
-      }
-    }
-  },
   "2016": {
     "year": 2016,
     "top_artists": [
@@ -2048,42 +1405,42 @@
     "top_artists": [
       [
         "Fall Out Boy",
-        316
+        314
       ],
       [
         "Twenty One Pilots",
-        282
+        281
       ],
       [
         "Panic! At The Disco",
-        225
+        223
       ],
       [
         "Imagine Dragons",
-        215
+        213
       ],
       [
         "The Maine",
-        178
+        169
       ],
       [
         "for KING & COUNTRY",
-        159
+        157
       ],
       [
         "The Wombats",
-        147
+        131
       ],
       [
         "888",
-        109
-      ],
-      [
-        "Bastille",
-        90
+        108
       ],
       [
         "The Rocket Summer",
+        88
+      ],
+      [
+        "Bastille",
         88
       ],
       [
@@ -2099,16 +1456,16 @@
         73
       ],
       [
-        "Yellowcard",
-        64
-      ],
-      [
         "A Day To Remember",
         64
       ],
       [
         "Foreign Air",
         63
+      ],
+      [
+        "Yellowcard",
+        62
       ],
       [
         "Sir Sly",
@@ -2155,12 +1512,12 @@
         49
       ],
       [
-        "OneRepublic",
+        "Vesperteen",
         48
       ],
       [
-        "Vesperteen",
-        48
+        "OneRepublic",
+        47
       ],
       [
         "Manafest",
@@ -2243,8 +1600,8 @@
         35
       ],
       [
-        "AJR",
-        35
+        "The Palms",
+        34
       ]
     ],
     "top_tracks": [
@@ -2309,10 +1666,6 @@
         34
       ],
       [
-        "Black Butterflies and Déjà Vu",
-        33
-      ],
-      [
         "Same Mistakes",
         33
       ],
@@ -2326,6 +1679,10 @@
       ],
       [
         "Dangerous Night",
+        31
+      ],
+      [
+        "Black Butterflies and Déjà Vu",
         31
       ],
       [
@@ -2393,10 +1750,6 @@
         24
       ],
       [
-        "Way With Words",
-        24
-      ],
-      [
         "Growing Pains",
         23
       ],
@@ -2406,10 +1759,6 @@
       ],
       [
         "Waking Up",
-        23
-      ],
-      [
-        "Jumpsuit",
         23
       ],
       [
@@ -2429,6 +1778,14 @@
         22
       ],
       [
+        "Way With Words",
+        22
+      ],
+      [
+        "Jumpsuit",
+        22
+      ],
+      [
         "Boomerang",
         21
       ],
@@ -2441,11 +1798,11 @@
         20
       ],
       [
-        "Glitter",
+        "Forever",
         20
       ],
       [
-        "Forever",
+        "Human to Human",
         20
       ]
     ],
@@ -2464,11 +1821,7 @@
       ],
       [
         "Lovely Little Lonely",
-        135
-      ],
-      [
-        "Beautiful People Will Ruin Your Life",
-        85
+        126
       ],
       [
         "Everybody Can't Complain",
@@ -2481,6 +1834,10 @@
       [
         "MANIA",
         70
+      ],
+      [
+        "Beautiful People Will Ruin Your Life",
+        69
       ],
       [
         "Miracles",
@@ -2619,10 +1976,6 @@
         25
       ],
       [
-        "Panic Vertigo - EP",
-        25
-      ],
-      [
         "Before the Waves",
         24
       ],
@@ -2647,24 +2000,28 @@
         23
       ],
       [
+        "Panic Vertigo - EP",
+        23
+      ],
+      [
         "All Time",
         22
       ]
     ],
     "year_stats": {
-      "total_plays": 9289,
-      "total_minutes": 22709.02625,
-      "total_hours": 378.4837708333333,
-      "unique_artists": 1528,
-      "unique_tracks": 3336,
-      "unique_albums": 2240,
+      "total_plays": 9189,
+      "total_minutes": 22538.129566666667,
+      "total_hours": 375.63549277777776,
+      "unique_artists": 1520,
+      "unique_tracks": 3317,
+      "unique_albums": 2229,
       "unique_days_with_listening": 322,
-      "average_track_length_minutes": 2.444722386693939,
-      "average_daily_minutes": 70.52492624223602,
-      "skip_rate_percentage": 2.4868123587038435,
-      "completion_rate_percentage": 57.368930993648405,
-      "offline_percentage": 8.49391753687157,
-      "shuffle_percentage": 12.111099149531704,
+      "average_track_length_minutes": 2.45272930315232,
+      "average_daily_minutes": 69.99419120082815,
+      "skip_rate_percentage": 2.513875285667646,
+      "completion_rate_percentage": 57.7647186853847,
+      "offline_percentage": 8.586353248449234,
+      "shuffle_percentage": 12.242899118511264,
       "first_play": "2018-01-01T17:00:00",
       "last_play": "2018-12-30T04:59:47",
       "peak_month": "June",
@@ -2675,18 +2032,16 @@
       ],
       "top_provider": [
         "Spotify",
-        8437
+        8337
       ],
       "provider_breakdown": {
         "Apple Music": 852,
-        "Spotify": 8437
+        "Spotify": 8337
       },
       "platform_breakdown": {
         "iOS": 8957,
         "Other": 71,
-        "Windows": 161,
-        "Web Player": 88,
-        "Google Cast": 12
+        "Windows": 161
       },
       "monthly_breakdown": {
         "January": {
@@ -2700,19 +2055,19 @@
           "hours": 29.57983222222222
         },
         "March": {
-          "plays": 1069,
-          "minutes": 2581.438166666667,
-          "hours": 43.02396944444445
+          "plays": 1048,
+          "minutes": 2546.5875,
+          "hours": 42.443125
         },
         "April": {
-          "plays": 786,
-          "minutes": 1972.6302833333332,
-          "hours": 32.87717138888889
+          "plays": 745,
+          "minutes": 1905.4506666666666,
+          "hours": 31.75751111111111
         },
         "May": {
-          "plays": 975,
-          "minutes": 2289.8143333333333,
-          "hours": 38.16357222222222
+          "plays": 953,
+          "minutes": 2251.9237166666667,
+          "hours": 37.53206194444444
         },
         "June": {
           "plays": 1082,
@@ -2720,14 +2075,14 @@
           "hours": 41.621942222222216
         },
         "July": {
-          "plays": 1044,
-          "minutes": 2425.5572333333334,
-          "hours": 40.42595388888889
+          "plays": 1040,
+          "minutes": 2412.992566666667,
+          "hours": 40.21654277777778
         },
         "August": {
-          "plays": 519,
-          "minutes": 1208.1022,
-          "hours": 20.135036666666668
+          "plays": 512,
+          "minutes": 1195.1389666666666,
+          "hours": 19.918982777777778
         },
         "September": {
           "plays": 821,
@@ -2735,19 +2090,19 @@
           "hours": 27.260936388888886
         },
         "October": {
-          "plays": 613,
-          "minutes": 1475.5909166666668,
-          "hours": 24.593181944444446
+          "plays": 610,
+          "minutes": 1474.21685,
+          "hours": 24.570280833333335
         },
         "November": {
-          "plays": 612,
-          "minutes": 1469.4784166666666,
-          "hours": 24.491306944444442
+          "plays": 611,
+          "minutes": 1469.3256166666665,
+          "hours": 24.488760277777775
         },
         "December": {
-          "plays": 767,
-          "minutes": 1642.2508166666667,
-          "hours": 27.370846944444445
+          "plays": 766,
+          "minutes": 1638.3298,
+          "hours": 27.305496666666667
         }
       }
     }
@@ -2755,10 +2110,6 @@
   "2019": {
     "year": 2019,
     "top_artists": [
-      [
-        "Wakeem",
-        663
-      ],
       [
         "Marianas Trench",
         248
@@ -2936,10 +2287,6 @@
         31
       ],
       [
-        "Phuketian",
-        31
-      ],
-      [
         "Built By Titan",
         30
       ],
@@ -2954,65 +2301,17 @@
       [
         "Hawk Nelson",
         29
+      ],
+      [
+        "Royal Teeth",
+        29
+      ],
+      [
+        "Thousand Foot Krutch",
+        28
       ]
     ],
     "top_tracks": [
-      [
-        "False Witness",
-        51
-      ],
-      [
-        "California Illusions",
-        51
-      ],
-      [
-        "A Boy and His God",
-        51
-      ],
-      [
-        "Paved Curtain",
-        50
-      ],
-      [
-        "Living Trust",
-        49
-      ],
-      [
-        "Beyond the Surface",
-        49
-      ],
-      [
-        "Gwenevere Experience",
-        47
-      ],
-      [
-        "Broken Together",
-        47
-      ],
-      [
-        "Forever Gone",
-        47
-      ],
-      [
-        "Fools Dreams",
-        46
-      ],
-      [
-        "Confetti Underground",
-        45
-      ],
-      [
-        "Dusty Saddles",
-        45
-      ],
-      [
-        "Daughter of Fire",
-        44
-      ],
-      [
-        "All Night Long",
-        41
-      ],
       [
         "Waking Up",
         33
@@ -3156,13 +2455,65 @@
       [
         "Dance With Ya",
         14
+      ],
+      [
+        "Chlorine",
+        13
+      ],
+      [
+        "THE HARDEST ART",
+        13
+      ],
+      [
+        "Toy Soldiers",
+        13
+      ],
+      [
+        "B Team",
+        13
+      ],
+      [
+        "Rebel Girl",
+        13
+      ],
+      [
+        "Fitzpleasure",
+        13
+      ],
+      [
+        "Everybody Gets a Piece",
+        12
+      ],
+      [
+        "I Knew You When",
+        12
+      ],
+      [
+        "Champion",
+        12
+      ],
+      [
+        "Opening Up",
+        12
+      ],
+      [
+        "Respighi: Pini di Roma, P. 141: IV. I pini della Via Appia",
+        12
+      ],
+      [
+        "Shatter Us",
+        12
+      ],
+      [
+        "Awayaway",
+        12
+      ],
+      [
+        "The Thrill",
+        12
       ]
     ],
     "top_albums": [
-      [
-        "War for Honor",
-        663
-      ],
       [
         "Phantoms",
         52
@@ -3260,10 +2611,6 @@
         12
       ],
       [
-        "Not Today",
-        12
-      ],
-      [
         "Everybody Gets a Piece",
         11
       ],
@@ -3316,18 +2663,6 @@
         9
       ],
       [
-        "To the Top",
-        9
-      ],
-      [
-        "Cross Ways",
-        9
-      ],
-      [
-        "Qanun Flights",
-        9
-      ],
-      [
         "HiLo (feat. Armors)",
         8
       ],
@@ -3358,26 +2693,46 @@
       [
         "Warrior",
         8
+      ],
+      [
+        "Green Lights EP",
+        7
+      ],
+      [
+        "Lonely Dance",
+        7
+      ],
+      [
+        "Simple Romance",
+        7
+      ],
+      [
+        "LET IT HAPPEN",
+        7
+      ],
+      [
+        "The Other Way",
+        7
       ]
     ],
     "year_stats": {
-      "total_plays": 6721,
-      "total_minutes": 18490.626866666666,
-      "total_hours": 308.17711444444444,
-      "unique_artists": 893,
-      "unique_tracks": 2467,
-      "unique_albums": 636,
-      "unique_days_with_listening": 337,
-      "average_track_length_minutes": 2.7511719783762336,
-      "average_daily_minutes": 54.86832898120672,
-      "skip_rate_percentage": 19.029906263948817,
-      "completion_rate_percentage": 55.60184496354709,
-      "offline_percentage": 0.6100282696027377,
-      "shuffle_percentage": 1.6366612111292964,
+      "total_plays": 5972,
+      "total_minutes": 18175.81578333333,
+      "total_hours": 302.93026305555554,
+      "unique_artists": 882,
+      "unique_tracks": 2426,
+      "unique_albums": 617,
+      "unique_days_with_listening": 335,
+      "average_track_length_minutes": 3.043505656954677,
+      "average_daily_minutes": 54.25616651741293,
+      "skip_rate_percentage": 21.416610850636303,
+      "completion_rate_percentage": 62.47488278633624,
+      "offline_percentage": 0.6865371734762223,
+      "shuffle_percentage": 1.8419290020093773,
       "first_play": "2019-01-01T23:45:03",
       "last_play": "2019-12-31T22:00:00",
       "peak_month": "April",
-      "peak_month_plays": 1231,
+      "peak_month_plays": 660,
       "top_platform": [
         "iOS",
         5819
@@ -3387,15 +2742,12 @@
         4389
       ],
       "provider_breakdown": {
-        "Spotify": 2332,
+        "Spotify": 1583,
         "Apple Music": 4389
       },
       "platform_breakdown": {
         "iOS": 5819,
-        "Windows": 213,
-        "Google Cast": 1,
-        "Web Player": 663,
-        "macOS": 6,
+        "Windows": 134,
         "Watch": 19
       },
       "monthly_breakdown": {
@@ -3405,24 +2757,24 @@
           "hours": 18.208705833333333
         },
         "February": {
-          "plays": 468,
-          "minutes": 1115.3853166666668,
-          "hours": 18.58975527777778
+          "plays": 465,
+          "minutes": 1114.2531000000001,
+          "hours": 18.570885
         },
         "March": {
-          "plays": 547,
-          "minutes": 1115.8502666666668,
-          "hours": 18.597504444444446
+          "plays": 531,
+          "minutes": 1104.3724499999998,
+          "hours": 18.406207499999997
         },
         "April": {
-          "plays": 1231,
-          "minutes": 2174.9456,
-          "hours": 36.249093333333334
+          "plays": 660,
+          "minutes": 1945.9894166666668,
+          "hours": 32.43315694444445
         },
         "May": {
-          "plays": 698,
-          "minutes": 1912.8053666666667,
-          "hours": 31.880089444444444
+          "plays": 539,
+          "minutes": 1839.5605,
+          "hours": 30.659341666666666
         },
         "June": {
           "plays": 554,
@@ -5920,7 +5272,7 @@
     "top_artists": [
       [
         "Twenty One Pilots",
-        403
+        405
       ],
       [
         "Judah & the Lion",
@@ -5932,7 +5284,7 @@
       ],
       [
         "Beartooth",
-        143
+        144
       ],
       [
         "The National Parks",
@@ -5991,11 +5343,11 @@
         57
       ],
       [
-        "Enter Shikari",
-        54
+        "The Maine",
+        55
       ],
       [
-        "The Maine",
+        "Enter Shikari",
         54
       ],
       [
@@ -6332,7 +5684,7 @@
       ],
       [
         "The Surface",
-        112
+        113
       ],
       [
         "Haven",
@@ -6376,7 +5728,7 @@
       ],
       [
         "Trench",
-        37
+        38
       ],
       [
         "American Beauty/American Psycho",
@@ -6451,15 +5803,15 @@
         23
       ],
       [
+        "Overcompensate",
+        21
+      ],
+      [
         "COLD NIGHTS // SUMMER DAYS",
         21
       ],
       [
         "A Hopeful Sign",
-        20
-      ],
-      [
-        "Overcompensate",
         20
       ],
       [
@@ -6524,37 +5876,37 @@
       ]
     ],
     "year_stats": {
-      "total_plays": 5070,
-      "total_minutes": 15182.424883333333,
-      "total_hours": 253.0404147222222,
-      "unique_artists": 508,
-      "unique_tracks": 1925,
-      "unique_albums": 1058,
+      "total_plays": 5078,
+      "total_minutes": 15182.549566666667,
+      "total_hours": 253.04249277777777,
+      "unique_artists": 510,
+      "unique_tracks": 1927,
+      "unique_albums": 1059,
       "unique_days_with_listening": 334,
-      "average_track_length_minutes": 2.994561120973044,
-      "average_daily_minutes": 45.45636192614771,
-      "skip_rate_percentage": 18.106508875739642,
-      "completion_rate_percentage": 71.32149901380672,
-      "offline_percentage": 12.307692307692308,
-      "shuffle_percentage": 1.7751479289940828,
+      "average_track_length_minutes": 2.9898679729552318,
+      "average_daily_minutes": 45.45673522954092,
+      "skip_rate_percentage": 18.07798345805435,
+      "completion_rate_percentage": 71.20913745569122,
+      "offline_percentage": 12.288302481291847,
+      "shuffle_percentage": 1.7723513194170932,
       "first_play": "2024-01-01T00:10:07",
       "last_play": "2024-12-30T17:22:58",
       "peak_month": "December",
       "peak_month_plays": 665,
       "top_platform": [
         "iOS",
-        3339
+        3347
       ],
       "top_provider": [
         "Spotify",
-        4997
+        5005
       ],
       "provider_breakdown": {
-        "Spotify": 4997,
+        "Spotify": 5005,
         "Apple Music": 73
       },
       "platform_breakdown": {
-        "iOS": 3339,
+        "iOS": 3347,
         "macOS": 1164,
         "Other": 567
       },
@@ -6570,9 +5922,9 @@
           "hours": 17.147188333333336
         },
         "March": {
-          "plays": 268,
-          "minutes": 791.6550166666667,
-          "hours": 13.194250277777778
+          "plays": 271,
+          "minutes": 791.7391833333334,
+          "hours": 13.195653055555557
         },
         "April": {
           "plays": 328,
@@ -6580,9 +5932,9 @@
           "hours": 16.306029444444444
         },
         "May": {
-          "plays": 453,
-          "minutes": 1385.5896666666667,
-          "hours": 23.09316111111111
+          "plays": 457,
+          "minutes": 1385.6137666666666,
+          "hours": 23.093562777777777
         },
         "June": {
           "plays": 229,
@@ -6605,9 +5957,9 @@
           "hours": 19.800829444444446
         },
         "October": {
-          "plays": 437,
-          "minutes": 1331.0138166666666,
-          "hours": 22.183563611111108
+          "plays": 438,
+          "minutes": 1331.0302333333334,
+          "hours": 22.183837222222223
         },
         "November": {
           "plays": 493,

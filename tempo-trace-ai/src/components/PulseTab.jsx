@@ -118,12 +118,12 @@ const TimelineCard = ({ title, data, icon: Icon }) => (
 
 // Chart Components
 const ChartCard = ({ title, children, className = "" }) => (
-  <div className={`cyber-card p-6 ${className}`}>
+  <div className={`cyber-card p-6 w-full h-auto flex flex-col justify-start items-stretch my-8 ${className}`}>
     <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
       <Activity className="w-5 h-5 text-cyber-blue" />
       {title}
     </h3>
-    <div className="h-48">
+    <div className="flex-1 w-full h-full">
       {children}
     </div>
   </div>
@@ -488,54 +488,38 @@ const PulseTab = ({ data, artistSummary, concertData = [] }) => {
       </div>
 
       {/* Stunning Visual Analytics Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <ChartCard title="Musical Journey Timeline" className="lg:col-span-2">
+      <div className="flex flex-col gap-12 mb-8">
+        <ChartCard title="Musical Journey Timeline">
           <MusicalJourneyTimeline data={data} />
         </ChartCard>
         <ChartCard title="Daily Rhythm">
           <CircadianChart data={data} />
         </ChartCard>
-        <ChartCard title="Concert Correlation" className="lg:col-span-2">
+        <ChartCard title="Concert Correlation">
           <ConcertStreamingHeatmap data={data} concertData={concertData} artistSummary={artistSummary} />
         </ChartCard>
         <ChartCard title="Discovery Radar">
           <DiscoveryRadar data={data} />
         </ChartCard>
-        <ChartCard title="Global Music Map" className="lg:col-span-3">
+        <ChartCard title="Global Music Map">
           <GlobalMusicMap data={data} />
         </ChartCard>
-      </div>
-
-      {/* Second Row - More Stunning Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <ChartCard title="Artist Loyalty Constellation" className="lg:col-span-2">
+        <ChartCard title="Artist Loyalty Constellation">
           <ArtistLoyaltyConstellation data={data} artistSummary={artistSummary} concertData={concertData} />
         </ChartCard>
-      </div>
-
-      {/* Third Row - Interactive Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <ChartCard title="Discovery vs Nostalgia">
           <DiscoveryNostalgiaFlow data={data} artistSummary={artistSummary} />
         </ChartCard>
         <ChartCard title="Genre Journey">
           <GenreEvolution data={data} />
         </ChartCard>
-      </div>
-
-      {/* Fourth Row - Network & Landscape */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <ChartCard title="Platform Ecosystem">
           <PlatformEcosystemWeb data={data} />
         </ChartCard>
         <ChartCard title="Emotional Landscape">
           <EmotionalListeningLandscape data={data} artistSummary={artistSummary} />
         </ChartCard>
-      </div>
-
-      {/* Fifth Row - Rankings & Traditional Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <ChartCard title="Artist Rankings Flow" className="lg:col-span-2">
+        <ChartCard title="Artist Rankings Flow">
           <ArtistRankingSankey data={data} artistSummary={artistSummary} />
         </ChartCard>
         <ChartCard title="Skip Analysis">

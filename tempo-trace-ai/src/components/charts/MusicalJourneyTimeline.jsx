@@ -11,25 +11,30 @@ const MusicalJourneyTimeline = ({ data }) => {
     }
 
     const monthlyData = data.temporal_patterns.monthly_breakdown;
-    const topArtists = data.top_lists.top_artists.slice(0, 10).map(([name]) => name);
-    
-    // Create monthly artist data
+    // Use all top artists, sorted in reverse order by total plays
+    const topArtists = [...data.top_lists.top_artists]
+      .sort((a, b) => b[1] - a[1])
+      .map(([name]) => name);
+
+    // Get all months
     const months = Object.keys(monthlyData).sort();
     const layers = [];
 
     topArtists.forEach((artist, artistIndex) => {
       const artistData = months.map(month => {
-        // Simulate artist-specific monthly data (in real app, this would come from processed data)
+        // If you have per-artist, per-month data, use it here. Otherwise, fallback to 0.
+        // This assumes monthlyData[month].artist_plays[artist] exists, otherwise fallback to 0.
         const monthData = monthlyData[month];
-        const baseIntensity = Math.random() * 0.3 + 0.1;
-        const seasonalBoost = Math.sin((new Date(month).getMonth() / 12) * Math.PI * 2) * 0.2;
-        const intensity = Math.min(baseIntensity + seasonalBoost, 1);
-        
+        let plays = 0;
+        if (monthData.artist_plays && monthData.artist_plays[artist] !== undefined) {
+          plays = monthData.artist_plays[artist];
+        }
+        // If no per-artist data, fallback to 0
         return {
           month,
           artist,
-          plays: Math.round(monthData.plays * intensity),
-          intensity,
+          plays,
+          intensity: plays, // Use plays directly for now
           color: d3.interpolateViridis(artistIndex / topArtists.length)
         };
       });
@@ -142,10 +147,11 @@ const MusicalJourneyTimeline = ({ data }) => {
                 x={processedData.width - 45}
                 y={processedData.artistScale(artistData[0].artist) + processedData.artistScale.bandwidth()/2}
                 fill={artistData[0].color}
-                fontSize="10"
+                fontSize="16"
                 textAnchor="start"
-                className="font-medium"
+                className="font-bold"
                 opacity={isSelected ? 1 : 0.5}
+                style={{ fontFamily: 'Inter, sans-serif' }}
               >
                 {artistData[0].artist}
               </text>
