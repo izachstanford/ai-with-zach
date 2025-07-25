@@ -53,47 +53,12 @@ if [ ! -f "wrapped_reimagined.py" ]; then
 fi
 print_success "Main script found"
 
-# Check if sample input files exist
-if [ ! -f "input/sample_spotify_streaming.json" ] || [ ! -f "input/sample_Apple Music - Play History Daily Tracks.csv" ]; then
-    print_error "Sample input files not found"
-    exit 1
-fi
-print_success "Sample input files found"
-
 # Test that the processor can run (just show help)
 print_info "Testing CLI interface..."
 python3 wrapped_reimagined.py --help > /dev/null 2>&1
 print_success "CLI interface works"
 
-# Check if sample processing would work (dry run)
-print_info "Checking sample data processing..."
-if python3 -c "
-import json
-import csv
-import pathlib
 
-# Check sample Spotify data
-with open('input/sample_spotify_streaming.json', 'r') as f:
-    spotify_data = json.load(f)
-    if isinstance(spotify_data, list) and len(spotify_data) > 0:
-        print('Sample Spotify data is valid')
-    else:
-        exit(1)
-
-# Check sample Apple Music data
-with open('input/sample_Apple Music - Play History Daily Tracks.csv', 'r') as f:
-    reader = csv.DictReader(f)
-    rows = list(reader)
-    if len(rows) > 0:
-        print('Sample Apple Music data is valid')
-    else:
-        exit(1)
-"; then
-    print_success "Sample data files are valid"
-else
-    print_error "Sample data files are invalid"
-    exit 1
-fi
 
 cd ..
 
@@ -121,15 +86,12 @@ if [ ! -d "node_modules" ]; then
 fi
 print_success "Node.js dependencies are installed"
 
-# Check if sample data files exist in public directory
-if [ ! -f "public/data/sample_lifetime_streaming_stats.json" ] || 
-   [ ! -f "public/data/sample_annual_recaps.json" ] || 
-   [ ! -f "public/data/sample_artist_summary.json" ] || 
-   [ ! -f "public/data/sample_concerts.json" ]; then
-    print_error "Sample data files not found in public/data/"
+# Ensure the data directory exists
+if [ ! -d "public/data" ]; then
+    print_error "public/data directory is missing"
     exit 1
 fi
-print_success "Sample data files found in public directory"
+print_success "public/data directory is present"
 
 # Test that the app builds
 print_info "Testing build process..."
@@ -195,7 +157,6 @@ echo ""
 echo "🎉 Pipeline Testing Complete!"
 echo "=============================="
 print_success "All core components are working correctly"
-print_success "Sample data is properly configured"
 print_success "Documentation is complete"
 print_success "Build processes are functional"
 
@@ -204,7 +165,7 @@ echo "🚀 Ready for Public Release!"
 echo "============================"
 echo "The tempo-trace-ai music analytics pipeline is ready for:"
 echo "• GitHub publication"
-echo "• Community use with sample data"
+echo "• Community use with your data"
 echo "• Complete end-to-end workflow"
 echo "• Documentation and examples"
 

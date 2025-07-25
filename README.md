@@ -2,7 +2,7 @@
 
 A complete end-to-end system for transforming your personal music streaming data into rich, interactive insights. This project combines a powerful Python data processor with a sleek React web dashboard to create your own personalized music analytics experience.
 
-> **Live Demo**: [Try the dashboard with sample data →](https://tempo-trace-ai.vercel.app) _(coming soon)_
+> **Live Demo**: [Try the dashboard →](https://tempo-trace-ai.vercel.app) _(coming soon)_
 
 ---
 
@@ -38,6 +38,11 @@ tempo-trace-ai/
 │
 └── README.md                # This file
 ```
+
+## Requirements
+
+- **Python**: version 3.8 or higher
+- **Node.js**: version 18 or higher
 
 ## 🔄 Complete Workflow
 
@@ -135,7 +140,6 @@ chmod +x test-pipeline.sh
 
 This script tests:
 - ✅ Python data processor functionality
-- ✅ Sample data file validity
 - ✅ Node.js web dashboard build process
 - ✅ File structure and documentation
 - ✅ Complete workflow integration
@@ -169,34 +173,6 @@ When working locally:
    deactivate
    ```
 
----
-
-## 🚀 Quick Start (Try with Sample Data)
-
-Want to see the dashboard in action before processing your own data? The project includes comprehensive sample data:
-
-```bash
-# Clone the repository
-git clone https://github.com/zachstanford/tempo-trace-ai.git
-cd tempo-trace-ai
-
-# Go to the web app
-cd tempo-trace-ai
-
-# Install dependencies
-npm install
-
-# Start with sample data (already included)
-npm run dev
-```
-
-The sample data includes:
-- 3 years of streaming history (2022-2024)
-- 15+ artists with detailed analytics
-- Concert attendance data with venue information
-- Realistic listening patterns and metrics
-
----
 
 ## 🛠️ Technical Details
 
