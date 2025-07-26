@@ -10,10 +10,19 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Get the directory where this script is located (TempoTraceAI dev repo)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WEBSITE_DIR="/Users/zachstanford/Development/website-ai-with-zach"
 TARGET_DIR="$WEBSITE_DIR/public/tempo-trace-ai"
 
-echo -e "${BLUE}🚀 Building tempo-trace-ai...${NC}"
+echo -e "${BLUE}🎵 Deploying TempoTraceAI from development environment...${NC}"
+echo -e "${BLUE}Development repo: $SCRIPT_DIR${NC}"
+echo -e "${BLUE}Target: $TARGET_DIR${NC}"
+
+# Change to the TempoTraceAI development directory
+cd "$SCRIPT_DIR"
+
+echo -e "\n${BLUE}🚀 Building tempo-trace-ai...${NC}"
 
 # Clean previous build
 rm -rf dist/
@@ -29,40 +38,63 @@ if [ $? -eq 0 ]; then
     # Create target directory if it doesn't exist
     mkdir -p "$TARGET_DIR"
     
-    # Copy all built files
-    cp -r dist/* "$TARGET_DIR/"
+    # Clean the target directory first
+    rm -rf "$TARGET_DIR"/*
+    
+    # Copy only the essential built files
+    echo -e "${BLUE}Copying built files...${NC}"
+    
+    # Copy the main HTML file
+    if [ -f "dist/index.html" ]; then
+        cp dist/index.html "$TARGET_DIR/"
+        echo -e "${GREEN}✓ Copied index.html${NC}"
+    else
+        echo -e "${RED}✗ index.html not found in dist${NC}"
+        exit 1
+    fi
+    
+    # Copy assets directory (JavaScript, CSS)
+    if [ -d "dist/assets" ]; then
+        cp -r dist/assets "$TARGET_DIR/"
+        echo -e "${GREEN}✓ Copied assets directory${NC}"
+    else
+        echo -e "${RED}✗ assets directory not found in dist${NC}"
+        exit 1
+    fi
+    
+    # Copy data directory
+    if [ -d "dist/data" ]; then
+        cp -r dist/data "$TARGET_DIR/"
+        echo -e "${GREEN}✓ Copied data directory${NC}"
+    else
+        echo -e "${RED}✗ data directory not found in dist${NC}"
+        exit 1
+    fi
+    
+    # Copy only the essential favicon (SVG version)
+    if [ -f "dist/favicon.svg" ]; then
+        cp dist/favicon.svg "$TARGET_DIR/"
+        echo -e "${GREEN}✓ Copied favicon.svg${NC}"
+    fi
+    
+    # Copy any other essential files (like apple-touch-icon if needed)
+    if [ -f "dist/apple-touch-icon.png" ]; then
+        cp dist/apple-touch-icon.png "$TARGET_DIR/"
+        echo -e "${GREEN}✓ Copied apple-touch-icon.png${NC}"
+    fi
     
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✅ Deployment successful!${NC}"
         
-        # Fix paths in the deployed HTML file for local testing
-        echo -e "${BLUE}🔧 Fixing paths for local testing...${NC}"
-        
-        # Create a development version of index.html with relative paths
-        cp "$TARGET_DIR/index.html" "$TARGET_DIR/index.html.production"
-        
-        # Update the production version to use absolute paths for website deployment
-        sed -i '' 's|src="./assets/|src="/tempo-trace-ai/assets/|g' "$TARGET_DIR/index.html"
-        sed -i '' 's|href="./assets/|href="/tempo-trace-ai/assets/|g' "$TARGET_DIR/index.html"
-        sed -i '' 's|href="./favicon|href="/tempo-trace-ai/favicon|g' "$TARGET_DIR/index.html"
-        
-        # Create a development version with relative paths
-        cp "$TARGET_DIR/index.html.production" "$TARGET_DIR/index.html.development"
-        sed -i '' 's|src="/tempo-trace-ai/assets/|src="./assets/|g' "$TARGET_DIR/index.html.development"
-        sed -i '' 's|href="/tempo-trace-ai/assets/|href="./assets/|g' "$TARGET_DIR/index.html.development"
-        sed -i '' 's|href="/tempo-trace-ai/favicon|href="./favicon|g' "$TARGET_DIR/index.html.development"
-        
-        echo -e "${GREEN}✅ Paths configured for both production and development!${NC}"
-        
         # Show deployment summary
         echo ""
         echo -e "${YELLOW}📊 Deployment Summary:${NC}"
-        echo -e "${BLUE}- Built with Vite${NC}"
-        echo -e "${BLUE}- Favicon: ✅ Both PNG and SVG included${NC}"
+        echo -e "${BLUE}- Built with Vite from development repo${NC}"
+        echo -e "${BLUE}- Favicon: ✅ SVG only (clean)${NC}"
         echo -e "${BLUE}- Base path: /tempo-trace-ai/ (production)${NC}"
         echo -e "${BLUE}- Data files: ✅ Updated${NC}"
         echo -e "${BLUE}- Assets: ✅ Optimized and deployed${NC}"
-        echo -e "${BLUE}- Paths: ✅ Configured for both environments${NC}"
+        echo -e "${BLUE}- Clean: ✅ Only built files copied${NC}"
         
         # Show file sizes
         echo ""
@@ -72,12 +104,12 @@ if [ $? -eq 0 ]; then
         echo ""
         echo -e "${YELLOW}🌐 Your app is now live at:${NC}"
         echo -e "${BLUE}Production: https://aiwithzach.com/tempo-trace-ai${NC}"
-        echo -e "${BLUE}Local testing: http://localhost:8000/ (when using test-local.sh)${NC}"
+        echo -e "${BLUE}Local testing: ./test-local.sh${NC}"
         
         echo ""
         echo -e "${YELLOW}📝 Next steps:${NC}"
-        echo -e "${BLUE}1. Commit and push changes in website-ai-with-zach${NC}"
-        echo -e "${BLUE}2. Test locally with: ./test-local.sh${NC}"
+        echo -e "${BLUE}1. Test locally: ./test-local.sh${NC}"
+        echo -e "${BLUE}2. Commit and push changes in website-ai-with-zach${NC}"
         echo -e "${BLUE}3. Deploy to production via Netlify${NC}"
         
     else
