@@ -2,125 +2,135 @@ import React, { useMemo, useState } from 'react';
 import * as d3 from 'd3';
 
 const ConcertStreamingHeatmap = ({ data, concertData, artistSummary }) => {
-  const [selectedArtist, setSelectedArtist] = useState(null);
+  const [selectedCell, setSelectedCell] = useState(null);
   const [tooltipData, setTooltipData] = useState(null);
 
   const processedData = useMemo(() => {
-    if (!concertData || !data?.temporal_patterns?.monthly_breakdown || !artistSummary) {
-      return { heatmapData: [], artists: [], months: [], scales: null };
+    if (!concertData || !artistSummary || !data?.temporal_patterns?.yearly_breakdown) {
+      return { heatmapData: [], artists: [], years: [], scales: null };
     }
 
-    // Filter concerts with actual dates and artists in our data
-    const validConcerts = concertData.filter(concert => 
-      concert.date && concert.date !== '2010-01-01' && artistSummary[concert.artist]
+    // Get all years from both concert data and yearly breakdown
+    const concertYears = [...new Set(concertData.map(c => new Date(c.date).getFullYear()))].sort();
+    const yearlyData = data.temporal_patterns.yearly_breakdown;
+    const allYears = [...new Set([...Object.keys(yearlyData), ...concertYears])].sort();
+    
+    // Filter to only show concerts since 2023, but keep all years for average calculation
+    const recentConcerts = concertData.filter(c => new Date(c.date).getFullYear() >= 2023);
+    const recentConcertYears = [...new Set(recentConcerts.map(c => new Date(c.date).getFullYear()))].sort();
+    
+    // Get all artists that have both concert data and streaming data
+    const concertArtists = [...new Set(recentConcerts.map(c => c.artist))];
+    const streamingArtists = Object.keys(artistSummary);
+    const artistsWithBoth = concertArtists.filter(artist => 
+      streamingArtists.includes(artist) && artistSummary[artist]?.yearly_breakdown
     );
 
-    if (validConcerts.length === 0) {
-      return { heatmapData: [], artists: [], months: [], scales: null };
+    if (artistsWithBoth.length === 0 || allYears.length === 0) {
+      return { heatmapData: [], artists: [], years: [], scales: null };
     }
 
-    const monthlyData = data.temporal_patterns.monthly_breakdown;
-    const months = Object.keys(monthlyData).sort();
-    const artists = [...new Set(validConcerts.map(c => c.artist))];
-
+    // Calculate correlation data for each artist-year combination
     const heatmapData = [];
+    const correlationData = [];
 
-    artists.forEach(artist => {
-      const concerts = validConcerts.filter(c => c.artist === artist);
+    artistsWithBoth.forEach(artist => {
       const artistData = artistSummary[artist];
+      const artistConcerts = recentConcerts.filter(c => c.artist === artist);
+      const concertYears = new Set(artistConcerts.map(c => new Date(c.date).getFullYear()));
       
-      if (!artistData) return;
-
-      months.forEach(month => {
-        const monthDate = new Date(month);
-        const monthPlays = monthlyData[month]?.plays || 0;
+      // Use all years for average calculation, but only show recent concert years
+      const displayYears = recentConcertYears.length > 0 ? recentConcertYears : allYears;
+      
+      displayYears.forEach(year => {
+        const yearStreams = artistData.yearly_breakdown[year]?.streams || 0;
+        const hasConcert = concertYears.has(parseInt(year));
+        const concertCount = artistConcerts.filter(c => 
+          new Date(c.date).getFullYear() === parseInt(year)
+        ).length;
         
-        // Calculate concert effect
-        let concertEffect = 0;
-        let nearestConcert = null;
-        let daysSinceConcert = Infinity;
-
-        concerts.forEach(concert => {
-          const concertDate = new Date(concert.date);
-          const daysDiff = Math.abs((monthDate - concertDate) / (1000 * 60 * 60 * 24));
-          
-          if (daysDiff < daysSinceConcert) {
-            daysSinceConcert = daysDiff;
-            nearestConcert = concert;
-          }
-
-          // Concert effect decays over time (strongest within 30 days)
-          const effect = Math.max(0, 1 - daysDiff / 90); // 90-day window
-          concertEffect = Math.max(concertEffect, effect);
-        });
-
-        // Estimate artist's monthly plays (simplified calculation)
-        const artistMonthlyPlays = Math.round(
-          (artistData.total_streams / artistData.years_active / 12) * (1 + concertEffect)
-        );
-
-        const correlationStrength = concertEffect * (concert => {
-          if (daysSinceConcert <= 7) return 1.0;
-          if (daysSinceConcert <= 30) return 0.8;
-          if (daysSinceConcert <= 60) return 0.5;
-          if (daysSinceConcert <= 90) return 0.3;
-          return 0.1;
-        })();
-
+        // Calculate average streams for non-concert years using ALL historical data
+        const nonConcertYears = allYears.filter(y => !concertYears.has(parseInt(y)));
+        const avgNonConcertStreams = nonConcertYears.length > 0 
+          ? nonConcertYears.reduce((sum, y) => sum + (artistData.yearly_breakdown[y]?.streams || 0), 0) / nonConcertYears.length
+          : 0;
+        
+        // Calculate correlation strength
+        let correlationStrength = 0;
+        if (hasConcert && avgNonConcertStreams > 0) {
+          const increase = (yearStreams - avgNonConcertStreams) / avgNonConcertStreams;
+          correlationStrength = Math.max(0, Math.min(1, increase)); // Normalize to 0-1
+        }
+        
         heatmapData.push({
           artist,
-          month,
-          plays: artistMonthlyPlays,
-          concertEffect,
+          year,
+          streams: yearStreams,
+          hasConcert,
+          concertCount,
+          avgNonConcertStreams,
           correlationStrength,
-          nearestConcert,
-          daysSinceConcert: daysSinceConcert === Infinity ? null : Math.round(daysSinceConcert),
-          monthDate
+          increase: hasConcert ? ((yearStreams - avgNonConcertStreams) / avgNonConcertStreams * 100) : 0
         });
+        
+        if (hasConcert) {
+          correlationData.push({
+            artist,
+            year,
+            increase: ((yearStreams - avgNonConcertStreams) / avgNonConcertStreams * 100),
+            streams: yearStreams,
+            avgStreams: avgNonConcertStreams
+          });
+        }
       });
     });
 
     // Create scales
-    const width = 1000;
+    const width = 800;
     const height = 400;
-    const cellWidth = (width - 100) / months.length;
-    const cellHeight = (height - 100) / artists.length;
+    const margin = { top: 60, right: 20, bottom: 60, left: 120 };
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
 
-    const timeScale = d3.scaleBand()
-      .domain(months)
-      .range([80, width - 20])
+    const xScale = d3.scaleBand()
+      .domain(recentConcertYears.length > 0 ? recentConcertYears : allYears)
+      .range([0, chartWidth])
       .padding(0.05);
 
-    const artistScale = d3.scaleBand()
-      .domain(artists)
-      .range([20, height - 80])
+    const yScale = d3.scaleBand()
+      .domain(artistsWithBoth)
+      .range([0, chartHeight])
       .padding(0.05);
 
     const colorScale = d3.scaleSequential(d3.interpolateRdYlBu)
       .domain([0, 1]);
 
-    const intensityScale = d3.scaleLinear()
-      .domain([0, d3.max(heatmapData, d => d.correlationStrength)])
-      .range([0, 1]);
-
-    return {
-      heatmapData,
-      artists,
-      months,
-      scales: { timeScale, artistScale, colorScale, intensityScale },
-      dimensions: { width, height, cellWidth, cellHeight }
+    return { 
+      heatmapData, 
+      artists: artistsWithBoth, 
+      years: allYears, 
+      recentConcertYears,
+      scales: { xScale, yScale, colorScale },
+      correlationData,
+      width,
+      height,
+      margin,
+      chartWidth,
+      chartHeight
     };
-  }, [data, concertData, artistSummary]);
+  }, [concertData, artistSummary, data]);
 
   const handleCellHover = (cellData, event) => {
+    setSelectedCell(cellData);
     setTooltipData({
-      data: cellData,
       x: event.clientX,
-      y: event.clientY
+      y: event.clientY,
+      data: cellData
     });
   };
 
   const handleCellLeave = () => {
+    setSelectedCell(null);
     setTooltipData(null);
   };
 
@@ -128,22 +138,20 @@ const ConcertStreamingHeatmap = ({ data, concertData, artistSummary }) => {
     return (
       <div className="flex items-center justify-center h-full text-gray-400">
         <div className="text-center">
-          <p>No concert correlation data available</p>
-          <p className="text-sm mt-1">Need concert dates and streaming data for analysis</p>
+          <p>No concert-streaming correlation data available</p>
+          <p className="text-sm mt-1">Need artists with both concert and streaming data</p>
         </div>
       </div>
     );
   }
 
-  const { heatmapData, artists, months, scales, dimensions } = processedData;
-
   return (
-    <div className="relative w-full h-full">
-      <svg width="100%" height="100%" viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}>
+    <div className="relative w-full h-full bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+      <svg width="100%" height="100%" viewBox={`0 0 ${processedData.width} ${processedData.height}`}>
         <defs>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-            <feMerge> 
+          <filter id="cellGlow">
+            <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+            <feMerge>
               <feMergeNode in="coloredBlur"/>
               <feMergeNode in="SourceGraphic"/>
             </feMerge>
@@ -151,14 +159,14 @@ const ConcertStreamingHeatmap = ({ data, concertData, artistSummary }) => {
         </defs>
 
         {/* Background grid */}
-        <g className="opacity-10">
-          {months.filter((_, i) => i % 6 === 0).map(month => (
+        <g opacity="0.1">
+          {(processedData.recentConcertYears.length > 0 ? processedData.recentConcertYears : processedData.years).map(year => (
             <line
-              key={month}
-              x1={scales.timeScale(month)}
-              y1="20"
-              x2={scales.timeScale(month)}
-              y2={dimensions.height - 80}
+              key={year}
+              x1={processedData.scales.xScale(year) + processedData.margin.left}
+              y1={processedData.margin.top}
+              x2={processedData.scales.xScale(year) + processedData.margin.left}
+              y2={processedData.height - processedData.margin.bottom}
               stroke="#ffffff"
               strokeWidth="0.5"
               strokeDasharray="2,2"
@@ -166,167 +174,146 @@ const ConcertStreamingHeatmap = ({ data, concertData, artistSummary }) => {
           ))}
         </g>
 
-        {/* Heatmap cells */}
-        {heatmapData.map((cell, index) => {
-          const isHighlighted = selectedArtist === null || selectedArtist === cell.artist;
-          const opacity = isHighlighted ? Math.max(0.1, cell.correlationStrength) : 0.1;
-          const glowIntensity = cell.correlationStrength > 0.5 ? 'url(#glow)' : 'none';
-
-          return (
-            <rect
-              key={index}
-              x={scales.timeScale(cell.month)}
-              y={scales.artistScale(cell.artist)}
-              width={scales.timeScale.bandwidth()}
-              height={scales.artistScale.bandwidth()}
-              fill={cell.concertEffect > 0 ? '#00f5ff' : scales.colorScale(cell.correlationStrength)}
-              opacity={opacity}
-              stroke={cell.concertEffect > 0 ? '#ffffff' : 'none'}
-              strokeWidth={cell.concertEffect > 0.7 ? '2' : '1'}
-              filter={glowIntensity}
-              className="transition-all duration-200 cursor-pointer"
-              onMouseEnter={(e) => handleCellHover(cell, e)}
-              onMouseLeave={handleCellLeave}
-            />
-          );
-        })}
-
-        {/* Concert event markers */}
-        {heatmapData
-          .filter(cell => cell.concertEffect > 0 && cell.daysSinceConcert <= 7)
-          .map((cell, index) => (
-            <g key={index}>
-              <circle
-                cx={scales.timeScale(cell.month) + scales.timeScale.bandwidth() / 2}
-                cy={scales.artistScale(cell.artist) + scales.artistScale.bandwidth() / 2}
-                r="4"
-                fill="#ff0080"
-                stroke="#ffffff"
-                strokeWidth="2"
-                filter="url(#glow)"
-                className="animate-pulse"
-              />
-            </g>
-          ))}
-
-        {/* Artist labels */}
-        {artists.map(artist => {
-          const isHighlighted = selectedArtist === null || selectedArtist === artist;
-          return (
-            <text
-              key={artist}
-              x="75"
-              y={scales.artistScale(artist) + scales.artistScale.bandwidth() / 2}
-              fill={isHighlighted ? "#ffffff" : "#666666"}
-              fontSize="10"
-              textAnchor="end"
-              dominantBaseline="middle"
-              className="font-medium cursor-pointer transition-colors"
-              onClick={() => setSelectedArtist(selectedArtist === artist ? null : artist)}
-            >
-              {artist}
-            </text>
-          );
-        })}
-
-        {/* Month labels */}
-        {months.filter((_, i) => i % 3 === 0).map(month => (
+        {/* Year labels */}
+        {(processedData.recentConcertYears.length > 0 ? processedData.recentConcertYears : processedData.years).map(year => (
           <text
-            key={month}
-            x={scales.timeScale(month) + scales.timeScale.bandwidth() / 2}
-            y={dimensions.height - 60}
+            key={year}
+            x={processedData.scales.xScale(year) + processedData.margin.left + processedData.scales.xScale.bandwidth() / 2}
+            y={processedData.margin.top - 10}
             fill="#ffffff"
-            fontSize="9"
+            fontSize="12"
+            fontWeight="bold"
             textAnchor="middle"
-            transform={`rotate(-45, ${scales.timeScale(month) + scales.timeScale.bandwidth() / 2}, ${dimensions.height - 60})`}
           >
-            {new Date(month).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })}
+            {year}
           </text>
         ))}
 
-        {/* Legend */}
-        <g transform={`translate(${dimensions.width - 150}, 40)`}>
-          <text x="0" y="0" fill="#ffffff" fontSize="12" fontWeight="bold">Concert Effect</text>
-          
-          {/* Color scale legend */}
-          {[0, 0.25, 0.5, 0.75, 1].map((value, i) => (
-            <g key={i} transform={`translate(0, ${20 + i * 20})`}>
-              <rect
-                width="15"
-                height="15"
-                fill={scales.colorScale(value)}
-                opacity="0.8"
-              />
-              <text x="20" y="12" fill="#ffffff" fontSize="10">
-                {value === 0 ? 'None' : 
-                 value === 0.25 ? 'Low' :
-                 value === 0.5 ? 'Medium' :
-                 value === 0.75 ? 'High' : 'Very High'}
-              </text>
-            </g>
-          ))}
+        {/* Artist labels */}
+        {processedData.artists.map(artist => (
+          <text
+            key={artist}
+            x={processedData.margin.left - 10}
+            y={processedData.scales.yScale(artist) + processedData.margin.top + processedData.scales.yScale.bandwidth() / 2}
+            fill="#ffffff"
+            fontSize="10"
+            textAnchor="end"
+            dominantBaseline="middle"
+          >
+            {artist.length > 15 ? artist.substring(0, 15) + '...' : artist}
+          </text>
+        ))}
 
-          {/* Concert marker legend */}
-          <g transform="translate(0, 120)">
-            <circle cx="7" cy="7" r="4" fill="#ff0080" stroke="#ffffff" strokeWidth="2" />
-            <text x="20" y="12" fill="#ffffff" fontSize="10">Concert Week</text>
-          </g>
+        {/* Heatmap cells */}
+        {processedData.heatmapData.map((cell, index) => {
+          const x = processedData.scales.xScale(cell.year) + processedData.margin.left;
+          const y = processedData.scales.yScale(cell.artist) + processedData.margin.top;
+          const width = processedData.scales.xScale.bandwidth();
+          const height = processedData.scales.yScale.bandwidth();
+          
+          const isSelected = selectedCell && selectedCell.artist === cell.artist && selectedCell.year === cell.year;
+          const color = cell.hasConcert 
+            ? processedData.scales.colorScale(cell.correlationStrength)
+            : '#333333';
+          
+          return (
+            <g key={index}>
+              <rect
+                x={x}
+                y={y}
+                width={width}
+                height={height}
+                fill={color}
+                stroke={cell.hasConcert ? "#ffffff" : "#555555"}
+                strokeWidth={isSelected ? 2 : 0.5}
+                opacity={isSelected ? 1 : 0.8}
+                filter={isSelected ? "url(#cellGlow)" : "none"}
+                className="cursor-pointer transition-all duration-200"
+                onMouseEnter={(e) => handleCellHover(cell, e)}
+                onMouseLeave={handleCellLeave}
+              />
+              
+              {/* Concert indicator */}
+              {cell.hasConcert && (
+                <circle
+                  cx={x + width / 2}
+                  cy={y + height / 2}
+                  r={Math.min(width, height) / 4}
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="2"
+                  opacity={0.8}
+                />
+              )}
+            </g>
+          );
+        })}
+
+        {/* Correlation summary */}
+        <g transform={`translate(${processedData.margin.left}, ${processedData.height - processedData.margin.bottom + 20})`}>
+          <text fill="#ffffff" fontSize="12" fontWeight="bold">
+            Concert Impact Summary:
+          </text>
+          {(() => {
+            const avgIncrease = processedData.correlationData.length > 0 
+              ? processedData.correlationData.reduce((sum, d) => sum + d.increase, 0) / processedData.correlationData.length
+              : 0;
+            const positiveImpact = processedData.correlationData.filter(d => d.increase > 0).length;
+            const totalConcerts = processedData.correlationData.length;
+            
+            return (
+              <g transform="translate(0, 20)">
+                <text fill="#00f5ff" fontSize="10">
+                  Average increase: {avgIncrease > 0 ? '+' : ''}{avgIncrease.toFixed(1)}% during concert years
+                </text>
+                <text fill="#ffffff" fontSize="10" transform="translate(0, 15)">
+                  {positiveImpact} of {totalConcerts} concerts increased streaming
+                </text>
+              </g>
+            );
+          })()}
         </g>
       </svg>
 
       {/* Tooltip */}
       {tooltipData && (
-        <div
-          className="fixed bg-black/90 border border-cyber-blue rounded-lg p-3 text-xs z-50 pointer-events-none"
+        <div 
+          className="absolute bg-black/90 rounded-lg p-3 text-white text-xs pointer-events-none z-10"
           style={{
-            left: `${tooltipData.x + 10}px`,
-            top: `${tooltipData.y - 10}px`,
+            left: tooltipData.x + 10,
+            top: tooltipData.y - 10,
+            maxWidth: '200px'
           }}
         >
-          <div className="text-white font-semibold">{tooltipData.data.artist}</div>
-          <div className="text-gray-300">
-            {new Date(tooltipData.data.month).toLocaleDateString('en-US', { 
-              month: 'long', 
-              year: 'numeric' 
-            })}
-          </div>
+          <div className="font-bold mb-1">{tooltipData.data.artist}</div>
+          <div>{tooltipData.data.year}</div>
           <div className="text-cyber-blue">
-            Estimated Plays: {tooltipData.data.plays.toLocaleString()}
+            {tooltipData.data.hasConcert ? (
+              <>
+                <div>🎵 Concert Year</div>
+                <div>{tooltipData.data.streams.toLocaleString()} streams</div>
+                {tooltipData.data.increase > 0 ? (
+                  <div className="text-green-400">+{tooltipData.data.increase.toFixed(1)}% vs average</div>
+                ) : (
+                  <div className="text-red-400">{tooltipData.data.increase.toFixed(1)}% vs average</div>
+                )}
+              </>
+            ) : (
+              <>
+                <div>📱 No Concert</div>
+                <div>{tooltipData.data.streams.toLocaleString()} streams</div>
+              </>
+            )}
           </div>
-          {tooltipData.data.nearestConcert && (
-            <div className="text-pink-400 mt-1">
-              Concert Effect: {Math.round(tooltipData.data.concertEffect * 100)}%
-              {tooltipData.data.daysSinceConcert !== null && (
-                <div className="text-xs">
-                  {tooltipData.data.daysSinceConcert} days from concert
-                </div>
-              )}
-            </div>
-          )}
         </div>
       )}
 
-      {/* Controls */}
-      <div className="absolute top-2 right-2 bg-black/70 rounded-lg p-3">
-        <div className="text-white text-xs font-semibold mb-2">Filters</div>
-        <button
-          onClick={() => setSelectedArtist(null)}
-          className={`px-2 py-1 text-xs rounded transition-colors mr-2 ${
-            selectedArtist === null 
-              ? 'bg-cyber-blue text-white' 
-              : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
-          }`}
-        >
-          All Artists
-        </button>
-      </div>
-
       {/* Info panel */}
-      <div className="absolute bottom-2 left-2 bg-black/70 rounded-lg p-3 max-w-sm">
-        <h4 className="text-white text-xs font-semibold mb-2">Concert Correlation Analysis</h4>
+      <div className="absolute bottom-4 right-4 bg-black/70 rounded-lg p-3 max-w-sm">
+        <h4 className="text-white text-xs font-semibold mb-2">Concert Streaming Correlation</h4>
         <p className="text-gray-400 text-xs">
-          Brighter colors indicate stronger correlation between concert attendance and streaming spikes. 
-          Pink dots mark concert weeks with immediate impact.
+          Heatmap showing how concerts since 2023 affect streaming activity. Red = high correlation, blue = low correlation. 
+          White circles indicate concert years. Hover for detailed stats.
         </p>
       </div>
     </div>

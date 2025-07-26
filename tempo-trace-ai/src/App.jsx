@@ -122,6 +122,7 @@ function App() {
             data={lifetimeStats} 
             artistSummary={artistSummary} 
             concertData={concertData} 
+            recapData={annualRecaps}
           />
         )}
         

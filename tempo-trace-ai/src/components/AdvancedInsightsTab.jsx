@@ -20,7 +20,7 @@ const ChartCard = ({ title, children, className = "" }) => (
   </div>
 );
 
-const AdvancedInsightsTab = ({ data, artistSummary, concertData }) => {
+const AdvancedInsightsTab = ({ data, artistSummary, concertData, recapData }) => {
   if (!data) {
     return (
       <div className="text-center py-12">
@@ -38,6 +38,10 @@ const AdvancedInsightsTab = ({ data, artistSummary, concertData }) => {
       </div>
       
       <div className="flex flex-col gap-12">
+        <ChartCard title="Artist Rankings Evolution">
+          <ArtistRankingSankey data={data} recapData={recapData} artistSummary={artistSummary} />
+        </ChartCard>
+        
         <ChartCard title="Global Music Map">
           <GlobalMusicMap data={data} />
         </ChartCard>
@@ -60,10 +64,6 @@ const AdvancedInsightsTab = ({ data, artistSummary, concertData }) => {
         
         <ChartCard title="Emotional Listening Landscape">
           <EmotionalListeningLandscape data={data} artistSummary={artistSummary} />
-        </ChartCard>
-        
-        <ChartCard title="Artist Rankings Evolution">
-          <ArtistRankingSankey data={data} artistSummary={artistSummary} />
         </ChartCard>
       </div>
     </div>
