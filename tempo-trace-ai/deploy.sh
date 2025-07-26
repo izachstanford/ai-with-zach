@@ -104,11 +104,11 @@ if [ $? -eq 0 ]; then
         echo ""
         echo -e "${YELLOW}🌐 Your app is now live at:${NC}"
         echo -e "${BLUE}Production: https://aiwithzach.com/tempo-trace-ai${NC}"
-        echo -e "${BLUE}Local testing: ./test-local.sh${NC}"
+        echo -e "${BLUE}Local testing: npm run preview${NC}"
         
         echo ""
         echo -e "${YELLOW}📝 Next steps:${NC}"
-        echo -e "${BLUE}1. Test locally: ./test-local.sh${NC}"
+        echo -e "${BLUE}1. Test locally: npm run preview${NC}"
         echo -e "${BLUE}2. Commit and push changes in website-ai-with-zach${NC}"
         echo -e "${BLUE}3. Deploy to production via Netlify${NC}"
         
