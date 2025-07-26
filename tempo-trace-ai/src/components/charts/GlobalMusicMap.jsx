@@ -272,41 +272,6 @@ const GlobalMusicMap = ({ data }) => {
           );
         })}
 
-        {/* Legend */}
-        <g transform="translate(20, 20)">
-          <rect width="200" height="140" fill="rgba(0, 0, 0, 0.7)" rx="8" />
-          <text x="10" y="20" fill="#ffffff" fontSize="12" fontWeight="bold">
-            Global Listening
-          </text>
-          
-          {/* Size legend */}
-          <g transform="translate(10, 35)">
-            <circle cx="10" cy="10" r="3" fill="#00f5ff" />
-            <text x="20" y="14" fill="#ffffff" fontSize="9">
-              {processedData.countries[processedData.countries.length-1]?.plays.toLocaleString()} plays
-            </text>
-            
-            <circle cx="10" cy="25" r="8" fill="#00f5ff" />
-            <text x="25" y="29" fill="#ffffff" fontSize="9">
-              {Math.round(processedData.maxPlays/2).toLocaleString()} plays
-            </text>
-            
-            <circle cx="10" cy="45" r="15" fill="#ff0080" />
-            <text x="30" y="49" fill="#ffffff" fontSize="9">
-              {processedData.maxPlays.toLocaleString()} plays (Primary)
-            </text>
-          </g>
-
-          {/* Flow legend */}
-          <g transform="translate(10, 95)">
-            <circle cx="5" cy="5" r="2" fill="#8b5cf6" opacity="0.8" />
-            <text x="15" y="9" fill="#ffffff" fontSize="9">Streaming flow</text>
-            <text x="15" y="20" fill="#00f5ff" fontSize="8">
-              {processedData.totalPlays.toLocaleString()} total international plays
-            </text>
-          </g>
-        </g>
-
         {/* Selected country info */}
         {selectedCountry && (
           <g transform="translate(500, 20)">

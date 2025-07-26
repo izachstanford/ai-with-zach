@@ -1,23 +1,12 @@
 import React, { useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { 
-  Chart as ChartJS, 
-  CategoryScale, 
-  LinearScale, 
-  PointElement, 
-  LineElement, 
-  Title, 
-  Tooltip, 
-  Legend,
-  Filler
-} from 'chart.js';
-import { 
-  Trophy, 
-  Calendar, 
-  Music, 
-  Users, 
-  Clock, 
-  TrendingUp, 
+// Leaderboard focuses on ranked lists so charting libraries are not needed here
+import {
+  Trophy,
+  Calendar,
+  Music,
+  Users,
+  Clock,
+  TrendingUp,
   Award,
   BarChart3,
   Headphones,
@@ -25,16 +14,6 @@ import {
   Play
 } from 'lucide-react';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
 
 const StatCard = ({ icon: Icon, label, value, subtitle, gradient = false }) => (
   <div className="cyber-card p-6">
@@ -79,82 +58,6 @@ const TopListCard = ({ title, items, icon: Icon }) => (
   </div>
 );
 
-const HoursListenedChart = ({ data }) => {
-  const years = Object.keys(data).sort();
-  const hoursData = years.map(year => Math.round(data[year].year_stats.total_hours));
-  
-  const chartData = {
-    labels: years,
-    datasets: [{
-      label: 'Hours Listened',
-      data: hoursData,
-      borderColor: '#00f5ff',
-      backgroundColor: 'rgba(0, 245, 255, 0.1)',
-      fill: true,
-      pointStyle: 'circle',
-      pointBackgroundColor: '#00f5ff',
-      pointBorderColor: '#00f5ff',
-      pointRadius: 4,
-      tension: 0.3
-    }]
-  };
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false
-      },
-      tooltip: {
-        backgroundColor: 'rgba(26, 26, 26, 0.9)',
-        titleColor: '#00f5ff',
-        bodyColor: '#ffffff',
-        borderColor: '#00f5ff',
-        borderWidth: 1,
-        callbacks: {
-          label: (context) => `${context.parsed.y.toLocaleString()} hours`
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: {
-          color: 'rgba(255, 255, 255, 0.1)'
-        },
-        ticks: {
-          color: '#ffffff'
-        }
-      },
-      y: {
-        beginAtZero: true,
-        grid: {
-          color: 'rgba(255, 255, 255, 0.1)'
-        },
-        ticks: {
-          color: '#ffffff'
-        },
-        title: {
-          display: true,
-          text: 'Hours Listened',
-          color: '#ffffff'
-        }
-      }
-    }
-  };
-
-  return (
-    <div className="cyber-card p-6">
-      <div className="flex items-center gap-3 mb-4">
-        <TrendingUp className="w-5 h-5 text-cyber-blue" />
-        <h3 className="text-lg font-semibold text-white">Hours Listened by Year</h3>
-      </div>
-      <div className="chart-container" style={{ height: '300px' }}>
-        <Line data={chartData} options={chartOptions} />
-      </div>
-    </div>
-  );
-};
 
 const LeaderboardTab = ({ data }) => {
   const [selectedYear, setSelectedYear] = useState(null);
@@ -198,9 +101,6 @@ const LeaderboardTab = ({ data }) => {
           Explore your musical evolution year by year • {years.length} years of data
         </p>
       </div>
-
-      {/* Hours Listened Chart */}
-      <HoursListenedChart data={data} />
 
       {/* Sticky Year Selection */}
       <div className="sticky top-16 z-20 bg-dark-bg/95 backdrop-blur-md border-b border-cyber-blue/20 py-4">
@@ -287,32 +187,6 @@ const LeaderboardTab = ({ data }) => {
         />
       </div>
 
-      {/* Provider Breakdown */}
-      <div className="cyber-card p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <Music className="w-5 h-5 text-cyber-blue" />
-          <h3 className="text-lg font-semibold text-white">Streaming Providers</h3>
-        </div>
-        <div className="space-y-4">
-          {Object.entries(currentData.year_stats.provider_breakdown).map(([provider, plays]) => (
-            <div key={provider} className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-white font-medium">{provider}</span>
-                <span className="text-cyber-blue font-bold">{plays.toLocaleString()}</span>
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-3">
-                <div 
-                  className="bg-gradient-to-r from-cyber-blue to-cyber-purple h-3 rounded-full" 
-                  style={{ width: `${(plays / currentData.year_stats.total_plays) * 100}%` }}
-                />
-              </div>
-              <p className="text-xs text-gray-400">
-                {Math.round((plays / currentData.year_stats.total_plays) * 100)}% of total plays
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* Top Lists for Selected Year */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -392,6 +266,33 @@ const LeaderboardTab = ({ data }) => {
               </p>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Provider Breakdown */}
+      <div className="cyber-card p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <Music className="w-5 h-5 text-cyber-blue" />
+          <h3 className="text-lg font-semibold text-white">Streaming Providers</h3>
+        </div>
+        <div className="space-y-4">
+          {Object.entries(currentData.year_stats.provider_breakdown).map(([provider, plays]) => (
+            <div key={provider} className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-white font-medium">{provider}</span>
+                <span className="text-cyber-blue font-bold">{plays.toLocaleString()}</span>
+              </div>
+              <div className="w-full bg-gray-700 rounded-full h-3">
+                <div
+                  className="bg-gradient-to-r from-cyber-blue to-cyber-purple h-3 rounded-full"
+                  style={{ width: `${(plays / currentData.year_stats.total_plays) * 100}%` }}
+                />
+              </div>
+              <p className="text-xs text-gray-400">
+                {Math.round((plays / currentData.year_stats.total_plays) * 100)}% of total plays
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

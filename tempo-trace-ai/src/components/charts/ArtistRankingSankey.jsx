@@ -1,63 +1,66 @@
 import React, { useMemo, useState } from 'react';
 import * as d3 from 'd3';
 
-const ArtistRankingSankey = ({ data, artistSummary }) => {
+const ArtistRankingSankey = ({ data, recapData, artistSummary }) => {
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [hoveredNode, setHoveredNode] = useState(null);
 
   const processedData = useMemo(() => {
-    if (!data?.temporal_patterns?.yearly_breakdown || !artistSummary) {
+    if (!recapData || !artistSummary) {
       return { nodes: [], links: [], years: [] };
     }
 
-    const yearlyData = data.temporal_patterns.yearly_breakdown;
-    const currentYear = new Date().getFullYear();
-    const years = [];
-    
-    // Get last 5 years of data
-    for (let i = 4; i >= 0; i--) {
-      const year = (currentYear - i).toString();
-      if (yearlyData[year]) {
-        years.push(year);
-      }
-    }
+    // Get years from recap data
+    const years = Object.keys(recapData).filter(year => 
+      recapData[year] && recapData[year].top_artists
+    ).sort();
 
     if (years.length < 2) {
       return { nodes: [], links: [], years: [] };
     }
 
-    // Calculate top 5 artists for each year
+    // Get last 7 years of data
+    const recentYears = years.slice(-7);
+
+    // Helper function to get artist's actual rank in a specific year
+    const getArtistRankInYear = (artistName, year) => {
+      const artistData = artistSummary[artistName];
+      if (!artistData || !artistData.yearly_breakdown || !artistData.yearly_breakdown[year]) {
+        return null; // Artist not active this year
+      }
+      
+      // Get all artists active in this year and their streams
+      const yearArtists = Object.entries(artistSummary)
+        .filter(([artist, data]) => data.yearly_breakdown && data.yearly_breakdown[year])
+        .map(([artist, data]) => ({
+          artist,
+          streams: data.yearly_breakdown[year].streams || 0
+        }))
+        .filter(item => item.streams > 0)
+        .sort((a, b) => b.streams - a.streams);
+      
+      // Find the rank of our target artist
+      const rankIndex = yearArtists.findIndex(item => item.artist === artistName);
+      return rankIndex !== -1 ? rankIndex + 1 : null;
+    };
+
+    // Calculate top 5 artists for each year from real data
     const yearlyRankings = {};
     const allArtists = new Set();
 
-    years.forEach(year => {
-      // Simulate yearly artist rankings based on available data
-      // In a real implementation, you'd have monthly/yearly artist breakdown
-      const yearlyArtists = Object.entries(artistSummary)
-        .filter(([artist, artistData]) => {
-          const firstYear = new Date(artistData.first_played).getFullYear();
-          const lastYear = new Date(artistData.last_played).getFullYear();
-          return firstYear <= parseInt(year) && lastYear >= parseInt(year);
-        })
-        .map(([artist, artistData]) => {
-          // Estimate yearly plays (simplified calculation)
-          const yearsActive = artistData.years_active || 1;
-          const estimatedYearlyPlays = Math.round(
-            (artistData.total_streams / yearsActive) * 
-            (Math.random() * 0.4 + 0.8) // Add some year-to-year variation
-          );
-          
-          return {
-            artist,
-            plays: estimatedYearlyPlays,
-            ...artistData
-          };
-        })
-        .sort((a, b) => b.plays - a.plays)
-        .slice(0, 5); // Top 5
+    recentYears.forEach(year => {
+      const yearData = recapData[year];
+      if (!yearData || !yearData.top_artists) return;
 
-      yearlyRankings[year] = yearlyArtists;
-      yearlyArtists.forEach(a => allArtists.add(a.artist));
+      // Get top 5 artists for this year
+      const top5Artists = yearData.top_artists.slice(0, 5).map(([artist, plays], index) => ({
+        artist,
+        plays,
+        rank: index + 1
+      }));
+
+      yearlyRankings[year] = top5Artists;
+      top5Artists.forEach(a => allArtists.add(a.artist));
     });
 
     // Create nodes for the Sankey diagram
@@ -67,22 +70,37 @@ const ArtistRankingSankey = ({ data, artistSummary }) => {
     // Calculate positions
     const width = 600;
     const height = 350;
-    const xStep = width / (years.length + 1);
+    const xStep = width / (recentYears.length + 1);
     const yStep = height / 6; // 5 ranks + some padding
 
-    years.forEach((year, yearIndex) => {
+    recentYears.forEach((year, yearIndex) => {
       const x = xStep * (yearIndex + 1);
       
       yearlyRankings[year].forEach((artistData, rank) => {
         const y = yStep * (rank + 1);
         const nodeId = `${artistData.artist}-${year}`;
         
+        // Find actual previous year rank for this artist using artistSummary data
+        let previousRank = null;
+        if (yearIndex > 0) {
+          const previousYear = recentYears[yearIndex - 1];
+          previousRank = getArtistRankInYear(artistData.artist, previousYear);
+        } else {
+          // For the first year in our chart, check the year before our range
+          const yearsBeforeChart = years.filter(y => parseInt(y) < parseInt(year)).sort();
+          if (yearsBeforeChart.length > 0) {
+            const previousYear = yearsBeforeChart[yearsBeforeChart.length - 1]; // Get the most recent year before our chart
+            previousRank = getArtistRankInYear(artistData.artist, previousYear);
+          }
+        }
+        
         const node = {
           id: nodeId,
           artist: artistData.artist,
           year,
-          rank: rank + 1,
+          rank: artistData.rank,
           plays: artistData.plays,
+          previousRank,
           x,
           y,
           yearIndex,
@@ -97,9 +115,9 @@ const ArtistRankingSankey = ({ data, artistSummary }) => {
     // Create links between consecutive years
     const links = [];
     
-    for (let i = 0; i < years.length - 1; i++) {
-      const currentYear = years[i];
-      const nextYear = years[i + 1];
+    for (let i = 0; i < recentYears.length - 1; i++) {
+      const currentYear = recentYears[i];
+      const nextYear = recentYears[i + 1];
       
       const currentRanking = yearlyRankings[currentYear];
       const nextRanking = yearlyRankings[nextYear];
@@ -182,8 +200,8 @@ const ArtistRankingSankey = ({ data, artistSummary }) => {
       });
     }
 
-    return { nodes, links, years, yearlyRankings };
-  }, [data, artistSummary]);
+    return { nodes, links, years: recentYears, yearlyRankings };
+  }, [recapData, artistSummary]);
 
   const generatePath = (link) => {
     if (!link.sourceNode || !link.targetNode) return '';
@@ -274,7 +292,7 @@ const ArtistRankingSankey = ({ data, artistSummary }) => {
 
         {/* Year labels */}
         {processedData.years.map((year, i) => {
-          const x = (600 / (processedData.years.length + 1)) * (i + 1);
+            const x = (600 / (processedData.years.length + 1)) * (i + 1);
           return (
             <text
               key={year}
@@ -290,25 +308,10 @@ const ArtistRankingSankey = ({ data, artistSummary }) => {
           );
         })}
 
-        {/* Rank labels */}
-        {[1, 2, 3, 4, 5].map(rank => (
-          <text
-            key={rank}
-            x="25"
-            y={50 + rank * (350 / 6)}
-            fill="#ffffff"
-            fontSize="12"
-            textAnchor="middle"
-            opacity="0.6"
-          >
-            #{rank}
-          </text>
-        ))}
-
         {/* Links */}
         {processedData.links.map((link, index) => {
           const opacity = getLinkOpacity(link);
-          const strokeWidth = Math.max(2, Math.min(link.value / 1000, 8));
+          const strokeWidth = Math.max(2, Math.min(link.value / 100, 8));
           const strokeColor = link.isEntry || link.isExit ? '#8b5cf6' : getRankChangeColor(link.rankChange);
           
           return (
@@ -393,7 +396,7 @@ const ArtistRankingSankey = ({ data, artistSummary }) => {
                 {node.artist.length > 12 ? node.artist.substring(0, 12) + '...' : node.artist}
               </text>
               
-              {/* Play count */}
+              {/* Previous year rank (instead of play count) */}
               <text
                 x={node.x}
                 y={node.y + 32}
@@ -403,7 +406,7 @@ const ArtistRankingSankey = ({ data, artistSummary }) => {
                 className="pointer-events-none"
                 opacity={opacity * 0.8}
               >
-                {node.plays > 999 ? `${Math.round(node.plays/1000)}k` : node.plays}
+                {node.previousRank ? `#${node.previousRank}` : 'New'}
               </text>
             </g>
           );
@@ -453,72 +456,21 @@ const ArtistRankingSankey = ({ data, artistSummary }) => {
             <text x="10" y="55" fill="#ffffff" fontSize="10">
               {hoveredNode.plays.toLocaleString()} plays
             </text>
+            <text x="10" y="70" fill="#ffffff" fontSize="10">
+              {hoveredNode.previousRank ? 
+                `Prior year rank: #${hoveredNode.previousRank}` : 
+                'Prior year rank: New entry'
+              }
+            </text>
           </g>
         )}
-
-        {/* Legend */}
-        <g transform="translate(20, 100)">
-          <rect width="160" height="120" fill="rgba(0, 0, 0, 0.8)" rx="8" />
-          <text x="10" y="20" fill="#ffffff" fontSize="12" fontWeight="bold">
-            Artist Rankings
-          </text>
-          
-          {/* Rank change indicators */}
-          <text x="10" y="40" fill="#10b981" fontSize="10">↑ Rank Improved</text>
-          <text x="10" y="55" fill="#dc2626" fontSize="10">↓ Rank Dropped</text>
-          <text x="10" y="70" fill="#fbbf24" fontSize="10">→ No Change</text>
-          <text x="10" y="85" fill="#8b5cf6" fontSize="10">◊ Entry/Exit</text>
-          
-          <text x="10" y="105" fill="#ffffff" fontSize="8">
-            Circle size = rank position
-            Line thickness = play volume
-          </text>
-        </g>
-
-        {/* Summary stats */}
-        <g transform="translate(520, 300)">
-          <rect width="160" height="80" fill="rgba(0, 0, 0, 0.8)" rx="8" />
-          <text x="10" y="20" fill="#ffffff" fontSize="12" fontWeight="bold">
-            Ranking Stats
-          </text>
-          
-          {(() => {
-            const improvements = processedData.links.filter(l => l.rankChange < 0 && !l.isEntry).length;
-            const declines = processedData.links.filter(l => l.rankChange > 0 && !l.isExit).length;
-            const stable = processedData.links.filter(l => l.rankChange === 0).length;
-            
-            return (
-              <g>
-                <text x="10" y="40" fill="#10b981" fontSize="9">
-                  Improvements: {improvements}
-                </text>
-                <text x="10" y="55" fill="#dc2626" fontSize="9">
-                  Declines: {declines}
-                </text>
-                <text x="10" y="70" fill="#fbbf24" fontSize="9">
-                  Stable: {stable}
-                </text>
-              </g>
-            );
-          })()}
-        </g>
       </svg>
-
-      {/* Controls */}
-      <div className="absolute top-4 right-4 bg-black/70 rounded-lg p-3">
-        <div className="text-white text-xs font-semibold mb-2">Artist Flow</div>
-        <div className="text-gray-400 text-xs">
-          <div>Years: {processedData.years.join(' → ')}</div>
-          <div className="mt-1">Click artists to track their journey</div>
-          <div>Hover nodes for quick details</div>
-        </div>
-      </div>
 
       {/* Info panel */}
       <div className="absolute bottom-4 left-4 bg-black/70 rounded-lg p-3 max-w-sm">
-        <h4 className="text-white text-xs font-semibold mb-2">Top 5 Artist Rankings Flow</h4>
+        <h4 className="text-white text-xs font-semibold mb-2">Artist Rankings Evolution</h4>
         <p className="text-gray-400 text-xs">
-          Sankey diagram showing how your top 5 artists have changed ranks over the past 5 years. 
+          Sankey diagram showing how your top 5 artists have changed ranks over the past 6 years. 
           Follow the flowing paths to see artist trajectories, rises, and falls in your personal charts.
         </p>
       </div>
