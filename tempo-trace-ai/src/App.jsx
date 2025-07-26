@@ -144,7 +144,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <p className="text-gray-400 text-sm">
-              Powered by your musical journey • Built with ❤️ and AI
+              Powered by Zach's Spotify + Apple Music Streaming History Data • Built with AI
             </p>
             <div className="mt-2 flex justify-center space-x-6">
               <div className="text-xs text-gray-500">
