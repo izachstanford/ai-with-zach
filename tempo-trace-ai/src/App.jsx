@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Activity, BarChart3, Compass, Users, Loader2, AlertCircle } from 'lucide-react';
+import { Activity, BarChart3, Compass, Users, Loader2, AlertCircle, Lightbulb } from 'lucide-react';
 import { useData } from './hooks/useData';
 import PulseTab from './components/PulseTab';
 import LeaderboardTab from './components/LeaderboardTab';
@@ -59,9 +59,9 @@ function App() {
   const tabs = [
     { id: 'pulse', label: 'The Pulse', icon: Activity },
     { id: 'leaderboard', label: 'Leaderboard', icon: BarChart3 },
-    { id: 'advanced', label: 'Advanced', icon: Activity },
     { id: 'stats', label: 'Artists', icon: Users },
-    { id: 'compass', label: 'Concert Compass', icon: Compass }
+    { id: 'compass', label: 'Concert Compass', icon: Compass },
+    { id: 'advanced', label: 'Insights', icon: Lightbulb }
   ];
 
   return (
@@ -118,7 +118,11 @@ function App() {
         )}
 
         {activeTab === 'advanced' && (
-          <AdvancedInsightsTab data={lifetimeStats} />
+          <AdvancedInsightsTab 
+            data={lifetimeStats} 
+            artistSummary={artistSummary} 
+            concertData={concertData} 
+          />
         )}
         
         {activeTab === 'compass' && (
